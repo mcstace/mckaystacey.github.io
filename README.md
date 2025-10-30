@@ -24,7 +24,7 @@ Download my app from the App Store
 - **Download**: [App Store Link](https://apps.apple.com/app/haingry)
 
 ### 🎵 My Playlist
-Access my curated Spotify playlist
+Access my Spotify playlist
 - **Listen**: [Spotify Playlist](https://spotify.link/KGVZoBxqTXb)
 
 ---
