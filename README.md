@@ -15,7 +15,7 @@ This is my personal landing page with links to my projects and social media.
 
 ## 🚀 Projects
 
-### 👗 Unravel Culture
+### 👗 Unravel
 Check out my clothing line
 - **Website**: [www.unravelculture.com](https://www.unravelculture.com)
 
@@ -28,6 +28,5 @@ Access my curated Spotify playlist
 - **Listen**: [Spotify Playlist](https://spotify.link/KGVZoBxqTXb)
 
 ---
-
 
 © 2025 McKay Stacey
