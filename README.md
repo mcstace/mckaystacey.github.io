@@ -25,7 +25,7 @@ Download my app from the App Store
 
 ### 🎵 My Playlist
 Access my curated Spotify playlist
-- **Listen**: [Spotify Playlist](https://open.spotify.com/user/mmckaystacey)
+- **Listen**: [Spotify Playlist](https://spotify.link/KGVZoBxqTXb)
 
 ---
 
