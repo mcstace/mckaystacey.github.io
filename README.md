@@ -1,3 +1,39 @@
+# McKay Stacey - Personal Links
+
+## 🌐 Live Site
+
+This is my personal landing page with links to my projects and social media.
+
+---
+
+## 📱 Social Media
+- **TikTok**: [@mmckaystacey](https://tiktok.com/@mmckaystacey)
+- **Twitter/X**: [@mmckaystacey](https://twitter.com/mmckaystacey)
+- **Instagram**: [@mmckaystacey](https://instagram.com/mmckaystacey)
+
+---
+
+## 🚀 Projects
+
+### 👗 Unravel Culture
+Check out my clothing line
+- **Website**: [www.unravelculture.com](https://www.unravelculture.com)
+
+### 📱 Haingry App
+Download my app from the App Store
+- **Download**: [App Store Link](https://apps.apple.com/app/haingry)
+
+### 🎵 My Playlist
+Access my curated Spotify playlist
+- **Listen**: [Spotify Playlist](https://open.spotify.com/user/mmckaystacey)
+
+---
+
+## 💻 Setup
+
+To use this as a website, save the HTML code below as `index.html`:
+
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -238,3 +274,22 @@
     <div class="footer">© 2025 McKay Stacey</div>
 </body>
 </html>
+```
+
+---
+
+## 🚀 How to Deploy
+
+### Option 1: GitHub Pages
+1. Create a new repository
+2. Add the HTML code as `index.html`
+3. Go to Settings → Pages
+4. Select your branch and save
+5. Your site will be live at `https://yourusername.github.io/repository-name`
+
+### Option 2: Save this README
+Just save this markdown file as `README.md` in your repository!
+
+---
+
+© 2025 McKay Stacey
