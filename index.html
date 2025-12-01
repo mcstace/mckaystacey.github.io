@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,7 +13,7 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background: #000;
+            background: radial-gradient(ellipse at center, #1a1a2e 0%, #0a0a15 50%, #000000 100%);
             color: #fff;
             min-height: 100vh;
             display: flex;
@@ -26,28 +25,40 @@
         .logo {
             width: 60px;
             height: 60px;
-            margin-bottom: 30px;
+            margin-bottom: 40px;
+            opacity: 0.9;
+            transition: all 0.3s ease;
+        }
+
+        .logo:hover {
+            opacity: 1;
+            transform: scale(1.05);
         }
 
         .logo svg {
             width: 100%;
             height: 100%;
+            filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.3));
         }
 
         h1 {
             font-size: 48px;
-            font-weight: 600;
+            font-weight: 300;
             text-align: center;
             margin-bottom: 10px;
             line-height: 1.2;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
         }
 
         .subtitle {
             font-size: 48px;
-            font-weight: 600;
+            font-weight: 300;
             text-align: center;
             margin-bottom: 40px;
             color: #ccc;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
         }
 
         .social-links {
@@ -63,13 +74,20 @@
             align-items: center;
             gap: 8px;
             text-decoration: none;
-            color: #fff;
+            color: rgba(255, 255, 255, 0.8);
             font-size: 16px;
-            transition: opacity 0.3s;
+            transition: all 0.3s ease;
+            padding: 8px 16px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
         }
 
         .social-link:hover {
-            opacity: 0.7;
+            color: #fff;
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
         }
 
         .social-icon {
@@ -87,28 +105,38 @@
         }
 
         .card {
-            background: #1a1a1a;
-            border-radius: 16px;
-            padding: 25px;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 30px;
             display: flex;
             align-items: center;
-            gap: 20px;
-            transition: background 0.3s;
+            gap: 25px;
+            transition: all 0.4s ease;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
         }
 
         .card:hover {
-            background: #222;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.5);
         }
 
         .card-icon {
-            width: 70px;
-            height: 70px;
-            border-radius: 12px;
+            width: 80px;
+            height: 80px;
+            border-radius: 16px;
             display: flex;
             align-items: center;
             justify-content: center;
             flex-shrink: 0;
             font-size: 32px;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
         }
 
         .card-content {
@@ -116,44 +144,50 @@
         }
 
         .card-title {
-            font-size: 20px;
+            font-size: 22px;
             font-weight: 600;
-            margin-bottom: 6px;
+            margin-bottom: 8px;
+            letter-spacing: 0.02em;
         }
 
         .card-description {
             font-size: 14px;
-            color: #999;
-            line-height: 1.4;
+            color: rgba(255, 255, 255, 0.6);
+            line-height: 1.5;
         }
 
         .card-button {
-            padding: 10px 24px;
-            background: transparent;
-            border: 1px solid #444;
-            border-radius: 8px;
+            padding: 12px 28px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
             color: #fff;
             text-decoration: none;
             font-size: 14px;
             font-weight: 500;
             white-space: nowrap;
-            transition: all 0.3s;
+            transition: all 0.3s ease;
         }
 
         .card-button:hover {
-            background: #333;
-            border-color: #666;
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.3);
+            transform: scale(1.05);
         }
 
         .footer {
             margin-top: auto;
-            color: #666;
+            color: rgba(255, 255, 255, 0.4);
             font-size: 14px;
+            letter-spacing: 0.05em;
         }
 
         @media (max-width: 600px) {
             h1, .subtitle {
-                font-size: 32px;
+                font-size: 28px;
+                letter-spacing: 0.1em;
             }
 
             .card {
@@ -168,9 +202,15 @@
     </style>
 </head>
 <body>
+    <div class="logo">
+        <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M30 50C30 38.954 38.954 30 50 30C61.046 30 70 38.954 70 50C70 61.046 61.046 70 50 70" stroke="white" stroke-width="3" stroke-linecap="round"/>
+            <path d="M70 50C70 61.046 61.046 70 50 70C38.954 70 30 61.046 30 50C30 38.954 38.954 30 50 30" stroke="white" stroke-width="3" stroke-linecap="round"/>
+        </svg>
+    </div>
 
     <h1>I create cool stuff,</h1>
-    <div class="subtitle">with cool people</div>
+    <div class="subtitle">with cool people.</div>
 
     <div class="social-links">
         <a href="https://tiktok.com/@mmckaystacey" class="social-link" target="_blank">
@@ -191,11 +231,17 @@
             </svg>
             @mmckaystacey
         </a>
+        <a href="https://www.linkedin.com/in/mckay-stacey-bab412212/" class="social-link" target="_blank">
+            <svg class="social-icon" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+            </svg>
+            McKay Stacey
+        </a>
     </div>
 
     <div class="cards-container">
         <div class="card">
-            <div class="card-icon" style="background: white; padding: 10px;">
+            <div class="card-icon" style="background: rgba(255, 107, 107, 0.15); padding: 10px;">
                 <img src="Untitled-1.png" alt="Unravel" style="width: 100%; height: 100%; object-fit: contain;">
             </div>
             <div class="card-content">
@@ -206,25 +252,25 @@
         </div>
 
         <div class="card">
-            <div class="card-icon" style="background: white; padding: 10px;">
+            <div class="card-icon" style="background: rgba(102, 126, 234, 0.15); padding: 10px;">
                 <img src="haingry purple.jpg" alt="Haingry" style="width: 100%; height: 100%; object-fit: contain;">
             </div>
             <div class="card-content">
                 <div class="card-title">Haingry App</div>
-                <div class="card-description">Download my app from the App Store</div>
+                <div class="card-description">App launching soon.</div>
             </div>
             <a href="https://apps.apple.com/app/haingry" class="card-button" target="_blank">Download</a>
         </div>
 
         <div class="card">
-            <div class="card-icon" style="background: #1DB954;">
-                <svg width="32" height="32" viewBox="0 0 24 24" fill="white">
+            <div class="card-icon" style="background: rgba(29, 185, 84, 0.15);">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="white">
                     <path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/>
                 </svg>
             </div>
             <div class="card-content">
-                <div class="card-title">Music in my videos</div>
-                <div class="card-description">Access my Spotify playlist</div>
+                <div class="card-title">Playlist</div>
+                <div class="card-description">Pub playlist for videos</div>
             </div>
             <a href="https://spotify.link/KGVZoBxqTXb" class="card-button" target="_blank">Listen now</a>
         </div>
@@ -233,5 +279,3 @@
     <div class="footer">© 2025 McKay Stacey</div>
 </body>
 </html>
-
-
