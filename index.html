@@ -1,248 +1,977 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>McKay Stacey - Links</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>McKay — Creative Director & Videographer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background: radial-gradient(ellipse at center, #1a1a2e 0%, #0a0a15 50%, #000000 100%);
-            color: #fff;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 40px 20px;
-        }
+    :root {
+      --cream: #FAFAF6;
+      --black: #111111;
+      --yellow: #F5C800;
+      --gray: #888888;
+      --dgray: #333333;
+      --lgray: #E8E8E4;
+      --rule: rgba(17,17,17,0.12);
+    }
 
-        h1 {
-            font-size: 48px;
-            font-weight: 300;
-            text-align: center;
-            margin-bottom: 10px;
-            line-height: 1.2;
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
-        }
+    html { scroll-behavior: smooth; }
 
-        .subtitle {
-            font-size: 48px;
-            font-weight: 300;
-            text-align: center;
-            margin-bottom: 40px;
-            color: #ccc;
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
-        }
+    body {
+      background: var(--cream);
+      color: var(--black);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      overflow-x: hidden;
+    }
 
-        .social-links {
-            display: flex;
-            gap: 25px;
-            margin-bottom: 50px;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
+    /* ── CURSOR ── */
+    *, a { cursor: none; }
+    #cursor {
+      position: fixed;
+      width: 10px; height: 10px;
+      background: var(--yellow);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: transform 0.12s ease, width 0.2s ease, height 0.2s ease, background 0.2s ease;
+      mix-blend-mode: multiply;
+    }
+    body:has(a:hover) #cursor,
+    body:has(button:hover) #cursor {
+      width: 32px; height: 32px;
+      background: var(--yellow);
+    }
 
-        .social-link {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            text-decoration: none;
-            color: rgba(255, 255, 255, 0.8);
-            font-size: 16px;
-            transition: all 0.3s ease;
-        }
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 3rem;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.3s, background 0.3s;
+    }
+    nav.scrolled {
+      border-color: var(--rule);
+      background: rgba(250,250,246,0.92);
+      backdrop-filter: blur(12px);
+    }
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      letter-spacing: 0.02em;
+      text-decoration: none;
+      color: var(--black);
+    }
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--gray);
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--black); }
 
-        .social-link:hover {
-            color: #fff;
-            transform: translateY(-2px);
-        }
+    /* ── SECTIONS ── */
+    section {
+      padding: 7rem 3rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
 
-        .social-icon {
-            width: 24px;
-            height: 24px;
-        }
+    .rule { width: 100%; height: 1px; background: var(--rule); margin-bottom: 1rem; }
+    .rule-yellow { width: 60px; height: 2px; background: var(--yellow); margin: 1.5rem 0; }
 
-        .cards-container {
-            display: grid;
-            gap: 30px;
-            width: 100%;
-            max-width: 1100px;
-            margin-bottom: 40px;
-        }
+    .section-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gray);
+      margin-bottom: 2.5rem;
+    }
 
-        .card {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 16px;
-            padding: 30px 40px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 30px;
-            transition: all 0.3s ease;
-        }
+    h1, h2, h3 {
+      font-family: 'Playfair Display', serif;
+      font-weight: 400;
+      line-height: 1.08;
+    }
 
-        .card:hover {
-            background: rgba(255, 255, 255, 0.05);
-            border-color: rgba(255, 255, 255, 0.2);
-            transform: translateY(-4px);
-        }
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding-top: 6rem;
+      padding-bottom: 4rem;
+      max-width: 100%;
+      padding-left: 3rem;
+      padding-right: 3rem;
+    }
+    .hero-inner { max-width: 1100px; margin: 0 auto; width: 100%; }
+    .hero-top-rule { width: 100%; height: 1px; background: var(--rule); margin-bottom: 1.5rem; }
 
-        .card-icon {
-            width: 60px;
-            height: 60px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-        }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: start;
+      gap: 3rem;
+    }
 
-        .card-icon svg {
-            width: 40px;
-            height: 40px;
-        }
+    .hero-name {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(5rem, 14vw, 11rem);
+      font-weight: 400;
+      line-height: 0.92;
+      letter-spacing: -0.02em;
+      opacity: 0;
+      transform: translateY(40px);
+      animation: fadeUp 0.9s cubic-bezier(0.16,1,0.3,1) 0.1s forwards;
+    }
 
-        .card-content {
-            flex: 1;
-        }
+    .hero-stat {
+      text-align: right;
+      opacity: 0;
+      animation: fadeUp 0.9s cubic-bezier(0.16,1,0.3,1) 0.3s forwards;
+    }
+    .hero-stat-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem;
+      font-weight: 400;
+      line-height: 1;
+      white-space: nowrap;
+    }
+    .hero-stat-sub {
+      font-size: 0.7rem;
+      color: var(--gray);
+      letter-spacing: 0.06em;
+      margin-top: 0.4rem;
+      line-height: 1.6;
+    }
+    .hero-stat-rule { width: 100%; height: 2px; background: var(--yellow); margin-top: 1rem; }
 
-        .card-title {
-            font-size: 22px;
-            font-weight: 600;
-            margin-bottom: 6px;
-        }
+    .hero-tagline {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1rem, 2vw, 1.3rem);
+      font-style: italic;
+      color: var(--gray);
+      margin-top: 2rem;
+      opacity: 0;
+      animation: fadeUp 0.9s cubic-bezier(0.16,1,0.3,1) 0.4s forwards;
+    }
+    .hero-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-top: 5rem;
+      opacity: 0;
+      animation: fadeUp 0.9s cubic-bezier(0.16,1,0.3,1) 0.55s forwards;
+    }
+    .hero-meta {
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gray);
+      line-height: 2;
+    }
+    .hero-scroll {
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gray);
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .hero-scroll:hover { color: var(--black); }
+    .hero-scroll::before {
+      content: '';
+      display: block;
+      width: 40px; height: 1px;
+      background: var(--gray);
+      transition: width 0.3s, background 0.2s;
+    }
+    .hero-scroll:hover::before { width: 70px; background: var(--black); }
 
-        .card-description {
-            font-size: 14px;
-            color: rgba(255, 255, 255, 0.6);
-            line-height: 1.5;
-        }
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
 
-        .card-button {
-            display: inline-block;
-            padding: 12px 28px;
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 10px;
-            color: #fff;
-            text-decoration: none;
-            font-size: 14px;
-            font-weight: 500;
-            white-space: nowrap;
-            transition: all 0.3s ease;
-        }
+    /* ── WHO I AM ── */
+    .who-grid {
+      display: grid;
+      grid-template-columns: 1fr 1px 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+    .who-divider { background: var(--lgray); align-self: stretch; }
+    .who-statement {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+      font-style: italic;
+      font-weight: 400;
+      line-height: 1.2;
+      color: var(--black);
+    }
+    .who-bullets { display: flex; flex-direction: column; gap: 1.5rem; padding-left: 2rem; }
+    .who-bullet { font-size: 0.95rem; line-height: 1.65; color: var(--dgray); padding-bottom: 1.5rem; border-bottom: 1px solid var(--lgray); }
+    .who-bullet:last-child { border-bottom: none; }
+    .who-bullet strong { color: var(--black); font-weight: 500; }
 
-        .card-button:hover {
-            background: rgba(255, 255, 255, 0.1);
-            border-color: rgba(255, 255, 255, 0.3);
-            transform: scale(1.05);
-        }
+    /* ── CLIENTS ── */
+    #clients { border-top: 1px solid var(--rule); }
+    .clients-headline {
+      font-size: clamp(2rem, 5vw, 4rem);
+      margin-bottom: 2.5rem;
+    }
+    .clients-rule { width: 100%; height: 1px; background: var(--yellow); margin-bottom: 2.5rem; }
+    .clients-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+    }
+    .client-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.05rem;
+      font-weight: 400;
+      padding: 1.1rem 0;
+      border-bottom: 1px solid var(--lgray);
+      color: var(--dgray);
+    }
+    .clients-more {
+      margin-top: 2rem;
+      font-size: 0.8rem;
+      letter-spacing: 0.08em;
+      color: var(--gray);
+      font-style: italic;
+    }
 
-        .footer {
-            margin-top: auto;
-            color: rgba(255, 255, 255, 0.4);
-            font-size: 14px;
-            letter-spacing: 0.05em;
-        }
+    /* ── NUMBERS ── */
+    #numbers { border-top: 1px solid var(--rule); text-align: center; }
+    .big-number {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(3.5rem, 10vw, 8rem);
+      font-weight: 400;
+      line-height: 1;
+      letter-spacing: -0.02em;
+      margin: 2rem 0;
+    }
+    .numbers-sub {
+      font-size: 0.7rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gray);
+      margin-bottom: 3rem;
+    }
+    .numbers-rule { width: 120px; height: 2px; background: var(--yellow); margin: 0 auto 3rem; }
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+      border-top: 1px solid var(--lgray);
+    }
+    .stat-item {
+      padding: 2.5rem 1rem;
+      border-right: 1px solid var(--lgray);
+    }
+    .stat-item:last-child { border-right: none; }
+    .stat-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      font-weight: 400;
+    }
+    .stat-label { font-size: 0.72rem; color: var(--gray); margin-top: 0.4rem; letter-spacing: 0.06em; }
 
-        @media (max-width: 600px) {
-            h1, .subtitle {
-                font-size: 28px;
-                letter-spacing: 0.1em;
-            }
+    /* ── CASE STUDY ── */
+    #casestudy { border-top: 1px solid var(--rule); }
+    .case-header { margin-bottom: 3rem; }
+    .case-name {
+      font-size: clamp(2.5rem, 6vw, 5rem);
+      margin-bottom: 0.5rem;
+    }
+    .case-handle { font-size: 0.85rem; color: var(--gray); font-style: italic; }
+    .case-grid {
+      display: grid;
+      grid-template-columns: 1fr 1px 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+    .case-divider { background: var(--lgray); align-self: stretch; }
+    .case-col-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--gray);
+      margin-bottom: 1.5rem;
+    }
+    .case-roles { list-style: none; display: flex; flex-direction: column; gap: 1rem; }
+    .case-roles li {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.05rem;
+      color: var(--dgray);
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--lgray);
+    }
+    .case-roles li::before { content: '— '; color: var(--gray); }
+    .case-result-num {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-weight: 400;
+      line-height: 1.1;
+    }
+    .case-result-desc {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      color: var(--gray);
+      font-size: 0.95rem;
+      line-height: 1.6;
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 2px solid var(--yellow);
+    }
 
-            .card {
-                flex-direction: column;
-                text-align: center;
-            }
+    /* Stats highlight boxes */
+    .view-stats {
+      display: flex;
+      gap: 0.75rem;
+      margin-top: 1.5rem;
+      flex-wrap: wrap;
+    }
+    .view-stat-img-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.4rem;
+      text-decoration: none;
+      flex: 1;
+      min-width: 80px;
+    }
+    .view-stat-img {
+      width: 100%;
+      aspect-ratio: 9/16;
+      object-fit: cover;
+      border-radius: 4px;
+      border: 1px solid var(--lgray);
+      transition: opacity 0.2s, transform 0.2s;
+      display: block;
+    }
+    .view-stat-img-wrap:hover .view-stat-img {
+      opacity: 0.85;
+      transform: scale(1.02);
+    }
+    .view-stat-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.06em;
+      color: var(--gray);
+      font-family: 'DM Sans', sans-serif;
+    }
 
-            .card-button {
-                width: 100%;
-            }
-        }
-    </style>
+    /* ── WORK EXAMPLES ── */
+    #work { border-top: 1px solid var(--rule); }
+    .work-headline { font-size: clamp(1.8rem, 4vw, 3rem); margin-bottom: 1rem; }
+    .work-note {
+      font-size: 0.82rem;
+      color: var(--gray);
+      font-style: italic;
+      line-height: 1.6;
+      margin-bottom: 2.5rem;
+      padding: 1rem 1.2rem;
+      border-left: 2px solid var(--yellow);
+      background: rgba(245,200,0,0.04);
+    }
+
+    .work-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
+    .work-item {
+      padding: 2rem 0;
+      border-bottom: 1px solid var(--lgray);
+    }
+    .work-item:nth-child(odd) { padding-right: 3rem; border-right: 1px solid var(--lgray); }
+    .work-item:nth-child(even) { padding-left: 3rem; }
+    .work-item:nth-last-child(-n+2) { border-bottom: none; }
+    .work-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.25rem;
+      margin-bottom: 0.5rem;
+    }
+    .work-sub { font-size: 0.75rem; color: var(--gray); font-style: italic; margin-bottom: 0.8rem; }
+    .work-link {
+      font-size: 0.78rem;
+      color: var(--yellow);
+      text-decoration: none;
+      letter-spacing: 0.04em;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.2s;
+      word-break: break-all;
+    }
+    .work-link:hover { border-color: var(--yellow); }
+
+    /* ── WHAT YOU GET ── */
+    #offer { border-top: 1px solid var(--rule); }
+    .offer-headline { font-size: clamp(1.8rem, 4vw, 3rem); margin-bottom: 3rem; }
+    .offer-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
+    .offer-item {
+      padding: 1.8rem 0;
+      border-bottom: 1px solid var(--lgray);
+    }
+    .offer-item:nth-child(odd) { padding-right: 3rem; border-right: 1px solid var(--lgray); }
+    .offer-item:nth-child(even) { padding-left: 3rem; }
+    .offer-item:nth-last-child(-n+2) { border-bottom: none; }
+    .offer-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.05rem;
+      margin-bottom: 0.5rem;
+    }
+    .offer-desc { font-size: 0.82rem; color: var(--gray); line-height: 1.65; }
+
+    /* ── HOW IT WORKS ── */
+    #how { border-top: 1px solid var(--rule); }
+    .how-headline {
+      font-size: clamp(2.5rem, 6vw, 5.5rem);
+      line-height: 1.05;
+      margin-bottom: 0.5rem;
+    }
+    .how-headline-yellow {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.5rem, 6vw, 5.5rem);
+      font-style: italic;
+      font-weight: 400;
+      color: var(--yellow);
+      line-height: 1.05;
+      margin-bottom: 3rem;
+    }
+    .how-rule { width: 100%; height: 2px; background: var(--yellow); margin-bottom: 3rem; }
+    .how-grid {
+      display: grid;
+      grid-template-columns: 1fr 1px 1fr;
+      gap: 4rem;
+    }
+    .how-divider { background: var(--lgray); }
+    .how-col-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--gray);
+      margin-bottom: 1.5rem;
+    }
+    .how-points { display: flex; flex-direction: column; gap: 1rem; }
+    .how-point {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      color: var(--dgray);
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--lgray);
+      line-height: 1.5;
+    }
+    .how-point:last-child { border-bottom: none; }
+    .how-point::before { content: '— '; color: var(--gray); }
+
+    /* ── THE OPPORTUNITY ── */
+    #opportunity { border-top: 1px solid var(--rule); }
+    .opp-headline { font-size: clamp(2.5rem, 6vw, 5rem); line-height: 1.05; margin-bottom: 3rem; }
+    .opp-rule { width: 100%; height: 2px; background: var(--yellow); margin-bottom: 2.5rem; }
+    .opp-details {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+      margin-bottom: 3rem;
+    }
+    .opp-detail {
+      padding: 2rem 0;
+      border-right: 1px solid var(--lgray);
+      padding-right: 2rem;
+    }
+    .opp-detail:last-child { border-right: none; padding-right: 0; padding-left: 2rem; }
+    .opp-detail:nth-child(2) { padding-left: 2rem; }
+    .opp-detail-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--gray);
+      margin-bottom: 0.75rem;
+    }
+    .opp-detail-value {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      font-weight: 400;
+    }
+    .opp-cta {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      font-style: italic;
+      color: var(--dgray);
+      line-height: 1.7;
+      text-align: center;
+      padding: 2.5rem;
+      border: 1px solid var(--lgray);
+    }
+
+    /* ── CONTACT ── */
+    #contact { border-top: 1px solid var(--rule); }
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1px 1fr;
+      gap: 5rem;
+      align-items: start;
+    }
+    .contact-divider { background: var(--lgray); align-self: stretch; }
+    .contact-headline {
+      font-size: clamp(2.5rem, 5vw, 4.5rem);
+      line-height: 1.05;
+      margin-bottom: 1.5rem;
+    }
+    .contact-sub {
+      font-size: 0.9rem;
+      color: var(--gray);
+      font-style: italic;
+      line-height: 1.7;
+      font-family: 'Playfair Display', serif;
+      margin-bottom: 2rem;
+    }
+    .contact-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+    }
+    .contact-title { font-size: 0.75rem; color: var(--gray); margin-top: 0.3rem; letter-spacing: 0.06em; }
+    .contact-fields { display: flex; flex-direction: column; gap: 0; padding-left: 2rem; }
+    .contact-field {
+      padding: 1.2rem 0;
+      border-bottom: 1px solid var(--lgray);
+    }
+    .contact-field:first-child { border-top: 1px solid var(--lgray); }
+    .contact-field a {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      color: var(--black);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .contact-field a:hover { color: var(--yellow); }
+    .contact-field-label { font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gray); margin-bottom: 0.3rem; }
+    .contact-exclusive {
+      margin-top: 2rem;
+      padding: 1rem 1.2rem;
+      border-left: 2px solid var(--yellow);
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 0.95rem;
+      color: var(--dgray);
+      padding-left: 2rem;
+    }
+
+    .how-body {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.1rem, 2vw, 1.4rem);
+      font-style: italic;
+      color: var(--dgray);
+      line-height: 1.75;
+      max-width: 680px;
+    }
+
+    /* ── SIMPLE CONTACT ── */
+    .contact-simple { max-width: 620px; }
+    .contact-simple-headline {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.2rem, 5vw, 4rem);
+      font-weight: 400;
+      line-height: 1.1;
+      margin-bottom: 1.5rem;
+    }
+    .contact-simple-sub {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 0.95rem;
+      color: var(--gray);
+      line-height: 1.75;
+      margin-bottom: 2rem;
+    }
+    .contact-email-link {
+      display: inline-block;
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.1rem, 2.5vw, 1.6rem);
+      color: var(--black);
+      text-decoration: none;
+      border-bottom: 2px solid var(--yellow);
+      padding-bottom: 0.2rem;
+      transition: color 0.2s, border-color 0.2s;
+      margin-bottom: 1.5rem;
+    }
+    .contact-email-link:hover { color: var(--gray); }
+    .contact-simple-name {
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gray);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--rule);
+      padding: 2rem 3rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .footer-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.9rem;
+    }
+    .footer-note { font-size: 0.7rem; color: var(--gray); letter-spacing: 0.06em; }
+
+    /* ── SCROLL REVEAL ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.16,1,0.3,1);
+    }
+    .reveal.visible { opacity: 1; transform: none; }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.32s; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      nav { padding: 1.2rem 1.5rem; }
+      .nav-links { display: none; }
+      section { padding: 4rem 1.5rem; }
+      #hero { padding-left: 1.5rem; padding-right: 1.5rem; }
+      .hero-grid { grid-template-columns: 1fr; }
+      .hero-stat { text-align: left; }
+      .who-grid, .case-grid, .how-grid, .contact-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      .who-divider, .case-divider, .how-divider, .contact-divider { display: none; }
+      .who-bullets { padding-left: 0; }
+      .clients-grid, .stats-row, .opp-details { grid-template-columns: 1fr 1fr; }
+      .work-grid, .offer-grid { grid-template-columns: 1fr; }
+      .work-item, .offer-item { padding-left: 0 !important; padding-right: 0 !important; border-right: none !important; }
+      .contact-fields { padding-left: 0; }
+      footer { flex-direction: column; gap: 0.5rem; text-align: center; }
+    }
+  </style>
 </head>
 <body>
-    <h1>I create cool stuff,</h1>
-    <div class="subtitle">with cool people.</div>
 
-    <div class="social-links">
-        <a href="https://www.linkedin.com/in/mckay-stacey-bab412212/" class="social-link" target="_blank">
-            <svg class="social-icon" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-            </svg>
-            McKay Stacey
-        </a>
-        <a href="https://twitter.com/mmckaystacey" class="social-link" target="_blank">
-            <svg class="social-icon" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-            </svg>
-            @mmckaystacey
-        </a>
-        <a href="https://instagram.com/mmckaystacey" class="social-link" target="_blank">
-            <svg class="social-icon" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
-            </svg>
-            @mmckaystacey
-        </a>
-        <a href="https://youtube.com/@mmckaystacey" class="social-link" target="_blank">
-            <svg class="social-icon" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
-            </svg>
-            @mmckaystacey
-        </a>
+  <div id="cursor"></div>
+
+  <!-- NAV -->
+  <nav id="nav">
+    <a href="#hero" class="nav-logo">McKay</a>
+    <ul class="nav-links">
+      <li><a href="#clients">Work</a></li>
+      <li><a href="#casestudy">Case Study</a></li>
+      <li><a href="#offer">What You Get</a></li>
+      <li><a href="#opportunity">The Offer</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <div id="hero">
+    <div class="hero-inner">
+      <div class="hero-top-rule"></div>
+      <div class="hero-grid">
+        <div>
+          <h1 class="hero-name">McKay</h1>
+          <p class="hero-tagline">Mastermind behind the views.</p>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-num">250M+</div>
+          <div class="hero-stat-sub">views generated<br>in 6 months</div>
+          <div class="hero-stat-rule"></div>
+        </div>
+      </div>
+      <div class="hero-bottom">
+        <div class="hero-meta">
+          Creative Director &amp; Videographer<br>
+          Puerto Rico · May 19 – June 3
+        </div>
+        <a href="#clients" class="hero-scroll">Scroll</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- WHO I AM -->
+  <section id="about">
+    <div class="rule"></div>
+    <p class="section-label">Who I Am</p>
+    <div class="who-grid reveal">
+      <div>
+        <p class="who-statement">"You've never heard of me. But you've seen my work."</p>
+        <div class="rule-yellow"></div>
+        <p style="font-size:0.82rem;color:var(--gray);font-style:italic;">McKay — Creative Director &amp; Videographer</p>
+      </div>
+      <div class="who-divider"></div>
+      <div class="who-bullets">
+        <p class="who-bullet"><strong>I concept, shoot, and edit</strong> videos for some of the biggest names on the internet.</p>
+        <p class="who-bullet"><strong>My work lives on other people's platforms</strong> — brands and major creators hire me to make them look great.</p>
+        <p class="who-bullet"><strong>250,000,000+ views generated</strong> from my concepts, filming &amp; editing in the last 6 months alone.</p>
+        <p class="who-bullet"><strong>Now I'm bringing that same energy</strong> to Puerto Rico — and I want your property to be part of it.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CLIENTS -->
+  <section id="clients">
+    <div class="rule"></div>
+    <p class="section-label">Who I've Worked With</p>
+    <h2 class="clients-headline reveal">The names behind<br>the numbers.</h2>
+    <div class="clients-rule reveal reveal-delay-1"></div>
+    <div class="clients-grid reveal reveal-delay-2">
+      <div class="client-name">MrBeast</div>
+      <div class="client-name">Microsoft</div>
+      <div class="client-name">BuckedUp</div>
+      <div class="client-name">Nick Shirley</div>
+      <div class="client-name">James Seo</div>
+      <div class="client-name">FaZe Clan</div>
+      <div class="client-name">Alibaba</div>
+      <div class="client-name">Ubisoft</div>
+      <div class="client-name">Halo</div>
+      <div class="client-name">Oats Overnight</div>
+      <div class="client-name">Rocket League</div>
+      <div class="client-name">Steelseries</div>
+    </div>
+  </section>
+
+  <!-- NUMBERS -->
+  <section id="numbers">
+    <div class="rule"></div>
+    <p class="section-label">The Numbers</p>
+    <div class="big-number reveal">250,000,000+</div>
+    <div class="numbers-rule reveal reveal-delay-1"></div>
+    <p class="numbers-sub reveal reveal-delay-1">Views generated in the last 6 months alone</p>
+    <div class="stats-row reveal reveal-delay-2">
+      <div class="stat-item">
+        <div class="stat-num">Major</div>
+        <div class="stat-label">brand partnerships</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">6 Months</div>
+        <div class="stat-label">of explosive growth</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CASE STUDY -->
+  <section id="casestudy">
+    <div class="rule"></div>
+    <p class="section-label">Case Study</p>
+    <div class="case-header reveal">
+      <h2 class="case-name">Case Study #1</h2>
+      <p class="case-handle">James Seo &nbsp;·&nbsp; @itsjamesseo</p>
+      <div class="rule-yellow"></div>
+    </div>
+    <div class="case-grid reveal reveal-delay-1">
+      <div>
+        <p class="case-col-label">My Role</p>
+        <ul class="case-roles">
+          <li>Video Concept &amp; Ideation</li>
+          <li>On-Location Filming</li>
+          <li>Post-Production Editing</li>
+          <li>Thumbnail &amp; Hook Strategy</li>
+        </ul>
+      </div>
+      <div class="case-divider"></div>
+      <div>
+        <p class="case-col-label">The Result</p>
+        <div class="case-result-num">Millions<br>of Views</div>
+        <div class="view-stats">
+          <a href="https://i.imgur.com/wp7Lv5P.jpeg" target="_blank" class="view-stat-img-wrap">
+            <img src="https://i.imgur.com/wp7Lv5P.jpeg" alt="87M views screenshot" class="view-stat-img" />
+            <span class="view-stat-label">87M views</span>
+          </a>
+          <a href="https://i.imgur.com/iSVa2Ke.jpeg" target="_blank" class="view-stat-img-wrap">
+            <img src="https://i.imgur.com/iSVa2Ke.jpeg" alt="37M views screenshot" class="view-stat-img" />
+            <span class="view-stat-label">37M views</span>
+          </a>
+          <a href="https://i.imgur.com/hrVIli1.jpeg" target="_blank" class="view-stat-img-wrap">
+            <img src="https://i.imgur.com/hrVIli1.jpeg" alt="22M views screenshot" class="view-stat-img" />
+            <span class="view-stat-label">22M views</span>
+          </a>
+        </div>
+        <p class="case-result-desc">Content that stopped people mid-scroll and grew his audience massively.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- WORK -->
+  <section id="work">
+    <div class="rule"></div>
+    <p class="section-label">My Work</p>
+    <h2 class="work-headline reveal">What I've already done<br>for hospitality brands.</h2>
+    <div class="work-note reveal reveal-delay-1">
+      Note — these videos were produced for a client's channel. The format &amp; style we'd create for your property is completely different. See below for examples of what we'd actually make you.
+    </div>
+    <div class="work-grid reveal reveal-delay-2">
+      <div class="work-item">
+        <p class="work-title">Clear Sky Resorts — Bryce Canyon</p>
+        <p class="work-sub">Concept · Filming · Editing</p>
+        <a class="work-link" href="https://www.tiktok.com/@itsjamesseo/video/7622382065459236126" target="_blank">tiktok.com/@itsjamesseo/video/7622382065459236126</a>
+      </div>
+      <div class="work-item">
+        <p class="work-title">Virgin Hotels — Las Vegas</p>
+        <p class="work-sub">Concept · Filming · Editing</p>
+        <a class="work-link" href="https://www.tiktok.com/@itsjamesseo/video/7596058332440300831" target="_blank">tiktok.com/@itsjamesseo/video/7596058332440300831</a>
+      </div>
     </div>
 
-    <div class="cards-container">
-        <div class="card">
-            <div class="card-icon" style="background: rgba(255, 107, 107, 0.15); padding: 10px;">
-                <img src="L.png" alt="Unravel" style="width: 100%; height: 100%; object-fit: contain;">
-            </div>
-            <div class="card-content">
-                <div class="card-title">Unravel</div>
-                <div class="card-description">Check out my clothing line</div>
-            </div>
-            <a href="https://www.unravelculture.com" class="card-button" target="_blank">View store</a>
+    <div style="margin-top:4rem;">
+      <p class="section-label" style="margin-bottom:1.5rem;">This Is What We'd Make For You</p>
+      <p style="font-family:'Playfair Display',serif;font-style:italic;color:var(--gray);font-size:0.95rem;margin-bottom:2rem;line-height:1.7;">Shareable, attention-grabbing content made specifically for your property — the kind that stops the scroll and drives real bookings.</p>
+      <div class="work-grid reveal">
+        <div class="work-item">
+          <p class="work-title">Example Reel #1</p>
+          <a class="work-link" href="https://www.instagram.com/reel/DWlU9C-hATA/" target="_blank">instagram.com/reel/DWlU9C-hATA</a>
         </div>
-
-        <div class="card">
-            <div class="card-icon" style="background: rgba(102, 126, 234, 0.15); padding: 10px;">
-                <img src="haingrylogowhite.png" alt="Haingry" style="width: 100%; height: 100%; object-fit: contain;">
-            </div>
-            <div class="card-content">
-                <div class="card-title">Haingry App</div>
-                <div class="card-description">Click to download my app.</div>
-            </div>
-            <a href="https://apps.apple.com/us/app/haingry/id6753778179" class="card-button" target="_blank">Download</a>
+        <div class="work-item">
+          <p class="work-title">Example Reel #2</p>
+          <a class="work-link" href="https://www.instagram.com/reel/DUxPPn4CceU/" target="_blank">instagram.com/reel/DUxPPn4CceU</a>
         </div>
-
-        <div class="card">
-            <div class="card-icon" style="background: rgba(29, 185, 84, 0.15);">
-                <svg width="40" height="40" viewBox="0 0 24 24" fill="white">
-                    <path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/>
-                </svg>
-            </div>
-            <div class="card-content">
-                <div class="card-title">Playlist</div>
-                <div class="card-description">Pub playlist for videos</div>
-            </div>
-            <a href="https://spotify.link/KGVZoBxqTXb" class="card-button" target="_blank">Listen now</a>
+        <div class="work-item">
+          <p class="work-title">Example Reel #3</p>
+          <a class="work-link" href="https://www.instagram.com/reel/DInsCrgzAyg/" target="_blank">instagram.com/reel/DInsCrgzAyg</a>
         </div>
+        <div class="work-item">
+          <p class="work-title">Example Reel #4</p>
+          <a class="work-link" href="https://www.instagram.com/reel/DWdRl7tjNYv/" target="_blank">instagram.com/reel/DWdRl7tjNYv</a>
+        </div>
+        <div class="work-item">
+          <p class="work-title">Example Reel #5</p>
+          <a class="work-link" href="https://www.instagram.com/reel/DMWq2oMRBtU/" target="_blank">instagram.com/reel/DMWq2oMRBtU</a>
+        </div>
+      </div>
     </div>
+  </section>
 
-    <div class="footer">© 2025 McKay Stacey</div>
+  <!-- WHAT YOU GET -->
+  <section id="offer">
+    <div class="rule"></div>
+    <p class="section-label">What You Get</p>
+    <h2 class="offer-headline reveal">A full creative package,<br>tailored to you.</h2>
+    <div class="offer-grid reveal reveal-delay-1">
+      <div class="offer-item">
+        <p class="offer-title">Cinematic Video Content</p>
+        <p class="offer-desc">Short-form Reels and videos built to stop the scroll and drive bookings.</p>
+      </div>
+      <div class="offer-item">
+        <p class="offer-title">Professional Photography</p>
+        <p class="offer-desc">High-quality photos for your listing, social media, and marketing materials.</p>
+      </div>
+      <div class="offer-item">
+        <p class="offer-title">Social Media Buildout</p>
+        <p class="offer-desc">We launch and grow your property's social presence from scratch — if you need it.</p>
+      </div>
+      <div class="offer-item">
+        <p class="offer-title">Professional Website</p>
+        <p class="offer-desc">A clean, conversion-focused site for your property if you don't have one.</p>
+      </div>
+      <div class="offer-item">
+        <p class="offer-title">Raw Footage — Yours Forever</p>
+        <p class="offer-desc">All footage and photos delivered to you. Use them however, whenever.</p>
+      </div>
+      <div class="offer-item">
+        <p class="offer-title">Fully Flexible Deliverables</p>
+        <p class="offer-desc">You tell us what matters most. We build the package around your goals.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section id="how">
+    <div class="rule"></div>
+    <p class="section-label">How It Works</p>
+    <h2 class="how-headline reveal">We post.</h2>
+    <h2 class="how-headline reveal">You grow.</h2>
+    <p class="how-headline-yellow reveal"><em>Organically.</em></p>
+    <div class="how-rule reveal"></div>
+    <p class="how-body reveal reveal-delay-1">We'll post multiple pieces on our end and personal platforms to drive immediate attention — but the bigger picture is that we leave you with everything you need to grow your own social media organically. The goal is that your property becomes a go-to travel destination. Always booked. Always in demand.</p>
+  </section>
+
+  <!-- OPPORTUNITY -->
+  <section id="opportunity">
+    <div class="rule"></div>
+    <p class="section-label">The Opportunity</p>
+    <h2 class="opp-headline reveal">One property.<br>One trip.<br>All eyes on you.</h2>
+    <div class="opp-rule reveal"></div>
+    <div class="opp-details reveal reveal-delay-1">
+      <div class="opp-detail">
+        <p class="opp-detail-label">Dates</p>
+        <p class="opp-detail-value">May 19 – June 3</p>
+      </div>
+      <div class="opp-detail">
+        <p class="opp-detail-label">Group</p>
+        <p class="opp-detail-value">McKay + 5 friends</p>
+      </div>
+      <div class="opp-detail">
+        <p class="opp-detail-label">Exclusivity</p>
+        <p class="opp-detail-value">1 property only</p>
+      </div>
+    </div>
+    <div class="opp-cta reveal reveal-delay-2">
+      In exchange for a discounted or complimentary stay, we bring world-class content to your property.
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="rule"></div>
+    <p class="section-label">Let's Talk</p>
+    <div class="contact-simple reveal">
+      <h2 class="contact-simple-headline">Interested?<br><em>Let's make it happen.</em></h2>
+      <div class="rule-yellow"></div>
+      <p class="contact-simple-sub">Deliverables are 100% flexible — we'll build a package around exactly what your property needs. Only partnering with one property this trip.</p>
+      <a href="mailto:mckay@seocreative.co" class="contact-email-link">mckay@seocreative.co</a>
+      <p class="contact-simple-name">McKay &nbsp;·&nbsp; Creative Director &amp; Videographer</p>
+    </div>
+  </section>
+
+  <footer>
+    <span class="footer-name">McKay</span>
+    <span class="footer-note"><a href="mailto:mckay@seocreative.co" style="color:var(--gray);text-decoration:none;">mckay@seocreative.co</a> &nbsp;·&nbsp; Creative Director &amp; Videographer · Puerto Rico 2025</span>
+  </footer>
+
+  <script>
+    // Cursor
+    const cursor = document.getElementById('cursor');
+    document.addEventListener('mousemove', e => {
+      cursor.style.left = e.clientX + 'px';
+      cursor.style.top = e.clientY + 'px';
+    });
+
+    // Nav scroll
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 50);
+    });
+
+    // Scroll reveal
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    reveals.forEach(el => observer.observe(el));
+  </script>
 </body>
 </html>
