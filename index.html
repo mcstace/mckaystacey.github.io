@@ -201,16 +201,10 @@
     max-width: 520px; width: 100%;
     position: relative; border: 1px solid var(--border);
     overflow: hidden; background: var(--white03);
+    display: block; text-decoration: none;
+    transition: opacity .3s;
   }
-  .beast-badge {
-    position: absolute; top: 14px; left: 14px; z-index: 10;
-    background: rgba(10,10,21,0.88); border: 1px solid var(--border);
-    padding: 5px 14px; backdrop-filter: blur(8px);
-    font-family: 'DM Mono', monospace; font-size: 0.5rem;
-    letter-spacing: 0.22em; text-transform: uppercase; color: var(--white60);
-  }
-  .ig-embed-container { width: 100%; min-height: 480px; display: flex; align-items: center; justify-content: center; }
-  .ig-embed-container blockquote { width: 100% !important; margin: 0 !important; }
+  .beast-photo-wrap:hover { opacity: 0.88; }
 
   /* VIDEOS */
   #videos { padding: 100px 48px; }
@@ -349,7 +343,6 @@
 <section id="hero">
   <div class="hero-glow"></div>
   <div class="hero-glow2"></div>
-  <p class="hero-eyebrow">Content Creator · Video Editor · Brand Partner</p>
   <h1 class="hero-title">McKay<br><em>Stacey</em></h1>
   <p class="hero-sub">I create cool stuff,<br><span>with cool people.</span></p>
   <div class="hero-socials">
@@ -394,74 +387,60 @@
   <div class="brands-track-outer" id="brandsOuter">
     <div class="brands-track" id="brandsTrack">
 
-      <!-- Microsoft: SimpleIcons slug = microsoft -->
+      <!-- Microsoft -->
       <div class="brand-item">
         <div class="brand-logo">
-          <img src="https://cdn.simpleicons.org/microsoft/ffffff" alt="Microsoft" width="36" height="36">
+          <img src="https://i.imgur.com/FKrK73y.png" alt="Microsoft">
         </div>
         <span class="brand-label">Microsoft</span>
       </div>
 
-      <!-- Halo: no slug in simpleicons, use clean inline SVG -->
+      <!-- Halo -->
       <div class="brand-item">
         <div class="brand-logo">
-          <svg viewBox="0 0 120 34" width="120" height="34" fill="white" xmlns="http://www.w3.org/2000/svg">
-            <text x="0" y="30" font-family="Arial Black, Impact, sans-serif" font-size="34" font-weight="900" letter-spacing="2" fill="white">HALO</text>
-          </svg>
+          <img src="https://i.imgur.com/KW3vlaw.png" alt="Halo">
         </div>
         <span class="brand-label">Halo</span>
       </div>
 
-      <!-- Ubisoft: slug = ubisoft -->
+      <!-- Ubisoft -->
       <div class="brand-item">
         <div class="brand-logo">
-          <img src="https://cdn.simpleicons.org/ubisoft/ffffff" alt="Ubisoft" width="36" height="36">
+          <img src="https://i.imgur.com/SksunuT.png" alt="Ubisoft">
         </div>
         <span class="brand-label">Ubisoft</span>
       </div>
 
-      <!-- Rocket League: slug = rocketleague -->
+      <!-- Rocket League -->
       <div class="brand-item">
         <div class="brand-logo">
-          <img src="https://cdn.simpleicons.org/rocketleague/ffffff" alt="Rocket League" width="36" height="36">
+          <img src="https://i.imgur.com/DGVZ1Tg.png" alt="Rocket League">
         </div>
         <span class="brand-label">Rocket League</span>
       </div>
 
-      <!-- Psyonix: not in simpleicons, wordmark -->
+      <!-- Psyonix -->
       <div class="brand-item">
         <div class="brand-logo">
-          <svg viewBox="0 0 200 34" width="160" height="34" xmlns="http://www.w3.org/2000/svg">
-            <text x="0" y="30" font-family="Arial Black, Impact, sans-serif" font-size="30" font-weight="900" letter-spacing="-0.5" fill="white">PSYONIX</text>
-          </svg>
+          <img src="https://i.imgur.com/ywZSfrJ.png" alt="Psyonix Studios">
         </div>
         <span class="brand-label">Psyonix Studios</span>
       </div>
 
-      <!-- FaZe Clan: slug = fazeclan -->
+      <!-- FaZe Clan -->
       <div class="brand-item">
         <div class="brand-logo">
-          <img src="https://cdn.simpleicons.org/fazeclan/ffffff" alt="FaZe Clan" width="36" height="36">
+          <img src="https://i.imgur.com/nkbozI1.png" alt="FaZe Clan">
         </div>
         <span class="brand-label">FaZe Clan</span>
       </div>
 
-      <!-- Bucked Up: not in simpleicons, wordmark -->
+      <!-- Bucked Up -->
       <div class="brand-item">
         <div class="brand-logo">
-          <svg viewBox="0 0 230 34" width="190" height="34" xmlns="http://www.w3.org/2000/svg">
-            <text x="0" y="30" font-family="Arial Black, Impact, sans-serif" font-size="28" font-weight="900" letter-spacing="0.5" fill="white">BUCKED UP</text>
-          </svg>
+          <img src="https://i.imgur.com/e5efSlm.png" alt="Bucked Up">
         </div>
         <span class="brand-label">Bucked Up</span>
-      </div>
-
-      <!-- MrBeast: slug = mrbeast -->
-      <div class="brand-item">
-        <div class="brand-logo">
-          <img src="https://cdn.simpleicons.org/youtube/ffffff" alt="MrBeast" width="36" height="36">
-        </div>
-        <span class="brand-label">MrBeast</span>
       </div>
 
       <!-- And more -->
@@ -482,24 +461,10 @@
 
 <!-- BEAST GAMES — photo only, centered, slide 8 via img_index -->
 <section id="beast">
-  <div class="beast-photo-wrap reveal">
+  <a class="beast-photo-wrap reveal" href="https://www.instagram.com/p/DTRkZBFEZuE/?img_index=8" target="_blank">
     <div class="beast-badge">@beastgames</div>
-    <div class="ig-embed-container">
-      <!--
-        Instagram's oEmbed only embeds the post — it always starts on slide 1.
-        There's no official API to deep-link to a specific slide in an embed.
-        The img_index=8 param works on instagram.com itself (in-browser) but
-        the embed script ignores it. The workaround below links OUT to slide 8
-        directly so visitors can tap through to it.
-      -->
-      <blockquote
-        class="instagram-media"
-        data-instgrm-permalink="https://www.instagram.com/p/DTRkZBFEZuE/?img_index=8"
-        data-instgrm-version="14"
-        style="background:transparent;border:0;border-radius:0;box-shadow:none;margin:0;max-width:100%;min-width:100%;padding:0;width:100%;">
-      </blockquote>
-    </div>
-  </div>
+    <img src="https://i.imgur.com/hs6ywxI.png" alt="McKay at Beast Games" style="width:100%;display:block;">
+  </a>
 </section>
 
 <!-- VIDEOS — portfolio work -->
@@ -557,15 +522,7 @@
       </div>
       <a href="https://apps.apple.com/us/app/haingry/id6753778179" class="card-btn" target="_blank">Download</a>
     </div>
-    <div class="card reveal d3">
-      <div class="card-left">
-        <div class="card-icon" style="background:rgba(255,255,255,0.05);">
-          <svg viewBox="0 0 24 24" fill="rgba(255,255,255,0.5)" width="30" height="30"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
-        </div>
-        <div><div class="card-title">YouTube</div><div class="card-desc">@mmckaystacey</div></div>
-      </div>
-      <a href="https://youtube.com/@mmckaystacey" class="card-btn" target="_blank">Subscribe</a>
-    </div>
+
   </div>
 </section>
 
@@ -602,7 +559,6 @@
   </div>
 </footer>
 
-<script async src="//www.instagram.com/embed.js"></script>
 <script>
   // CURSOR
   const cur = document.getElementById('cursor');
