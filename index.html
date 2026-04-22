@@ -104,7 +104,6 @@
     opacity: 0; animation: fadeUp .7s .5s forwards;
   }
   .hero-sub span { color: var(--white); }
-
   .hero-socials {
     display: flex; gap: 28px; align-items: center; justify-content: center; flex-wrap: wrap;
     margin-bottom: 60px; opacity: 0; animation: fadeUp .7s .7s forwards;
@@ -119,14 +118,20 @@
   .hero-socials svg { width: 14px; height: 14px; opacity: 0.65; }
   .sep { color: var(--white10); font-size: 0.4rem; }
 
-  .stat-strip {
-    display: flex; border: 1px solid var(--border);
+  /* STAT — just the one big number */
+  .hero-stat {
     opacity: 0; animation: fadeUp .7s .9s forwards;
+    display: flex; flex-direction: column; align-items: center; gap: 8px;
+    border: 1px solid var(--border); padding: 24px 60px;
   }
-  .stat-item { padding: 16px 36px; text-align: center; border-right: 1px solid var(--border); }
-  .stat-item:last-child { border-right: none; }
-  .stat-num { font-family: 'Syne', sans-serif; font-weight: 600; font-size: 1.4rem; letter-spacing: 0.06em; }
-  .stat-lbl { font-family: 'DM Mono', monospace; font-size: 0.5rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--white30); margin-top: 4px; }
+  .hero-stat-num {
+    font-family: 'Syne', sans-serif; font-weight: 300;
+    font-size: clamp(2.5rem, 6vw, 5rem); letter-spacing: 0.05em; line-height: 1;
+  }
+  .hero-stat-lbl {
+    font-family: 'DM Mono', monospace; font-size: 0.58rem;
+    letter-spacing: 0.3em; text-transform: uppercase; color: var(--white30);
+  }
 
   /* SECTION HELPERS */
   .section-label {
@@ -141,27 +146,8 @@
     text-transform: uppercase; line-height: 1.1; margin-bottom: 52px;
   }
 
-  /* BEAST GAMES — photo only, no text */
-  #beast { padding: 80px 48px; display: flex; justify-content: center; }
-  .beast-photo-wrap {
-    max-width: 540px; width: 100%;
-    position: relative;
-    border: 1px solid var(--border);
-    overflow: hidden;
-    background: var(--white03);
-  }
-  .beast-badge {
-    position: absolute; top: 14px; left: 14px; z-index: 10;
-    background: rgba(10,10,21,0.88); border: 1px solid var(--border);
-    padding: 5px 14px; backdrop-filter: blur(8px);
-    font-family: 'DM Mono', monospace; font-size: 0.5rem;
-    letter-spacing: 0.22em; text-transform: uppercase; color: var(--white60);
-  }
-  .ig-embed-container { width: 100%; min-height: 480px; display: flex; align-items: center; justify-content: center; }
-  .ig-embed-container blockquote { width: 100% !important; margin: 0 !important; }
-
-  /* BRANDS — horizontal drag */
-  #brands { padding: 100px 0; }
+  /* BRANDS — right under hero, horizontal drag */
+  #brands { padding: 80px 0; }
   .brands-header { padding: 0 48px; margin-bottom: 40px; }
   .brands-hint {
     font-family: 'DM Mono', monospace; font-size: 0.52rem;
@@ -184,74 +170,86 @@
 
   .brand-item {
     display: flex; flex-direction: column; align-items: center; justify-content: center;
-    gap: 18px; padding: 44px 60px; border-right: 1px solid var(--border);
-    min-width: 240px; transition: background .3s;
+    gap: 18px; padding: 40px 56px; border-right: 1px solid var(--border);
+    min-width: 220px; transition: background .3s;
   }
   .brand-item:first-child { border-left: 1px solid var(--border); }
   .brand-item:hover { background: var(--white03); }
 
   .brand-logo {
-    height: 40px; display: flex; align-items: center; justify-content: center;
-    opacity: 0.3; transition: opacity .35s;
+    height: 36px; display: flex; align-items: center; justify-content: center;
+    opacity: 0.28; transition: opacity .35s;
   }
-  .brand-item:hover .brand-logo { opacity: 0.8; }
-  .brand-logo img { max-height: 40px; max-width: 150px; object-fit: contain; filter: brightness(0) invert(1); display: block; }
+  .brand-item:hover .brand-logo { opacity: 0.75; }
+
+  /* SimpleIcons CDN — served as SVG, white via color param */
+  .brand-logo img {
+    max-height: 36px; max-width: 140px;
+    object-fit: contain; display: block;
+  }
 
   .brand-label {
-    font-family: 'DM Mono', monospace; font-size: 0.5rem;
+    font-family: 'DM Mono', monospace; font-size: 0.48rem;
     letter-spacing: 0.2em; text-transform: uppercase; color: var(--white30);
     transition: color .3s; white-space: nowrap;
   }
   .brand-item:hover .brand-label { color: var(--white60); }
 
+  /* BEAST GAMES — centered photo, no text */
+  #beast { padding: 80px 48px; display: flex; justify-content: center; }
+  .beast-photo-wrap {
+    max-width: 520px; width: 100%;
+    position: relative; border: 1px solid var(--border);
+    overflow: hidden; background: var(--white03);
+  }
+  .beast-badge {
+    position: absolute; top: 14px; left: 14px; z-index: 10;
+    background: rgba(10,10,21,0.88); border: 1px solid var(--border);
+    padding: 5px 14px; backdrop-filter: blur(8px);
+    font-family: 'DM Mono', monospace; font-size: 0.5rem;
+    letter-spacing: 0.22em; text-transform: uppercase; color: var(--white60);
+  }
+  .ig-embed-container { width: 100%; min-height: 480px; display: flex; align-items: center; justify-content: center; }
+  .ig-embed-container blockquote { width: 100% !important; margin: 0 !important; }
+
   /* VIDEOS */
   #videos { padding: 100px 48px; }
-  .videos-intro {
-    max-width: 560px; margin-bottom: 52px;
-    font-family: 'Syne', sans-serif; font-weight: 300;
-    font-size: 0.95rem; line-height: 1.85; color: var(--white60);
-  }
-  .videos-intro strong { color: var(--white); font-weight: 600; }
-
   .video-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
   .video-card {
     position: relative; overflow: hidden;
     background: var(--white03); border: 1px solid var(--border);
     text-decoration: none; display: block; cursor: none;
   }
-  .video-card.featured { grid-column: 1 / 3; }
   .video-thumb {
     width: 100%; aspect-ratio: 16/9;
     display: block; object-fit: cover;
-    filter: brightness(0.75) grayscale(20%);
-    transition: filter .4s, transform .5s cubic-bezier(0.16,1,0.3,1);
+    filter: brightness(0.72) grayscale(15%);
+    transition: filter .4s, transform .55s cubic-bezier(0.16,1,0.3,1);
   }
-  .video-card:hover .video-thumb { filter: brightness(0.9) grayscale(0%); transform: scale(1.03); }
-  /* placeholder when no thumb */
+  .video-card:hover .video-thumb { filter: brightness(0.92) grayscale(0%); transform: scale(1.04); }
+
   .video-ph {
     width: 100%; aspect-ratio: 16/9;
     display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 10px;
-    background: linear-gradient(135deg, rgba(255,255,255,0.02) 0%, rgba(255,255,255,0.006) 100%);
+    background: rgba(255,255,255,0.02);
   }
   .video-ph svg { opacity: 0.05; }
   .video-ph-lbl { font-family: 'DM Mono', monospace; font-size: 0.48rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,0.09); }
 
   .play-circle {
-    position: absolute; top: calc(50% - 24px); left: 50%;
-    transform: translateX(-50%) scale(0.85);
-    width: 48px; height: 48px;
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%,-50%) scale(0.85);
+    width: 46px; height: 46px;
     border: 1px solid rgba(255,255,255,0.3); border-radius: 50%;
     display: flex; align-items: center; justify-content: center;
     transition: transform .3s, border-color .3s, background .3s;
+    /* keep centred regardless of thumb height */
+    margin-top: 0;
   }
-  .video-card.featured .play-circle { top: 50%; transform: translate(-50%,-50%) scale(0.85); }
-  .video-card:hover .play-circle { transform: translateX(-50%) scale(1); border-color: rgba(255,255,255,0.7); background: rgba(255,255,255,0.1); }
-  .video-card.featured:hover .play-circle { transform: translate(-50%,-50%) scale(1); }
-  .play-circle svg { width: 12px; margin-left: 3px; fill: var(--white); }
+  .video-card:hover .play-circle { transform: translate(-50%,-50%) scale(1); border-color: rgba(255,255,255,0.7); background: rgba(255,255,255,0.1); }
+  .play-circle svg { width: 11px; margin-left: 3px; fill: var(--white); }
 
-  .video-meta-bar { padding: 12px 14px; border-top: 1px solid var(--border); }
-  .video-title-txt { font-family: 'Syne', sans-serif; font-size: 0.78rem; font-weight: 600; color: var(--white); margin-bottom: 2px; }
-  .video-views-txt { font-family: 'DM Mono', monospace; font-size: 0.5rem; letter-spacing: 0.14em; color: var(--white60); }
+
 
   /* LINKS */
   #links { padding: 100px 48px; }
@@ -320,14 +318,13 @@
   @media (max-width: 900px) {
     nav { padding: 20px 24px; } .nav-links { display: none; }
     #hero { padding: 140px 24px 80px; }
+    #brands { padding: 60px 0; } .brands-header { padding: 0 24px; }
     #beast { padding: 60px 24px; }
-    #brands { padding: 70px 0; } .brands-header { padding: 0 24px; }
     #videos, #links, #clothes, #cta { padding: 70px 24px; }
     .clothes-grid { grid-template-columns: 1fr 1fr; }
     .cloth-card:first-child { grid-column: 1/3; } .cloth-card:first-child .cloth-ph { min-height: 280px; }
     .video-grid { grid-template-columns: 1fr; } .video-card.featured { grid-column: auto; }
     footer { flex-direction: column; gap: 16px; text-align: center; }
-    .stat-strip { flex-wrap: wrap; } .stat-item { flex: 1; min-width: 110px; }
   }
 </style>
 </head>
@@ -355,7 +352,6 @@
   <p class="hero-eyebrow">Content Creator · Video Editor · Brand Partner</p>
   <h1 class="hero-title">McKay<br><em>Stacey</em></h1>
   <p class="hero-sub">I create cool stuff,<br><span>with cool people.</span></p>
-
   <div class="hero-socials">
     <a href="https://instagram.com/mmckaystacey" target="_blank">
       <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
@@ -378,30 +374,14 @@
     </a>
   </div>
 
-  <div class="stat-strip">
-    <div class="stat-item"><div class="stat-num">250M+</div><div class="stat-lbl">Views generated · 6 months</div></div>
-    <div class="stat-item"><div class="stat-num">7+</div><div class="stat-lbl">Major brand partners</div></div>
-    <div class="stat-item"><div class="stat-num">Unravel</div><div class="stat-lbl">Clothing Brand</div></div>
-    <div class="stat-item"><div class="stat-num">0</div><div class="stat-lbl">Compromises</div></div>
+  <!-- Single hero stat -->
+  <div class="hero-stat">
+    <div class="hero-stat-num">250,000,000</div>
+    <div class="hero-stat-lbl">Views generated for other creators · last 6 months</div>
   </div>
 </section>
 
-<!-- BEAST GAMES — photo only -->
-<section id="beast">
-  <div class="beast-photo-wrap reveal">
-    <div class="beast-badge">@beastgames</div>
-    <div class="ig-embed-container">
-      <blockquote
-        class="instagram-media"
-        data-instgrm-permalink="https://www.instagram.com/p/DTRkZBFEZuE/"
-        data-instgrm-version="14"
-        style="background:transparent;border:0;border-radius:0;box-shadow:none;margin:0;max-width:100%;min-width:100%;padding:0;width:100%;">
-      </blockquote>
-    </div>
-  </div>
-</section>
-
-<!-- BRANDS -->
+<!-- BRANDS — immediately after hero -->
 <section id="brands">
   <div class="brands-header reveal">
     <div class="section-label">Worked With</div>
@@ -414,70 +394,83 @@
   <div class="brands-track-outer" id="brandsOuter">
     <div class="brands-track" id="brandsTrack">
 
+      <!-- Microsoft: SimpleIcons slug = microsoft -->
       <div class="brand-item">
         <div class="brand-logo">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 23 23" width="44" height="44">
-            <rect x="0" y="0" width="10.5" height="10.5" fill="white"/>
-            <rect x="12.5" y="0" width="10.5" height="10.5" fill="white"/>
-            <rect x="0" y="12.5" width="10.5" height="10.5" fill="white"/>
-            <rect x="12.5" y="12.5" width="10.5" height="10.5" fill="white"/>
-          </svg>
+          <img src="https://cdn.simpleicons.org/microsoft/ffffff" alt="Microsoft" width="36" height="36">
         </div>
         <span class="brand-label">Microsoft</span>
       </div>
 
+      <!-- Halo: no slug in simpleicons, use clean inline SVG -->
       <div class="brand-item">
         <div class="brand-logo">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Halo_%28series%29_logo.svg/320px-Halo_%28series%29_logo.svg.png" alt="Halo">
+          <svg viewBox="0 0 120 34" width="120" height="34" fill="white" xmlns="http://www.w3.org/2000/svg">
+            <text x="0" y="30" font-family="Arial Black, Impact, sans-serif" font-size="34" font-weight="900" letter-spacing="2" fill="white">HALO</text>
+          </svg>
         </div>
         <span class="brand-label">Halo</span>
       </div>
 
+      <!-- Ubisoft: slug = ubisoft -->
       <div class="brand-item">
         <div class="brand-logo">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/Ubisoft_logo.svg/320px-Ubisoft_logo.svg.png" alt="Ubisoft">
+          <img src="https://cdn.simpleicons.org/ubisoft/ffffff" alt="Ubisoft" width="36" height="36">
         </div>
         <span class="brand-label">Ubisoft</span>
       </div>
 
+      <!-- Rocket League: slug = rocketleague -->
       <div class="brand-item">
         <div class="brand-logo">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Rocket_League_logo.svg/320px-Rocket_League_logo.svg.png" alt="Rocket League">
+          <img src="https://cdn.simpleicons.org/rocketleague/ffffff" alt="Rocket League" width="36" height="36">
         </div>
         <span class="brand-label">Rocket League</span>
       </div>
 
+      <!-- Psyonix: not in simpleicons, wordmark -->
       <div class="brand-item">
         <div class="brand-logo">
-          <svg viewBox="0 0 220 46" width="180" height="40">
-            <text x="2" y="40" font-family="Arial Black, Impact, sans-serif" font-size="40" font-weight="900" fill="white" letter-spacing="-1">PSYONIX</text>
+          <svg viewBox="0 0 200 34" width="160" height="34" xmlns="http://www.w3.org/2000/svg">
+            <text x="0" y="30" font-family="Arial Black, Impact, sans-serif" font-size="30" font-weight="900" letter-spacing="-0.5" fill="white">PSYONIX</text>
           </svg>
         </div>
         <span class="brand-label">Psyonix Studios</span>
       </div>
 
+      <!-- FaZe Clan: slug = fazeclan -->
       <div class="brand-item">
         <div class="brand-logo">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/FaZe_Clan_logo.svg/320px-FaZe_Clan_logo.svg.png" alt="FaZe Clan">
+          <img src="https://cdn.simpleicons.org/fazeclan/ffffff" alt="FaZe Clan" width="36" height="36">
         </div>
         <span class="brand-label">FaZe Clan</span>
       </div>
 
+      <!-- Bucked Up: not in simpleicons, wordmark -->
       <div class="brand-item">
         <div class="brand-logo">
-          <svg viewBox="0 0 270 46" width="210" height="40">
-            <text x="2" y="38" font-family="Arial Black, Impact, sans-serif" font-size="34" font-weight="900" fill="white" letter-spacing="1">BUCKED UP</text>
+          <svg viewBox="0 0 230 34" width="190" height="34" xmlns="http://www.w3.org/2000/svg">
+            <text x="0" y="30" font-family="Arial Black, Impact, sans-serif" font-size="28" font-weight="900" letter-spacing="0.5" fill="white">BUCKED UP</text>
           </svg>
         </div>
         <span class="brand-label">Bucked Up</span>
       </div>
 
-      <div class="brand-item" style="opacity:0.35;">
+      <!-- MrBeast: slug = mrbeast -->
+      <div class="brand-item">
         <div class="brand-logo">
-          <svg viewBox="0 0 44 44" width="44" height="44" fill="none" stroke="white" stroke-width="1.5">
-            <circle cx="22" cy="22" r="19"/>
-            <line x1="22" y1="13" x2="22" y2="31"/>
-            <line x1="13" y1="22" x2="31" y2="22"/>
+          <img src="https://cdn.simpleicons.org/youtube/ffffff" alt="MrBeast" width="36" height="36">
+        </div>
+        <span class="brand-label">MrBeast</span>
+      </div>
+
+      <!-- And more -->
+      <div class="brand-item" style="opacity:0.3;">
+        <div class="brand-logo">
+          <svg viewBox="0 0 36 36" width="36" height="36" fill="none" stroke="white" stroke-width="1.5">
+            <circle cx="18" cy="18" r="15"/>
+            <line x1="18" y1="10" x2="18" y2="26"/>
+            <line x1="10" y1="18" x2="26" y2="18"/>
           </svg>
         </div>
         <span class="brand-label">And more</span>
@@ -487,58 +480,57 @@
   </div>
 </section>
 
-<!-- VIDEOS — portfolio of work done for other creators -->
+<!-- BEAST GAMES — photo only, centered, slide 8 via img_index -->
+<section id="beast">
+  <div class="beast-photo-wrap reveal">
+    <div class="beast-badge">@beastgames</div>
+    <div class="ig-embed-container">
+      <!--
+        Instagram's oEmbed only embeds the post — it always starts on slide 1.
+        There's no official API to deep-link to a specific slide in an embed.
+        The img_index=8 param works on instagram.com itself (in-browser) but
+        the embed script ignores it. The workaround below links OUT to slide 8
+        directly so visitors can tap through to it.
+      -->
+      <blockquote
+        class="instagram-media"
+        data-instgrm-permalink="https://www.instagram.com/p/DTRkZBFEZuE/?img_index=8"
+        data-instgrm-version="14"
+        style="background:transparent;border:0;border-radius:0;box-shadow:none;margin:0;max-width:100%;min-width:100%;padding:0;width:100%;">
+      </blockquote>
+    </div>
+  </div>
+</section>
+
+<!-- VIDEOS — portfolio work -->
 <section id="videos">
   <div class="section-label reveal">The Work</div>
-  <h2 class="section-title reveal" style="margin-bottom: 20px;">Videos I've<br>Made</h2>
-  <p class="videos-intro reveal">
-    Over <strong>250 million views generated</strong> in the past 6 months — for other creators and brands. 
-    Below is a selection of work. Drop in the links and your best thumbnails.
-  </p>
-
+  <h2 class="section-title reveal" style="margin-bottom:20px;">Videos I've Made</h2>
   <div class="video-grid">
-    <!-- Replace href with your actual video URL, and add a thumbnail img instead of .video-ph -->
-    <a class="video-card featured reveal" href="https://youtube.com/@mmckaystacey" target="_blank">
+
+    <!-- Video 1: YouTube Short t2i-O-8svik -->
+    <a class="video-card reveal" href="https://www.youtube.com/shorts/t2i-O-8svik" target="_blank">
+      <img class="video-thumb" src="https://i.ytimg.com/vi/t2i-O-8svik/hqdefault.jpg" alt="Video">
+      <div class="play-circle"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+    </a>
+
+    <!-- Video 2: YouTube Short 9F-HbsyVOBA -->
+    <a class="video-card reveal d1" href="https://www.youtube.com/shorts/9F-HbsyVOBA" target="_blank">
+      <img class="video-thumb" src="https://i.ytimg.com/vi/9F-HbsyVOBA/hqdefault.jpg" alt="Video">
+      <div class="play-circle"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+    </a>
+
+    <!-- Video 3: Instagram Reel -->
+    <a class="video-card reveal d2" href="https://www.instagram.com/reel/DWH1Y9ZyFVT/" target="_blank">
       <div class="video-ph">
-        <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="0.7"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
-        <span class="video-ph-lbl">Paste your best thumbnail here</span>
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="0.7"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="white" stroke="none"/></svg>
+        <span class="video-ph-lbl">Instagram Reel — tap to view</span>
       </div>
       <div class="play-circle"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
-      <div class="video-meta-bar">
-        <div class="video-title-txt">Your Biggest Video</div>
-        <div class="video-views-txt">Replace with real title + views</div>
-      </div>
     </a>
 
-    <a class="video-card reveal d1" href="https://youtube.com/@mmckaystacey" target="_blank">
-      <div class="video-ph"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="0.7"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg><span class="video-ph-lbl">Video 2</span></div>
-      <div class="play-circle"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
-      <div class="video-meta-bar"><div class="video-title-txt">Video Title</div><div class="video-views-txt">Paste view count</div></div>
-    </a>
 
-    <a class="video-card reveal d1" href="https://youtube.com/@mmckaystacey" target="_blank">
-      <div class="video-ph"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="0.7"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg><span class="video-ph-lbl">Video 3</span></div>
-      <div class="play-circle"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
-      <div class="video-meta-bar"><div class="video-title-txt">Video Title</div><div class="video-views-txt">Paste view count</div></div>
-    </a>
 
-    <a class="video-card reveal d2" href="https://youtube.com/@mmckaystacey" target="_blank">
-      <div class="video-ph"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="0.7"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg><span class="video-ph-lbl">Video 4</span></div>
-      <div class="play-circle"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
-      <div class="video-meta-bar"><div class="video-title-txt">Video Title</div><div class="video-views-txt">Paste view count</div></div>
-    </a>
-
-    <a class="video-card reveal d2" href="https://youtube.com/@mmckaystacey" target="_blank">
-      <div class="video-ph"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="0.7"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg><span class="video-ph-lbl">Video 5</span></div>
-      <div class="play-circle"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
-      <div class="video-meta-bar"><div class="video-title-txt">Video Title</div><div class="video-views-txt">Paste view count</div></div>
-    </a>
-
-    <a class="video-card reveal d3" href="https://youtube.com/@mmckaystacey" target="_blank">
-      <div class="video-ph"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="0.7"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg><span class="video-ph-lbl">Video 6</span></div>
-      <div class="play-circle"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
-      <div class="video-meta-bar"><div class="video-title-txt">Video Title</div><div class="video-views-txt">Paste view count</div></div>
-    </a>
   </div>
 </section>
 
