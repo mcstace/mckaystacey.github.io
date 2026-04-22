@@ -1,977 +1,644 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>McKay — Creative Director & Videographer</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>McKay Stacey</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@300;400;600;700&family=DM+Mono:wght@300&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
-    :root {
-      --cream: #FAFAF6;
-      --black: #111111;
-      --yellow: #F5C800;
-      --gray: #888888;
-      --dgray: #333333;
-      --lgray: #E8E8E4;
-      --rule: rgba(17,17,17,0.12);
-    }
+  :root {
+    --white: #ffffff;
+    --white60: rgba(255,255,255,0.6);
+    --white30: rgba(255,255,255,0.3);
+    --white10: rgba(255,255,255,0.1);
+    --white05: rgba(255,255,255,0.05);
+    --white03: rgba(255,255,255,0.03);
+    --border: rgba(255,255,255,0.1);
+  }
 
-    html { scroll-behavior: smooth; }
+  html { scroll-behavior: smooth; }
 
-    body {
-      background: var(--cream);
-      color: var(--black);
-      font-family: 'DM Sans', sans-serif;
-      font-weight: 300;
-      overflow-x: hidden;
-    }
+  body {
+    background: radial-gradient(ellipse at center, #1a1a2e 0%, #0a0a15 50%, #000000 100%);
+    color: var(--white);
+    font-family: 'Syne', sans-serif;
+    overflow-x: hidden;
+    cursor: none;
+    min-height: 100vh;
+  }
 
-    /* ── CURSOR ── */
-    *, a { cursor: none; }
-    #cursor {
-      position: fixed;
-      width: 10px; height: 10px;
-      background: var(--yellow);
-      border-radius: 50%;
-      pointer-events: none;
-      z-index: 9999;
-      transform: translate(-50%, -50%);
-      transition: transform 0.12s ease, width 0.2s ease, height 0.2s ease, background 0.2s ease;
-      mix-blend-mode: multiply;
-    }
-    body:has(a:hover) #cursor,
-    body:has(button:hover) #cursor {
-      width: 32px; height: 32px;
-      background: var(--yellow);
-    }
+  .cursor {
+    position: fixed; width: 10px; height: 10px;
+    background: rgba(255,255,255,0.85); border-radius: 50%;
+    pointer-events: none; z-index: 9999;
+    transform: translate(-50%,-50%);
+    transition: width .18s, height .18s, border-radius .18s, background .18s;
+  }
+  .cursor.drag { width: 52px; height: 52px; border-radius: 6px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.2); }
+  .cursor-ring {
+    position: fixed; width: 34px; height: 34px;
+    border: 1px solid rgba(255,255,255,0.2); border-radius: 50%;
+    pointer-events: none; z-index: 9998;
+    transform: translate(-50%,-50%); transition: opacity .2s;
+  }
+  .cursor-ring.hide { opacity: 0; }
 
-    /* ── NAV ── */
-    nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 100;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1.5rem 3rem;
-      border-bottom: 1px solid transparent;
-      transition: border-color 0.3s, background 0.3s;
-    }
-    nav.scrolled {
-      border-color: var(--rule);
-      background: rgba(250,250,246,0.92);
-      backdrop-filter: blur(12px);
-    }
-    .nav-logo {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.2rem;
-      letter-spacing: 0.02em;
-      text-decoration: none;
-      color: var(--black);
-    }
-    .nav-links {
-      display: flex;
-      gap: 2.5rem;
-      list-style: none;
-    }
-    .nav-links a {
-      font-size: 0.7rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      text-decoration: none;
-      color: var(--gray);
-      transition: color 0.2s;
-    }
-    .nav-links a:hover { color: var(--black); }
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 28px 48px; z-index: 100;
+    background: linear-gradient(to bottom, rgba(10,10,21,0.96) 0%, transparent 100%);
+  }
+  .nav-logo {
+    font-family: 'Syne', sans-serif; font-weight: 300;
+    font-size: 1.35rem; letter-spacing: 0.15em;
+    color: var(--white); text-decoration: none; text-transform: uppercase;
+  }
+  .nav-links { display: flex; gap: 36px; list-style: none; }
+  .nav-links a {
+    font-family: 'DM Mono', monospace; font-size: 0.58rem;
+    letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--white30); text-decoration: none; transition: color 0.25s;
+  }
+  .nav-links a:hover { color: var(--white); }
 
-    /* ── SECTIONS ── */
-    section {
-      padding: 7rem 3rem;
-      max-width: 1100px;
-      margin: 0 auto;
-    }
+  /* HERO */
+  #hero {
+    min-height: 100vh; display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center; padding: 160px 48px 100px;
+    position: relative; overflow: hidden;
+  }
+  .hero-glow {
+    position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+    width: 800px; height: 500px;
+    background: radial-gradient(ellipse, rgba(100,100,200,0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-glow2 {
+    position: absolute; bottom: 0; right: 0; width: 400px; height: 400px;
+    background: radial-gradient(ellipse, rgba(80,80,180,0.07) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-eyebrow {
+    font-family: 'DM Mono', monospace; font-size: 0.6rem;
+    letter-spacing: 0.35em; text-transform: uppercase; color: var(--white30);
+    margin-bottom: 28px; opacity: 0; animation: fadeUp .7s .2s forwards;
+  }
+  .hero-title {
+    font-family: 'Syne', sans-serif; font-weight: 300;
+    font-size: clamp(52px, 10vw, 140px); line-height: 1.1;
+    letter-spacing: 0.15em; text-transform: uppercase;
+    opacity: 0; animation: fadeUp .9s .3s forwards;
+  }
+  .hero-title em { font-style: normal; color: var(--white60); }
+  .hero-sub {
+    margin-top: 32px; margin-bottom: 52px;
+    font-family: 'Syne', sans-serif; font-weight: 300;
+    font-size: clamp(1.2rem, 3vw, 2.4rem);
+    letter-spacing: 0.05em; color: var(--white60); line-height: 1.3;
+    opacity: 0; animation: fadeUp .7s .5s forwards;
+  }
+  .hero-sub span { color: var(--white); }
 
-    .rule { width: 100%; height: 1px; background: var(--rule); margin-bottom: 1rem; }
-    .rule-yellow { width: 60px; height: 2px; background: var(--yellow); margin: 1.5rem 0; }
+  .hero-socials {
+    display: flex; gap: 28px; align-items: center; justify-content: center; flex-wrap: wrap;
+    margin-bottom: 60px; opacity: 0; animation: fadeUp .7s .7s forwards;
+  }
+  .hero-socials a {
+    display: flex; align-items: center; gap: 8px;
+    font-family: 'DM Mono', monospace; font-size: 0.58rem;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--white60); text-decoration: none; transition: color .25s, transform .25s;
+  }
+  .hero-socials a:hover { color: var(--white); transform: translateY(-2px); }
+  .hero-socials svg { width: 14px; height: 14px; opacity: 0.65; }
+  .sep { color: var(--white10); font-size: 0.4rem; }
 
-    .section-label {
-      font-size: 0.65rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--gray);
-      margin-bottom: 2.5rem;
-    }
+  .stat-strip {
+    display: flex; border: 1px solid var(--border);
+    opacity: 0; animation: fadeUp .7s .9s forwards;
+  }
+  .stat-item { padding: 16px 36px; text-align: center; border-right: 1px solid var(--border); }
+  .stat-item:last-child { border-right: none; }
+  .stat-num { font-family: 'Syne', sans-serif; font-weight: 600; font-size: 1.4rem; letter-spacing: 0.06em; }
+  .stat-lbl { font-family: 'DM Mono', monospace; font-size: 0.5rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--white30); margin-top: 4px; }
 
-    h1, h2, h3 {
-      font-family: 'Playfair Display', serif;
-      font-weight: 400;
-      line-height: 1.08;
-    }
+  /* SECTION HELPERS */
+  .section-label {
+    font-family: 'DM Mono', monospace; font-size: 0.56rem;
+    letter-spacing: 0.28em; text-transform: uppercase; color: var(--white30);
+    margin-bottom: 14px; display: flex; align-items: center; gap: 10px;
+  }
+  .section-label::before { content: ''; width: 22px; height: 1px; background: var(--white30); }
+  .section-title {
+    font-family: 'Syne', sans-serif; font-weight: 300;
+    font-size: clamp(32px, 5vw, 64px); letter-spacing: 0.12em;
+    text-transform: uppercase; line-height: 1.1; margin-bottom: 52px;
+  }
 
-    /* ── HERO ── */
-    #hero {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      padding-top: 6rem;
-      padding-bottom: 4rem;
-      max-width: 100%;
-      padding-left: 3rem;
-      padding-right: 3rem;
-    }
-    .hero-inner { max-width: 1100px; margin: 0 auto; width: 100%; }
-    .hero-top-rule { width: 100%; height: 1px; background: var(--rule); margin-bottom: 1.5rem; }
+  /* BEAST GAMES — photo only, no text */
+  #beast { padding: 80px 48px; display: flex; justify-content: center; }
+  .beast-photo-wrap {
+    max-width: 540px; width: 100%;
+    position: relative;
+    border: 1px solid var(--border);
+    overflow: hidden;
+    background: var(--white03);
+  }
+  .beast-badge {
+    position: absolute; top: 14px; left: 14px; z-index: 10;
+    background: rgba(10,10,21,0.88); border: 1px solid var(--border);
+    padding: 5px 14px; backdrop-filter: blur(8px);
+    font-family: 'DM Mono', monospace; font-size: 0.5rem;
+    letter-spacing: 0.22em; text-transform: uppercase; color: var(--white60);
+  }
+  .ig-embed-container { width: 100%; min-height: 480px; display: flex; align-items: center; justify-content: center; }
+  .ig-embed-container blockquote { width: 100% !important; margin: 0 !important; }
 
-    .hero-grid {
-      display: grid;
-      grid-template-columns: 1fr auto;
-      align-items: start;
-      gap: 3rem;
-    }
+  /* BRANDS — horizontal drag */
+  #brands { padding: 100px 0; }
+  .brands-header { padding: 0 48px; margin-bottom: 40px; }
+  .brands-hint {
+    font-family: 'DM Mono', monospace; font-size: 0.52rem;
+    letter-spacing: 0.2em; text-transform: uppercase; color: var(--white30);
+    margin-top: 8px; display: flex; align-items: center; gap: 8px;
+  }
+  .brands-hint svg { width: 14px; opacity: 0.4; }
 
-    .hero-name {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(5rem, 14vw, 11rem);
-      font-weight: 400;
-      line-height: 0.92;
-      letter-spacing: -0.02em;
-      opacity: 0;
-      transform: translateY(40px);
-      animation: fadeUp 0.9s cubic-bezier(0.16,1,0.3,1) 0.1s forwards;
-    }
+  .brands-track-outer {
+    overflow: hidden; position: relative; padding: 10px 0; cursor: none;
+  }
+  .brands-track-outer::before,
+  .brands-track-outer::after {
+    content: ''; position: absolute; top: 0; bottom: 0; width: 140px; z-index: 2; pointer-events: none;
+  }
+  .brands-track-outer::before { left: 0; background: linear-gradient(to right, #050510, transparent); }
+  .brands-track-outer::after  { right: 0; background: linear-gradient(to left, #000005, transparent); }
 
-    .hero-stat {
-      text-align: right;
-      opacity: 0;
-      animation: fadeUp 0.9s cubic-bezier(0.16,1,0.3,1) 0.3s forwards;
-    }
-    .hero-stat-num {
-      font-family: 'Playfair Display', serif;
-      font-size: 3rem;
-      font-weight: 400;
-      line-height: 1;
-      white-space: nowrap;
-    }
-    .hero-stat-sub {
-      font-size: 0.7rem;
-      color: var(--gray);
-      letter-spacing: 0.06em;
-      margin-top: 0.4rem;
-      line-height: 1.6;
-    }
-    .hero-stat-rule { width: 100%; height: 2px; background: var(--yellow); margin-top: 1rem; }
+  .brands-track { display: flex; align-items: stretch; width: max-content; user-select: none; will-change: transform; }
 
-    .hero-tagline {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(1rem, 2vw, 1.3rem);
-      font-style: italic;
-      color: var(--gray);
-      margin-top: 2rem;
-      opacity: 0;
-      animation: fadeUp 0.9s cubic-bezier(0.16,1,0.3,1) 0.4s forwards;
-    }
-    .hero-bottom {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-      margin-top: 5rem;
-      opacity: 0;
-      animation: fadeUp 0.9s cubic-bezier(0.16,1,0.3,1) 0.55s forwards;
-    }
-    .hero-meta {
-      font-size: 0.7rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--gray);
-      line-height: 2;
-    }
-    .hero-scroll {
-      font-size: 0.65rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--gray);
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-    .hero-scroll:hover { color: var(--black); }
-    .hero-scroll::before {
-      content: '';
-      display: block;
-      width: 40px; height: 1px;
-      background: var(--gray);
-      transition: width 0.3s, background 0.2s;
-    }
-    .hero-scroll:hover::before { width: 70px; background: var(--black); }
+  .brand-item {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 18px; padding: 44px 60px; border-right: 1px solid var(--border);
+    min-width: 240px; transition: background .3s;
+  }
+  .brand-item:first-child { border-left: 1px solid var(--border); }
+  .brand-item:hover { background: var(--white03); }
 
-    @keyframes fadeUp {
-      to { opacity: 1; transform: translateY(0); }
-    }
+  .brand-logo {
+    height: 40px; display: flex; align-items: center; justify-content: center;
+    opacity: 0.3; transition: opacity .35s;
+  }
+  .brand-item:hover .brand-logo { opacity: 0.8; }
+  .brand-logo img { max-height: 40px; max-width: 150px; object-fit: contain; filter: brightness(0) invert(1); display: block; }
 
-    /* ── WHO I AM ── */
-    .who-grid {
-      display: grid;
-      grid-template-columns: 1fr 1px 1fr;
-      gap: 4rem;
-      align-items: start;
-    }
-    .who-divider { background: var(--lgray); align-self: stretch; }
-    .who-statement {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(1.8rem, 3.5vw, 2.8rem);
-      font-style: italic;
-      font-weight: 400;
-      line-height: 1.2;
-      color: var(--black);
-    }
-    .who-bullets { display: flex; flex-direction: column; gap: 1.5rem; padding-left: 2rem; }
-    .who-bullet { font-size: 0.95rem; line-height: 1.65; color: var(--dgray); padding-bottom: 1.5rem; border-bottom: 1px solid var(--lgray); }
-    .who-bullet:last-child { border-bottom: none; }
-    .who-bullet strong { color: var(--black); font-weight: 500; }
+  .brand-label {
+    font-family: 'DM Mono', monospace; font-size: 0.5rem;
+    letter-spacing: 0.2em; text-transform: uppercase; color: var(--white30);
+    transition: color .3s; white-space: nowrap;
+  }
+  .brand-item:hover .brand-label { color: var(--white60); }
 
-    /* ── CLIENTS ── */
-    #clients { border-top: 1px solid var(--rule); }
-    .clients-headline {
-      font-size: clamp(2rem, 5vw, 4rem);
-      margin-bottom: 2.5rem;
-    }
-    .clients-rule { width: 100%; height: 1px; background: var(--yellow); margin-bottom: 2.5rem; }
-    .clients-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 0;
-    }
-    .client-name {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.05rem;
-      font-weight: 400;
-      padding: 1.1rem 0;
-      border-bottom: 1px solid var(--lgray);
-      color: var(--dgray);
-    }
-    .clients-more {
-      margin-top: 2rem;
-      font-size: 0.8rem;
-      letter-spacing: 0.08em;
-      color: var(--gray);
-      font-style: italic;
-    }
+  /* VIDEOS */
+  #videos { padding: 100px 48px; }
+  .videos-intro {
+    max-width: 560px; margin-bottom: 52px;
+    font-family: 'Syne', sans-serif; font-weight: 300;
+    font-size: 0.95rem; line-height: 1.85; color: var(--white60);
+  }
+  .videos-intro strong { color: var(--white); font-weight: 600; }
 
-    /* ── NUMBERS ── */
-    #numbers { border-top: 1px solid var(--rule); text-align: center; }
-    .big-number {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(3.5rem, 10vw, 8rem);
-      font-weight: 400;
-      line-height: 1;
-      letter-spacing: -0.02em;
-      margin: 2rem 0;
-    }
-    .numbers-sub {
-      font-size: 0.7rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--gray);
-      margin-bottom: 3rem;
-    }
-    .numbers-rule { width: 120px; height: 2px; background: var(--yellow); margin: 0 auto 3rem; }
-    .stats-row {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 0;
-      border-top: 1px solid var(--lgray);
-    }
-    .stat-item {
-      padding: 2.5rem 1rem;
-      border-right: 1px solid var(--lgray);
-    }
-    .stat-item:last-child { border-right: none; }
-    .stat-num {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.8rem;
-      font-weight: 400;
-    }
-    .stat-label { font-size: 0.72rem; color: var(--gray); margin-top: 0.4rem; letter-spacing: 0.06em; }
+  .video-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  .video-card {
+    position: relative; overflow: hidden;
+    background: var(--white03); border: 1px solid var(--border);
+    text-decoration: none; display: block; cursor: none;
+  }
+  .video-card.featured { grid-column: 1 / 3; }
+  .video-thumb {
+    width: 100%; aspect-ratio: 16/9;
+    display: block; object-fit: cover;
+    filter: brightness(0.75) grayscale(20%);
+    transition: filter .4s, transform .5s cubic-bezier(0.16,1,0.3,1);
+  }
+  .video-card:hover .video-thumb { filter: brightness(0.9) grayscale(0%); transform: scale(1.03); }
+  /* placeholder when no thumb */
+  .video-ph {
+    width: 100%; aspect-ratio: 16/9;
+    display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 10px;
+    background: linear-gradient(135deg, rgba(255,255,255,0.02) 0%, rgba(255,255,255,0.006) 100%);
+  }
+  .video-ph svg { opacity: 0.05; }
+  .video-ph-lbl { font-family: 'DM Mono', monospace; font-size: 0.48rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,0.09); }
 
-    /* ── CASE STUDY ── */
-    #casestudy { border-top: 1px solid var(--rule); }
-    .case-header { margin-bottom: 3rem; }
-    .case-name {
-      font-size: clamp(2.5rem, 6vw, 5rem);
-      margin-bottom: 0.5rem;
-    }
-    .case-handle { font-size: 0.85rem; color: var(--gray); font-style: italic; }
-    .case-grid {
-      display: grid;
-      grid-template-columns: 1fr 1px 1fr;
-      gap: 4rem;
-      align-items: start;
-    }
-    .case-divider { background: var(--lgray); align-self: stretch; }
-    .case-col-label {
-      font-size: 0.65rem;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: var(--gray);
-      margin-bottom: 1.5rem;
-    }
-    .case-roles { list-style: none; display: flex; flex-direction: column; gap: 1rem; }
-    .case-roles li {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.05rem;
-      color: var(--dgray);
-      padding-bottom: 1rem;
-      border-bottom: 1px solid var(--lgray);
-    }
-    .case-roles li::before { content: '— '; color: var(--gray); }
-    .case-result-num {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(2.5rem, 5vw, 4rem);
-      font-weight: 400;
-      line-height: 1.1;
-    }
-    .case-result-desc {
-      font-family: 'Playfair Display', serif;
-      font-style: italic;
-      color: var(--gray);
-      font-size: 0.95rem;
-      line-height: 1.6;
-      margin-top: 1rem;
-      padding-top: 1rem;
-      border-top: 2px solid var(--yellow);
-    }
+  .play-circle {
+    position: absolute; top: calc(50% - 24px); left: 50%;
+    transform: translateX(-50%) scale(0.85);
+    width: 48px; height: 48px;
+    border: 1px solid rgba(255,255,255,0.3); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    transition: transform .3s, border-color .3s, background .3s;
+  }
+  .video-card.featured .play-circle { top: 50%; transform: translate(-50%,-50%) scale(0.85); }
+  .video-card:hover .play-circle { transform: translateX(-50%) scale(1); border-color: rgba(255,255,255,0.7); background: rgba(255,255,255,0.1); }
+  .video-card.featured:hover .play-circle { transform: translate(-50%,-50%) scale(1); }
+  .play-circle svg { width: 12px; margin-left: 3px; fill: var(--white); }
 
-    /* Stats highlight boxes */
-    .view-stats {
-      display: flex;
-      gap: 0.75rem;
-      margin-top: 1.5rem;
-      flex-wrap: wrap;
-    }
-    .view-stat-img-wrap {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0.4rem;
-      text-decoration: none;
-      flex: 1;
-      min-width: 80px;
-    }
-    .view-stat-img {
-      width: 100%;
-      aspect-ratio: 9/16;
-      object-fit: cover;
-      border-radius: 4px;
-      border: 1px solid var(--lgray);
-      transition: opacity 0.2s, transform 0.2s;
-      display: block;
-    }
-    .view-stat-img-wrap:hover .view-stat-img {
-      opacity: 0.85;
-      transform: scale(1.02);
-    }
-    .view-stat-label {
-      font-size: 0.7rem;
-      letter-spacing: 0.06em;
-      color: var(--gray);
-      font-family: 'DM Sans', sans-serif;
-    }
+  .video-meta-bar { padding: 12px 14px; border-top: 1px solid var(--border); }
+  .video-title-txt { font-family: 'Syne', sans-serif; font-size: 0.78rem; font-weight: 600; color: var(--white); margin-bottom: 2px; }
+  .video-views-txt { font-family: 'DM Mono', monospace; font-size: 0.5rem; letter-spacing: 0.14em; color: var(--white60); }
 
-    /* ── WORK EXAMPLES ── */
-    #work { border-top: 1px solid var(--rule); }
-    .work-headline { font-size: clamp(1.8rem, 4vw, 3rem); margin-bottom: 1rem; }
-    .work-note {
-      font-size: 0.82rem;
-      color: var(--gray);
-      font-style: italic;
-      line-height: 1.6;
-      margin-bottom: 2.5rem;
-      padding: 1rem 1.2rem;
-      border-left: 2px solid var(--yellow);
-      background: rgba(245,200,0,0.04);
-    }
+  /* LINKS */
+  #links { padding: 100px 48px; }
+  .cards-grid { display: flex; flex-direction: column; gap: 12px; max-width: 860px; margin: 0 auto; }
+  .card {
+    background: var(--white03); backdrop-filter: blur(10px);
+    border: 1px solid var(--border); border-radius: 16px;
+    padding: 26px 34px; display: flex; align-items: center;
+    justify-content: space-between; gap: 28px;
+    transition: background .3s, border-color .3s, transform .3s; cursor: none;
+  }
+  .card:hover { background: var(--white05); border-color: rgba(255,255,255,0.2); transform: translateY(-3px); }
+  .card-left { display: flex; align-items: center; gap: 20px; }
+  .card-icon { width: 50px; height: 50px; flex-shrink: 0; border-radius: 12px; display: flex; align-items: center; justify-content: center; }
+  .card-title { font-family: 'Syne', sans-serif; font-weight: 600; font-size: 1.05rem; letter-spacing: 0.05em; color: var(--white); margin-bottom: 3px; }
+  .card-desc { font-family: 'DM Mono', monospace; font-size: 0.56rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--white60); }
+  .card-btn {
+    font-family: 'DM Mono', monospace; font-size: 0.56rem; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--white); text-decoration: none; background: var(--white05);
+    border: 1px solid rgba(255,255,255,0.2); border-radius: 10px;
+    padding: 10px 20px; white-space: nowrap; transition: background .25s, border-color .25s;
+  }
+  .card-btn:hover { background: var(--white10); border-color: rgba(255,255,255,0.3); }
 
-    .work-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
-    .work-item {
-      padding: 2rem 0;
-      border-bottom: 1px solid var(--lgray);
-    }
-    .work-item:nth-child(odd) { padding-right: 3rem; border-right: 1px solid var(--lgray); }
-    .work-item:nth-child(even) { padding-left: 3rem; }
-    .work-item:nth-last-child(-n+2) { border-bottom: none; }
-    .work-title {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.25rem;
-      margin-bottom: 0.5rem;
-    }
-    .work-sub { font-size: 0.75rem; color: var(--gray); font-style: italic; margin-bottom: 0.8rem; }
-    .work-link {
-      font-size: 0.78rem;
-      color: var(--yellow);
-      text-decoration: none;
-      letter-spacing: 0.04em;
-      border-bottom: 1px solid transparent;
-      transition: border-color 0.2s;
-      word-break: break-all;
-    }
-    .work-link:hover { border-color: var(--yellow); }
+  /* CLOTHES */
+  #clothes { padding: 100px 48px; }
+  .clothes-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 10px; }
+  .cloth-card { position: relative; overflow: hidden; background: var(--white03); border: 1px solid var(--border); cursor: none; }
+  .cloth-ph { width: 100%; min-height: 300px; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 10px; }
+  .cloth-card:first-child .cloth-ph { min-height: 620px; }
+  .cloth-ph svg { opacity: 0.05; }
+  .cloth-ph-lbl { font-family: 'DM Mono', monospace; font-size: 0.48rem; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(255,255,255,0.09); }
+  .cloth-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(10,10,21,0.92) 0%, transparent 55%); opacity: 0; transition: opacity .4s; }
+  .cloth-card:hover .cloth-overlay { opacity: 1; }
+  .cloth-meta { position: absolute; bottom: 0; left: 0; right: 0; padding: 20px 18px; opacity: 0; transform: translateY(8px); transition: opacity .4s, transform .4s; }
+  .cloth-card:hover .cloth-meta { opacity: 1; transform: translateY(0); }
+  .cloth-name { font-family: 'Syne', sans-serif; font-weight: 600; font-size: 0.95rem; letter-spacing: 0.1em; text-transform: uppercase; }
+  .cloth-tag { font-family: 'DM Mono', monospace; font-size: 0.48rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--white60); margin-top: 4px; }
 
-    /* ── WHAT YOU GET ── */
-    #offer { border-top: 1px solid var(--rule); }
-    .offer-headline { font-size: clamp(1.8rem, 4vw, 3rem); margin-bottom: 3rem; }
-    .offer-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
-    .offer-item {
-      padding: 1.8rem 0;
-      border-bottom: 1px solid var(--lgray);
-    }
-    .offer-item:nth-child(odd) { padding-right: 3rem; border-right: 1px solid var(--lgray); }
-    .offer-item:nth-child(even) { padding-left: 3rem; }
-    .offer-item:nth-last-child(-n+2) { border-bottom: none; }
-    .offer-title {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.05rem;
-      margin-bottom: 0.5rem;
-    }
-    .offer-desc { font-size: 0.82rem; color: var(--gray); line-height: 1.65; }
+  /* CTA */
+  #cta { padding: 100px 48px; text-align: center; position: relative; overflow: hidden; }
+  .cta-glow { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 600px; height: 300px; background: radial-gradient(ellipse, rgba(80,80,180,0.1) 0%, transparent 70%); pointer-events: none; }
+  .cta-title { font-family: 'Syne', sans-serif; font-weight: 300; font-size: clamp(32px, 5vw, 64px); letter-spacing: 0.12em; text-transform: uppercase; line-height: 1.2; margin-bottom: 16px; }
+  .cta-sub { font-family: 'DM Mono', monospace; font-size: 0.6rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--white30); margin-bottom: 40px; }
+  .cta-btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-family: 'DM Mono', monospace; font-size: 0.6rem; letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--white); text-decoration: none; border: 1px solid rgba(255,255,255,0.2);
+    background: var(--white05); backdrop-filter: blur(10px);
+    padding: 15px 38px; border-radius: 10px; transition: background .3s, border-color .3s;
+  }
+  .cta-btn:hover { background: var(--white10); border-color: rgba(255,255,255,0.35); }
 
-    /* ── HOW IT WORKS ── */
-    #how { border-top: 1px solid var(--rule); }
-    .how-headline {
-      font-size: clamp(2.5rem, 6vw, 5.5rem);
-      line-height: 1.05;
-      margin-bottom: 0.5rem;
-    }
-    .how-headline-yellow {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(2.5rem, 6vw, 5.5rem);
-      font-style: italic;
-      font-weight: 400;
-      color: var(--yellow);
-      line-height: 1.05;
-      margin-bottom: 3rem;
-    }
-    .how-rule { width: 100%; height: 2px; background: var(--yellow); margin-bottom: 3rem; }
-    .how-grid {
-      display: grid;
-      grid-template-columns: 1fr 1px 1fr;
-      gap: 4rem;
-    }
-    .how-divider { background: var(--lgray); }
-    .how-col-label {
-      font-size: 0.65rem;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: var(--gray);
-      margin-bottom: 1.5rem;
-    }
-    .how-points { display: flex; flex-direction: column; gap: 1rem; }
-    .how-point {
-      font-family: 'Playfair Display', serif;
-      font-size: 1rem;
-      color: var(--dgray);
-      padding-bottom: 1rem;
-      border-bottom: 1px solid var(--lgray);
-      line-height: 1.5;
-    }
-    .how-point:last-child { border-bottom: none; }
-    .how-point::before { content: '— '; color: var(--gray); }
+  footer { padding: 34px 48px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+  .footer-logo { font-family: 'Syne', sans-serif; font-weight: 300; font-size: 1.05rem; letter-spacing: 0.18em; text-transform: uppercase; }
+  .footer-copy { font-family: 'DM Mono', monospace; font-size: 0.48rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--white30); }
+  .footer-links { display: flex; gap: 20px; }
+  .footer-links a { font-family: 'DM Mono', monospace; font-size: 0.48rem; letter-spacing: 0.13em; text-transform: uppercase; color: var(--white30); text-decoration: none; transition: color .2s; }
+  .footer-links a:hover { color: var(--white); }
 
-    /* ── THE OPPORTUNITY ── */
-    #opportunity { border-top: 1px solid var(--rule); }
-    .opp-headline { font-size: clamp(2.5rem, 6vw, 5rem); line-height: 1.05; margin-bottom: 3rem; }
-    .opp-rule { width: 100%; height: 2px; background: var(--yellow); margin-bottom: 2.5rem; }
-    .opp-details {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 0;
-      margin-bottom: 3rem;
-    }
-    .opp-detail {
-      padding: 2rem 0;
-      border-right: 1px solid var(--lgray);
-      padding-right: 2rem;
-    }
-    .opp-detail:last-child { border-right: none; padding-right: 0; padding-left: 2rem; }
-    .opp-detail:nth-child(2) { padding-left: 2rem; }
-    .opp-detail-label {
-      font-size: 0.65rem;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: var(--gray);
-      margin-bottom: 0.75rem;
-    }
-    .opp-detail-value {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.4rem;
-      font-weight: 400;
-    }
-    .opp-cta {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.1rem;
-      font-style: italic;
-      color: var(--dgray);
-      line-height: 1.7;
-      text-align: center;
-      padding: 2.5rem;
-      border: 1px solid var(--lgray);
-    }
+  @keyframes fadeUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
+  .reveal { opacity:0; transform:translateY(26px); transition:opacity .85s cubic-bezier(0.16,1,0.3,1), transform .85s cubic-bezier(0.16,1,0.3,1); }
+  .reveal.vis { opacity:1; transform:translateY(0); }
+  .d1{transition-delay:.1s} .d2{transition-delay:.2s} .d3{transition-delay:.3s} .d4{transition-delay:.4s}
 
-    /* ── CONTACT ── */
-    #contact { border-top: 1px solid var(--rule); }
-    .contact-grid {
-      display: grid;
-      grid-template-columns: 1fr 1px 1fr;
-      gap: 5rem;
-      align-items: start;
-    }
-    .contact-divider { background: var(--lgray); align-self: stretch; }
-    .contact-headline {
-      font-size: clamp(2.5rem, 5vw, 4.5rem);
-      line-height: 1.05;
-      margin-bottom: 1.5rem;
-    }
-    .contact-sub {
-      font-size: 0.9rem;
-      color: var(--gray);
-      font-style: italic;
-      line-height: 1.7;
-      font-family: 'Playfair Display', serif;
-      margin-bottom: 2rem;
-    }
-    .contact-name {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.3rem;
-    }
-    .contact-title { font-size: 0.75rem; color: var(--gray); margin-top: 0.3rem; letter-spacing: 0.06em; }
-    .contact-fields { display: flex; flex-direction: column; gap: 0; padding-left: 2rem; }
-    .contact-field {
-      padding: 1.2rem 0;
-      border-bottom: 1px solid var(--lgray);
-    }
-    .contact-field:first-child { border-top: 1px solid var(--lgray); }
-    .contact-field a {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.1rem;
-      color: var(--black);
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-    .contact-field a:hover { color: var(--yellow); }
-    .contact-field-label { font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gray); margin-bottom: 0.3rem; }
-    .contact-exclusive {
-      margin-top: 2rem;
-      padding: 1rem 1.2rem;
-      border-left: 2px solid var(--yellow);
-      font-family: 'Playfair Display', serif;
-      font-style: italic;
-      font-size: 0.95rem;
-      color: var(--dgray);
-      padding-left: 2rem;
-    }
-
-    .how-body {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(1.1rem, 2vw, 1.4rem);
-      font-style: italic;
-      color: var(--dgray);
-      line-height: 1.75;
-      max-width: 680px;
-    }
-
-    /* ── SIMPLE CONTACT ── */
-    .contact-simple { max-width: 620px; }
-    .contact-simple-headline {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(2.2rem, 5vw, 4rem);
-      font-weight: 400;
-      line-height: 1.1;
-      margin-bottom: 1.5rem;
-    }
-    .contact-simple-sub {
-      font-family: 'Playfair Display', serif;
-      font-style: italic;
-      font-size: 0.95rem;
-      color: var(--gray);
-      line-height: 1.75;
-      margin-bottom: 2rem;
-    }
-    .contact-email-link {
-      display: inline-block;
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(1.1rem, 2.5vw, 1.6rem);
-      color: var(--black);
-      text-decoration: none;
-      border-bottom: 2px solid var(--yellow);
-      padding-bottom: 0.2rem;
-      transition: color 0.2s, border-color 0.2s;
-      margin-bottom: 1.5rem;
-    }
-    .contact-email-link:hover { color: var(--gray); }
-    .contact-simple-name {
-      font-size: 0.72rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--gray);
-    }
-
-    /* ── FOOTER ── */
-    footer {
-      border-top: 1px solid var(--rule);
-      padding: 2rem 3rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      max-width: 1100px;
-      margin: 0 auto;
-    }
-    .footer-name {
-      font-family: 'Playfair Display', serif;
-      font-size: 0.9rem;
-    }
-    .footer-note { font-size: 0.7rem; color: var(--gray); letter-spacing: 0.06em; }
-
-    /* ── SCROLL REVEAL ── */
-    .reveal {
-      opacity: 0;
-      transform: translateY(28px);
-      transition: opacity 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.16,1,0.3,1);
-    }
-    .reveal.visible { opacity: 1; transform: none; }
-    .reveal-delay-1 { transition-delay: 0.1s; }
-    .reveal-delay-2 { transition-delay: 0.2s; }
-    .reveal-delay-3 { transition-delay: 0.32s; }
-
-    /* ── RESPONSIVE ── */
-    @media (max-width: 768px) {
-      nav { padding: 1.2rem 1.5rem; }
-      .nav-links { display: none; }
-      section { padding: 4rem 1.5rem; }
-      #hero { padding-left: 1.5rem; padding-right: 1.5rem; }
-      .hero-grid { grid-template-columns: 1fr; }
-      .hero-stat { text-align: left; }
-      .who-grid, .case-grid, .how-grid, .contact-grid { grid-template-columns: 1fr; gap: 2.5rem; }
-      .who-divider, .case-divider, .how-divider, .contact-divider { display: none; }
-      .who-bullets { padding-left: 0; }
-      .clients-grid, .stats-row, .opp-details { grid-template-columns: 1fr 1fr; }
-      .work-grid, .offer-grid { grid-template-columns: 1fr; }
-      .work-item, .offer-item { padding-left: 0 !important; padding-right: 0 !important; border-right: none !important; }
-      .contact-fields { padding-left: 0; }
-      footer { flex-direction: column; gap: 0.5rem; text-align: center; }
-    }
-  </style>
+  @media (max-width: 900px) {
+    nav { padding: 20px 24px; } .nav-links { display: none; }
+    #hero { padding: 140px 24px 80px; }
+    #beast { padding: 60px 24px; }
+    #brands { padding: 70px 0; } .brands-header { padding: 0 24px; }
+    #videos, #links, #clothes, #cta { padding: 70px 24px; }
+    .clothes-grid { grid-template-columns: 1fr 1fr; }
+    .cloth-card:first-child { grid-column: 1/3; } .cloth-card:first-child .cloth-ph { min-height: 280px; }
+    .video-grid { grid-template-columns: 1fr; } .video-card.featured { grid-column: auto; }
+    footer { flex-direction: column; gap: 16px; text-align: center; }
+    .stat-strip { flex-wrap: wrap; } .stat-item { flex: 1; min-width: 110px; }
+  }
+</style>
 </head>
 <body>
 
-  <div id="cursor"></div>
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="ring"></div>
 
-  <!-- NAV -->
-  <nav id="nav">
-    <a href="#hero" class="nav-logo">McKay</a>
-    <ul class="nav-links">
-      <li><a href="#clients">Work</a></li>
-      <li><a href="#casestudy">Case Study</a></li>
-      <li><a href="#offer">What You Get</a></li>
-      <li><a href="#opportunity">The Offer</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
-  </nav>
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">McKay Stacey</a>
+  <ul class="nav-links">
+    <li><a href="#brands">Brands</a></li>
+    <li><a href="#videos">Work</a></li>
+    <li><a href="#links">Links</a></li>
+    <li><a href="#clothes">Clothes</a></li>
+    <li><a href="#cta">Collab</a></li>
+  </ul>
+</nav>
 
-  <!-- HERO -->
-  <div id="hero">
-    <div class="hero-inner">
-      <div class="hero-top-rule"></div>
-      <div class="hero-grid">
-        <div>
-          <h1 class="hero-name">McKay</h1>
-          <p class="hero-tagline">Mastermind behind the views.</p>
-        </div>
-        <div class="hero-stat">
-          <div class="hero-stat-num">250M+</div>
-          <div class="hero-stat-sub">views generated<br>in 6 months</div>
-          <div class="hero-stat-rule"></div>
-        </div>
-      </div>
-      <div class="hero-bottom">
-        <div class="hero-meta">
-          Creative Director &amp; Videographer<br>
-          Puerto Rico · May 19 – June 3
-        </div>
-        <a href="#clients" class="hero-scroll">Scroll</a>
-      </div>
-    </div>
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-glow2"></div>
+  <p class="hero-eyebrow">Content Creator · Video Editor · Brand Partner</p>
+  <h1 class="hero-title">McKay<br><em>Stacey</em></h1>
+  <p class="hero-sub">I create cool stuff,<br><span>with cool people.</span></p>
+
+  <div class="hero-socials">
+    <a href="https://instagram.com/mmckaystacey" target="_blank">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+      Instagram
+    </a>
+    <span class="sep">✦</span>
+    <a href="https://twitter.com/mmckaystacey" target="_blank">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+      Twitter
+    </a>
+    <span class="sep">✦</span>
+    <a href="https://youtube.com/@mmckaystacey" target="_blank">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+      YouTube
+    </a>
+    <span class="sep">✦</span>
+    <a href="https://www.linkedin.com/in/mckay-stacey-bab412212/" target="_blank">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+      LinkedIn
+    </a>
   </div>
 
-  <!-- WHO I AM -->
-  <section id="about">
-    <div class="rule"></div>
-    <p class="section-label">Who I Am</p>
-    <div class="who-grid reveal">
-      <div>
-        <p class="who-statement">"You've never heard of me. But you've seen my work."</p>
-        <div class="rule-yellow"></div>
-        <p style="font-size:0.82rem;color:var(--gray);font-style:italic;">McKay — Creative Director &amp; Videographer</p>
-      </div>
-      <div class="who-divider"></div>
-      <div class="who-bullets">
-        <p class="who-bullet"><strong>I concept, shoot, and edit</strong> videos for some of the biggest names on the internet.</p>
-        <p class="who-bullet"><strong>My work lives on other people's platforms</strong> — brands and major creators hire me to make them look great.</p>
-        <p class="who-bullet"><strong>250,000,000+ views generated</strong> from my concepts, filming &amp; editing in the last 6 months alone.</p>
-        <p class="who-bullet"><strong>Now I'm bringing that same energy</strong> to Puerto Rico — and I want your property to be part of it.</p>
-      </div>
-    </div>
-  </section>
+  <div class="stat-strip">
+    <div class="stat-item"><div class="stat-num">250M+</div><div class="stat-lbl">Views generated · 6 months</div></div>
+    <div class="stat-item"><div class="stat-num">7+</div><div class="stat-lbl">Major brand partners</div></div>
+    <div class="stat-item"><div class="stat-num">Unravel</div><div class="stat-lbl">Clothing Brand</div></div>
+    <div class="stat-item"><div class="stat-num">0</div><div class="stat-lbl">Compromises</div></div>
+  </div>
+</section>
 
-  <!-- CLIENTS -->
-  <section id="clients">
-    <div class="rule"></div>
-    <p class="section-label">Who I've Worked With</p>
-    <h2 class="clients-headline reveal">The names behind<br>the numbers.</h2>
-    <div class="clients-rule reveal reveal-delay-1"></div>
-    <div class="clients-grid reveal reveal-delay-2">
-      <div class="client-name">MrBeast</div>
-      <div class="client-name">Microsoft</div>
-      <div class="client-name">BuckedUp</div>
-      <div class="client-name">Nick Shirley</div>
-      <div class="client-name">James Seo</div>
-      <div class="client-name">FaZe Clan</div>
-      <div class="client-name">Alibaba</div>
-      <div class="client-name">Ubisoft</div>
-      <div class="client-name">Halo</div>
-      <div class="client-name">Oats Overnight</div>
-      <div class="client-name">Rocket League</div>
-      <div class="client-name">Steelseries</div>
+<!-- BEAST GAMES — photo only -->
+<section id="beast">
+  <div class="beast-photo-wrap reveal">
+    <div class="beast-badge">@beastgames</div>
+    <div class="ig-embed-container">
+      <blockquote
+        class="instagram-media"
+        data-instgrm-permalink="https://www.instagram.com/p/DTRkZBFEZuE/"
+        data-instgrm-version="14"
+        style="background:transparent;border:0;border-radius:0;box-shadow:none;margin:0;max-width:100%;min-width:100%;padding:0;width:100%;">
+      </blockquote>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- NUMBERS -->
-  <section id="numbers">
-    <div class="rule"></div>
-    <p class="section-label">The Numbers</p>
-    <div class="big-number reveal">250,000,000+</div>
-    <div class="numbers-rule reveal reveal-delay-1"></div>
-    <p class="numbers-sub reveal reveal-delay-1">Views generated in the last 6 months alone</p>
-    <div class="stats-row reveal reveal-delay-2">
-      <div class="stat-item">
-        <div class="stat-num">Major</div>
-        <div class="stat-label">brand partnerships</div>
-      </div>
-      <div class="stat-item">
-        <div class="stat-num">6 Months</div>
-        <div class="stat-label">of explosive growth</div>
-      </div>
-    </div>
-  </section>
+<!-- BRANDS -->
+<section id="brands">
+  <div class="brands-header reveal">
+    <div class="section-label">Worked With</div>
+    <h2 class="section-title" style="margin-bottom:10px;">The Brands</h2>
+    <p class="brands-hint">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M12 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Drag to explore
+    </p>
+  </div>
+  <div class="brands-track-outer" id="brandsOuter">
+    <div class="brands-track" id="brandsTrack">
 
-  <!-- CASE STUDY -->
-  <section id="casestudy">
-    <div class="rule"></div>
-    <p class="section-label">Case Study</p>
-    <div class="case-header reveal">
-      <h2 class="case-name">Case Study #1</h2>
-      <p class="case-handle">James Seo &nbsp;·&nbsp; @itsjamesseo</p>
-      <div class="rule-yellow"></div>
-    </div>
-    <div class="case-grid reveal reveal-delay-1">
-      <div>
-        <p class="case-col-label">My Role</p>
-        <ul class="case-roles">
-          <li>Video Concept &amp; Ideation</li>
-          <li>On-Location Filming</li>
-          <li>Post-Production Editing</li>
-          <li>Thumbnail &amp; Hook Strategy</li>
-        </ul>
-      </div>
-      <div class="case-divider"></div>
-      <div>
-        <p class="case-col-label">The Result</p>
-        <div class="case-result-num">Millions<br>of Views</div>
-        <div class="view-stats">
-          <a href="https://i.imgur.com/wp7Lv5P.jpeg" target="_blank" class="view-stat-img-wrap">
-            <img src="https://i.imgur.com/wp7Lv5P.jpeg" alt="87M views screenshot" class="view-stat-img" />
-            <span class="view-stat-label">87M views</span>
-          </a>
-          <a href="https://i.imgur.com/iSVa2Ke.jpeg" target="_blank" class="view-stat-img-wrap">
-            <img src="https://i.imgur.com/iSVa2Ke.jpeg" alt="37M views screenshot" class="view-stat-img" />
-            <span class="view-stat-label">37M views</span>
-          </a>
-          <a href="https://i.imgur.com/hrVIli1.jpeg" target="_blank" class="view-stat-img-wrap">
-            <img src="https://i.imgur.com/hrVIli1.jpeg" alt="22M views screenshot" class="view-stat-img" />
-            <span class="view-stat-label">22M views</span>
-          </a>
+      <div class="brand-item">
+        <div class="brand-logo">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 23 23" width="44" height="44">
+            <rect x="0" y="0" width="10.5" height="10.5" fill="white"/>
+            <rect x="12.5" y="0" width="10.5" height="10.5" fill="white"/>
+            <rect x="0" y="12.5" width="10.5" height="10.5" fill="white"/>
+            <rect x="12.5" y="12.5" width="10.5" height="10.5" fill="white"/>
+          </svg>
         </div>
-        <p class="case-result-desc">Content that stopped people mid-scroll and grew his audience massively.</p>
+        <span class="brand-label">Microsoft</span>
       </div>
-    </div>
-  </section>
 
-  <!-- WORK -->
-  <section id="work">
-    <div class="rule"></div>
-    <p class="section-label">My Work</p>
-    <h2 class="work-headline reveal">What I've already done<br>for hospitality brands.</h2>
-    <div class="work-note reveal reveal-delay-1">
-      Note — these videos were produced for a client's channel. The format &amp; style we'd create for your property is completely different. See below for examples of what we'd actually make you.
-    </div>
-    <div class="work-grid reveal reveal-delay-2">
-      <div class="work-item">
-        <p class="work-title">Clear Sky Resorts — Bryce Canyon</p>
-        <p class="work-sub">Concept · Filming · Editing</p>
-        <a class="work-link" href="https://www.tiktok.com/@itsjamesseo/video/7622382065459236126" target="_blank">tiktok.com/@itsjamesseo/video/7622382065459236126</a>
-      </div>
-      <div class="work-item">
-        <p class="work-title">Virgin Hotels — Las Vegas</p>
-        <p class="work-sub">Concept · Filming · Editing</p>
-        <a class="work-link" href="https://www.tiktok.com/@itsjamesseo/video/7596058332440300831" target="_blank">tiktok.com/@itsjamesseo/video/7596058332440300831</a>
-      </div>
-    </div>
-
-    <div style="margin-top:4rem;">
-      <p class="section-label" style="margin-bottom:1.5rem;">This Is What We'd Make For You</p>
-      <p style="font-family:'Playfair Display',serif;font-style:italic;color:var(--gray);font-size:0.95rem;margin-bottom:2rem;line-height:1.7;">Shareable, attention-grabbing content made specifically for your property — the kind that stops the scroll and drives real bookings.</p>
-      <div class="work-grid reveal">
-        <div class="work-item">
-          <p class="work-title">Example Reel #1</p>
-          <a class="work-link" href="https://www.instagram.com/reel/DWlU9C-hATA/" target="_blank">instagram.com/reel/DWlU9C-hATA</a>
+      <div class="brand-item">
+        <div class="brand-logo">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Halo_%28series%29_logo.svg/320px-Halo_%28series%29_logo.svg.png" alt="Halo">
         </div>
-        <div class="work-item">
-          <p class="work-title">Example Reel #2</p>
-          <a class="work-link" href="https://www.instagram.com/reel/DUxPPn4CceU/" target="_blank">instagram.com/reel/DUxPPn4CceU</a>
+        <span class="brand-label">Halo</span>
+      </div>
+
+      <div class="brand-item">
+        <div class="brand-logo">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/Ubisoft_logo.svg/320px-Ubisoft_logo.svg.png" alt="Ubisoft">
         </div>
-        <div class="work-item">
-          <p class="work-title">Example Reel #3</p>
-          <a class="work-link" href="https://www.instagram.com/reel/DInsCrgzAyg/" target="_blank">instagram.com/reel/DInsCrgzAyg</a>
+        <span class="brand-label">Ubisoft</span>
+      </div>
+
+      <div class="brand-item">
+        <div class="brand-logo">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Rocket_League_logo.svg/320px-Rocket_League_logo.svg.png" alt="Rocket League">
         </div>
-        <div class="work-item">
-          <p class="work-title">Example Reel #4</p>
-          <a class="work-link" href="https://www.instagram.com/reel/DWdRl7tjNYv/" target="_blank">instagram.com/reel/DWdRl7tjNYv</a>
+        <span class="brand-label">Rocket League</span>
+      </div>
+
+      <div class="brand-item">
+        <div class="brand-logo">
+          <svg viewBox="0 0 220 46" width="180" height="40">
+            <text x="2" y="40" font-family="Arial Black, Impact, sans-serif" font-size="40" font-weight="900" fill="white" letter-spacing="-1">PSYONIX</text>
+          </svg>
         </div>
-        <div class="work-item">
-          <p class="work-title">Example Reel #5</p>
-          <a class="work-link" href="https://www.instagram.com/reel/DMWq2oMRBtU/" target="_blank">instagram.com/reel/DMWq2oMRBtU</a>
+        <span class="brand-label">Psyonix Studios</span>
+      </div>
+
+      <div class="brand-item">
+        <div class="brand-logo">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/FaZe_Clan_logo.svg/320px-FaZe_Clan_logo.svg.png" alt="FaZe Clan">
         </div>
+        <span class="brand-label">FaZe Clan</span>
       </div>
+
+      <div class="brand-item">
+        <div class="brand-logo">
+          <svg viewBox="0 0 270 46" width="210" height="40">
+            <text x="2" y="38" font-family="Arial Black, Impact, sans-serif" font-size="34" font-weight="900" fill="white" letter-spacing="1">BUCKED UP</text>
+          </svg>
+        </div>
+        <span class="brand-label">Bucked Up</span>
+      </div>
+
+      <div class="brand-item" style="opacity:0.35;">
+        <div class="brand-logo">
+          <svg viewBox="0 0 44 44" width="44" height="44" fill="none" stroke="white" stroke-width="1.5">
+            <circle cx="22" cy="22" r="19"/>
+            <line x1="22" y1="13" x2="22" y2="31"/>
+            <line x1="13" y1="22" x2="31" y2="22"/>
+          </svg>
+        </div>
+        <span class="brand-label">And more</span>
+      </div>
+
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- WHAT YOU GET -->
-  <section id="offer">
-    <div class="rule"></div>
-    <p class="section-label">What You Get</p>
-    <h2 class="offer-headline reveal">A full creative package,<br>tailored to you.</h2>
-    <div class="offer-grid reveal reveal-delay-1">
-      <div class="offer-item">
-        <p class="offer-title">Cinematic Video Content</p>
-        <p class="offer-desc">Short-form Reels and videos built to stop the scroll and drive bookings.</p>
+<!-- VIDEOS — portfolio of work done for other creators -->
+<section id="videos">
+  <div class="section-label reveal">The Work</div>
+  <h2 class="section-title reveal" style="margin-bottom: 20px;">Videos I've<br>Made</h2>
+  <p class="videos-intro reveal">
+    Over <strong>250 million views generated</strong> in the past 6 months — for other creators and brands. 
+    Below is a selection of work. Drop in the links and your best thumbnails.
+  </p>
+
+  <div class="video-grid">
+    <!-- Replace href with your actual video URL, and add a thumbnail img instead of .video-ph -->
+    <a class="video-card featured reveal" href="https://youtube.com/@mmckaystacey" target="_blank">
+      <div class="video-ph">
+        <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="0.7"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
+        <span class="video-ph-lbl">Paste your best thumbnail here</span>
       </div>
-      <div class="offer-item">
-        <p class="offer-title">Professional Photography</p>
-        <p class="offer-desc">High-quality photos for your listing, social media, and marketing materials.</p>
+      <div class="play-circle"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+      <div class="video-meta-bar">
+        <div class="video-title-txt">Your Biggest Video</div>
+        <div class="video-views-txt">Replace with real title + views</div>
       </div>
-      <div class="offer-item">
-        <p class="offer-title">Social Media Buildout</p>
-        <p class="offer-desc">We launch and grow your property's social presence from scratch — if you need it.</p>
+    </a>
+
+    <a class="video-card reveal d1" href="https://youtube.com/@mmckaystacey" target="_blank">
+      <div class="video-ph"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="0.7"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg><span class="video-ph-lbl">Video 2</span></div>
+      <div class="play-circle"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+      <div class="video-meta-bar"><div class="video-title-txt">Video Title</div><div class="video-views-txt">Paste view count</div></div>
+    </a>
+
+    <a class="video-card reveal d1" href="https://youtube.com/@mmckaystacey" target="_blank">
+      <div class="video-ph"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="0.7"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg><span class="video-ph-lbl">Video 3</span></div>
+      <div class="play-circle"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+      <div class="video-meta-bar"><div class="video-title-txt">Video Title</div><div class="video-views-txt">Paste view count</div></div>
+    </a>
+
+    <a class="video-card reveal d2" href="https://youtube.com/@mmckaystacey" target="_blank">
+      <div class="video-ph"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="0.7"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg><span class="video-ph-lbl">Video 4</span></div>
+      <div class="play-circle"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+      <div class="video-meta-bar"><div class="video-title-txt">Video Title</div><div class="video-views-txt">Paste view count</div></div>
+    </a>
+
+    <a class="video-card reveal d2" href="https://youtube.com/@mmckaystacey" target="_blank">
+      <div class="video-ph"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="0.7"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg><span class="video-ph-lbl">Video 5</span></div>
+      <div class="play-circle"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+      <div class="video-meta-bar"><div class="video-title-txt">Video Title</div><div class="video-views-txt">Paste view count</div></div>
+    </a>
+
+    <a class="video-card reveal d3" href="https://youtube.com/@mmckaystacey" target="_blank">
+      <div class="video-ph"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="0.7"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg><span class="video-ph-lbl">Video 6</span></div>
+      <div class="play-circle"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+      <div class="video-meta-bar"><div class="video-title-txt">Video Title</div><div class="video-views-txt">Paste view count</div></div>
+    </a>
+  </div>
+</section>
+
+<!-- LINKS -->
+<section id="links">
+  <div class="section-label reveal">Find Me</div>
+  <h2 class="section-title reveal">The Links</h2>
+  <div class="cards-grid">
+    <div class="card reveal d1">
+      <div class="card-left">
+        <div class="card-icon" style="background:rgba(255,107,107,0.1);">
+          <svg viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="1.1" width="30" height="30"><path d="M20.38 3.46L16 2a4 4 0 01-8 0L3.62 3.46a2 2 0 00-1.34 2.23l.58 3.57a1 1 0 00.99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 002-2V10h2.15a1 1 0 00.99-.84l.58-3.57a2 2 0 00-1.34-2.23z"/></svg>
+        </div>
+        <div><div class="card-title">Unravel</div><div class="card-desc">Check out my clothing line</div></div>
       </div>
-      <div class="offer-item">
-        <p class="offer-title">Professional Website</p>
-        <p class="offer-desc">A clean, conversion-focused site for your property if you don't have one.</p>
-      </div>
-      <div class="offer-item">
-        <p class="offer-title">Raw Footage — Yours Forever</p>
-        <p class="offer-desc">All footage and photos delivered to you. Use them however, whenever.</p>
-      </div>
-      <div class="offer-item">
-        <p class="offer-title">Fully Flexible Deliverables</p>
-        <p class="offer-desc">You tell us what matters most. We build the package around your goals.</p>
-      </div>
+      <a href="https://www.unravelculture.com" class="card-btn" target="_blank">View Store</a>
     </div>
-  </section>
-
-  <!-- HOW IT WORKS -->
-  <section id="how">
-    <div class="rule"></div>
-    <p class="section-label">How It Works</p>
-    <h2 class="how-headline reveal">We post.</h2>
-    <h2 class="how-headline reveal">You grow.</h2>
-    <p class="how-headline-yellow reveal"><em>Organically.</em></p>
-    <div class="how-rule reveal"></div>
-    <p class="how-body reveal reveal-delay-1">We'll post multiple pieces on our end and personal platforms to drive immediate attention — but the bigger picture is that we leave you with everything you need to grow your own social media organically. The goal is that your property becomes a go-to travel destination. Always booked. Always in demand.</p>
-  </section>
-
-  <!-- OPPORTUNITY -->
-  <section id="opportunity">
-    <div class="rule"></div>
-    <p class="section-label">The Opportunity</p>
-    <h2 class="opp-headline reveal">One property.<br>One trip.<br>All eyes on you.</h2>
-    <div class="opp-rule reveal"></div>
-    <div class="opp-details reveal reveal-delay-1">
-      <div class="opp-detail">
-        <p class="opp-detail-label">Dates</p>
-        <p class="opp-detail-value">May 19 – June 3</p>
+    <div class="card reveal d2">
+      <div class="card-left">
+        <div class="card-icon" style="background:rgba(102,126,234,0.12);">
+          <svg viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="1.1" width="30" height="30"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+        </div>
+        <div><div class="card-title">Haingry App</div><div class="card-desc">Download on the App Store</div></div>
       </div>
-      <div class="opp-detail">
-        <p class="opp-detail-label">Group</p>
-        <p class="opp-detail-value">McKay + 5 friends</p>
+      <a href="https://apps.apple.com/us/app/haingry/id6753778179" class="card-btn" target="_blank">Download</a>
+    </div>
+    <div class="card reveal d3">
+      <div class="card-left">
+        <div class="card-icon" style="background:rgba(255,255,255,0.05);">
+          <svg viewBox="0 0 24 24" fill="rgba(255,255,255,0.5)" width="30" height="30"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+        </div>
+        <div><div class="card-title">YouTube</div><div class="card-desc">@mmckaystacey</div></div>
       </div>
-      <div class="opp-detail">
-        <p class="opp-detail-label">Exclusivity</p>
-        <p class="opp-detail-value">1 property only</p>
-      </div>
+      <a href="https://youtube.com/@mmckaystacey" class="card-btn" target="_blank">Subscribe</a>
     </div>
-    <div class="opp-cta reveal reveal-delay-2">
-      In exchange for a discounted or complimentary stay, we bring world-class content to your property.
-    </div>
-  </section>
+  </div>
+</section>
 
-  <!-- CONTACT -->
-  <section id="contact">
-    <div class="rule"></div>
-    <p class="section-label">Let's Talk</p>
-    <div class="contact-simple reveal">
-      <h2 class="contact-simple-headline">Interested?<br><em>Let's make it happen.</em></h2>
-      <div class="rule-yellow"></div>
-      <p class="contact-simple-sub">Deliverables are 100% flexible — we'll build a package around exactly what your property needs. Only partnering with one property this trip.</p>
-      <a href="mailto:mckay@seocreative.co" class="contact-email-link">mckay@seocreative.co</a>
-      <p class="contact-simple-name">McKay &nbsp;·&nbsp; Creative Director &amp; Videographer</p>
-    </div>
-  </section>
+<!-- CLOTHES -->
+<section id="clothes">
+  <div class="section-label reveal">Unravel</div>
+  <h2 class="section-title reveal">The Clothes</h2>
+  <div class="clothes-grid">
+    <div class="cloth-card reveal"><div class="cloth-ph"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="0.7"><path d="M20.38 3.46L16 2a4 4 0 01-8 0L3.62 3.46a2 2 0 00-1.34 2.23l.58 3.57a1 1 0 00.99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 002-2V10h2.15a1 1 0 00.99-.84l.58-3.57a2 2 0 00-1.34-2.23z"/></svg><span class="cloth-ph-lbl">Drop your hero piece here</span></div><div class="cloth-overlay"></div><div class="cloth-meta"><div class="cloth-name">Hero Piece</div><div class="cloth-tag">Unravel — SS '25</div></div></div>
+    <div class="cloth-card reveal d1"><div class="cloth-ph"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="0.7"><path d="M20.38 3.46L16 2a4 4 0 01-8 0L3.62 3.46a2 2 0 00-1.34 2.23l.58 3.57a1 1 0 00.99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 002-2V10h2.15a1 1 0 00.99-.84l.58-3.57a2 2 0 00-1.34-2.23z"/></svg><span class="cloth-ph-lbl">Piece 2</span></div><div class="cloth-overlay"></div><div class="cloth-meta"><div class="cloth-name">Signature Cut</div><div class="cloth-tag">Limited Drop</div></div></div>
+    <div class="cloth-card reveal d2"><div class="cloth-ph"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="0.7"><path d="M20.38 3.46L16 2a4 4 0 01-8 0L3.62 3.46a2 2 0 00-1.34 2.23l.58 3.57a1 1 0 00.99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 002-2V10h2.15a1 1 0 00.99-.84l.58-3.57a2 2 0 00-1.34-2.23z"/></svg><span class="cloth-ph-lbl">Piece 3</span></div><div class="cloth-overlay"></div><div class="cloth-meta"><div class="cloth-name">The Statement</div><div class="cloth-tag">One-Off</div></div></div>
+    <div class="cloth-card reveal d3"><div class="cloth-ph"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="0.7"><path d="M20.38 3.46L16 2a4 4 0 01-8 0L3.62 3.46a2 2 0 00-1.34 2.23l.58 3.57a1 1 0 00.99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 002-2V10h2.15a1 1 0 00.99-.84l.58-3.57a2 2 0 00-1.34-2.23z"/></svg><span class="cloth-ph-lbl">Piece 4</span></div><div class="cloth-overlay"></div><div class="cloth-meta"><div class="cloth-name">Core Essential</div><div class="cloth-tag">Unravel</div></div></div>
+    <div class="cloth-card reveal d4"><div class="cloth-ph"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="0.7"><path d="M20.38 3.46L16 2a4 4 0 01-8 0L3.62 3.46a2 2 0 00-1.34 2.23l.58 3.57a1 1 0 00.99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 002-2V10h2.15a1 1 0 00.99-.84l.58-3.57a2 2 0 00-1.34-2.23z"/></svg><span class="cloth-ph-lbl">Piece 5</span></div><div class="cloth-overlay"></div><div class="cloth-meta"><div class="cloth-name">The Edge</div><div class="cloth-tag">Archive</div></div></div>
+  </div>
+</section>
 
-  <footer>
-    <span class="footer-name">McKay</span>
-    <span class="footer-note"><a href="mailto:mckay@seocreative.co" style="color:var(--gray);text-decoration:none;">mckay@seocreative.co</a> &nbsp;·&nbsp; Creative Director &amp; Videographer · Puerto Rico 2026</span>
-  </footer>
+<!-- CTA -->
+<section id="cta">
+  <div class="cta-glow"></div>
+  <p class="section-label reveal" style="justify-content:center;">Let's Work</p>
+  <h2 class="cta-title reveal">Got an idea?<br>Let's build it.</h2>
+  <p class="cta-sub reveal">Collabs · Brand Deals · Video Work · Anything</p>
+  <a href="https://twitter.com/mmckaystacey" class="cta-btn reveal" target="_blank">Hit Me Up →</a>
+</section>
 
-  <script>
-    // Cursor
-    const cursor = document.getElementById('cursor');
-    document.addEventListener('mousemove', e => {
-      cursor.style.left = e.clientX + 'px';
-      cursor.style.top = e.clientY + 'px';
-    });
+<footer>
+  <div class="footer-logo">McKay Stacey</div>
+  <div class="footer-copy">© 2025 McKay Stacey</div>
+  <div class="footer-links">
+    <a href="https://www.unravelculture.com" target="_blank">Unravel</a>
+    <a href="https://apps.apple.com/us/app/haingry/id6753778179" target="_blank">Haingry</a>
+    <a href="https://instagram.com/mmckaystacey" target="_blank">Instagram</a>
+    <a href="https://youtube.com/@mmckaystacey" target="_blank">YouTube</a>
+  </div>
+</footer>
 
-    // Nav scroll
-    const nav = document.getElementById('nav');
-    window.addEventListener('scroll', () => {
-      nav.classList.toggle('scrolled', window.scrollY > 50);
-    });
+<script async src="//www.instagram.com/embed.js"></script>
+<script>
+  // CURSOR
+  const cur = document.getElementById('cursor');
+  const ring = document.getElementById('ring');
+  let mx=0,my=0,rx=0,ry=0;
+  document.addEventListener('mousemove', e => { mx=e.clientX; my=e.clientY; cur.style.left=mx+'px'; cur.style.top=my+'px'; });
+  (function anim(){ rx+=(mx-rx)*0.11; ry+=(my-ry)*0.11; ring.style.left=rx+'px'; ring.style.top=ry+'px'; requestAnimationFrame(anim); })();
 
-    // Scroll reveal
-    const reveals = document.querySelectorAll('.reveal');
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(e => {
-        if (e.isIntersecting) {
-          e.target.classList.add('visible');
-          observer.unobserve(e.target);
-        }
-      });
-    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
-    reveals.forEach(el => observer.observe(el));
-  </script>
+  // REVEAL
+  const obs = new IntersectionObserver(e => e.forEach(x => { if(x.isIntersecting) x.target.classList.add('vis'); }), { threshold: 0.07 });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+  // BRAND DRAG
+  const outer = document.getElementById('brandsOuter');
+  const track = document.getElementById('brandsTrack');
+  let isDragging=false, startX=0, scrollLeft=0, currentX=0, velocity=0, lastX=0, rafId=null;
+  function clamp(v,a,b){ return Math.min(Math.max(v,a),b); }
+  function maxScroll(){ return Math.max(0, track.scrollWidth - outer.clientWidth); }
+  function applyX(x){ currentX=clamp(x,-maxScroll(),0); track.style.transform=`translateX(${currentX}px)`; }
+  outer.addEventListener('mouseenter',()=>{ ring.classList.add('hide'); cur.classList.add('drag'); });
+  outer.addEventListener('mouseleave',()=>{ ring.classList.remove('hide'); cur.classList.remove('drag'); if(isDragging) end(); });
+  outer.addEventListener('mousedown',e=>{ isDragging=true; startX=e.clientX; scrollLeft=currentX; lastX=e.clientX; velocity=0; if(rafId) cancelAnimationFrame(rafId); e.preventDefault(); });
+  document.addEventListener('mousemove',e=>{ if(!isDragging) return; velocity=e.clientX-lastX; lastX=e.clientX; applyX(scrollLeft+(e.clientX-startX)); });
+  document.addEventListener('mouseup',()=>{ if(isDragging) end(); });
+  function end(){ isDragging=false; (function m(){ velocity*=0.92; if(Math.abs(velocity)>0.4){ applyX(currentX+velocity); rafId=requestAnimationFrame(m); } })(); }
+  outer.addEventListener('touchstart',e=>{ startX=e.touches[0].clientX; scrollLeft=currentX; velocity=0; lastX=startX; if(rafId) cancelAnimationFrame(rafId); },{passive:true});
+  outer.addEventListener('touchmove',e=>{ velocity=e.touches[0].clientX-lastX; lastX=e.touches[0].clientX; applyX(scrollLeft+(e.touches[0].clientX-startX)); },{passive:true});
+  outer.addEventListener('touchend',()=>{ (function m(){ velocity*=0.92; if(Math.abs(velocity)>0.4){ applyX(currentX+velocity); rafId=requestAnimationFrame(m); } })(); });
+</script>
 </body>
 </html>
