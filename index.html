@@ -95,7 +95,14 @@
     letter-spacing: 0.15em; text-transform: uppercase;
     opacity: 0; animation: fadeUp .9s .3s forwards;
   }
-  .hero-title em { font-style: normal; color: var(--white60); }
+  .hero-title em {
+    font-style: normal; color: var(--white60);
+    transition: color .4s, text-shadow .4s;
+  }
+  .hero-title em:hover {
+    color: var(--white);
+    text-shadow: 0 0 80px rgba(255,255,255,0.4), 0 0 160px rgba(160,160,255,0.2);
+  }
   .hero-sub {
     margin-top: 32px; margin-bottom: 52px;
     font-family: 'Syne', sans-serif; font-weight: 300;
@@ -123,15 +130,27 @@
     opacity: 0; animation: fadeUp .7s .9s forwards;
     display: flex; flex-direction: column; align-items: center; gap: 8px;
     border: 1px solid var(--border); padding: 24px 60px;
+    transition: border-color .4s;
+    cursor: default;
   }
+  .hero-stat:hover { border-color: rgba(255,255,255,0.25); }
   .hero-stat-num {
     font-family: 'Syne', sans-serif; font-weight: 300;
     font-size: clamp(2.5rem, 6vw, 5rem); letter-spacing: 0.05em; line-height: 1;
+    transition: font-size .5s cubic-bezier(0.16,1,0.3,1), letter-spacing .5s, text-shadow .4s, color .3s;
+  }
+  .hero-stat:hover .hero-stat-num {
+    font-size: clamp(3rem, 8vw, 7rem);
+    letter-spacing: 0.08em;
+    text-shadow: 0 0 60px rgba(180,180,255,0.35), 0 0 120px rgba(120,120,255,0.15);
+    color: var(--white);
   }
   .hero-stat-lbl {
     font-family: 'DM Mono', monospace; font-size: 0.58rem;
     letter-spacing: 0.3em; text-transform: uppercase; color: var(--white30);
+    transition: color .3s, letter-spacing .4s;
   }
+  .hero-stat:hover .hero-stat-lbl { color: var(--white60); letter-spacing: 0.35em; }
 
   /* SECTION HELPERS */
   .section-label {
@@ -270,10 +289,9 @@
 
   /* CLOTHES */
   #clothes { padding: 100px 48px; }
-  .clothes-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 10px; }
+  .clothes-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
   .cloth-card { position: relative; overflow: hidden; background: var(--white03); border: 1px solid var(--border); cursor: none; }
   .cloth-img { width: 100%; height: 100%; min-height: 300px; object-fit: cover; display: block; transition: transform .6s cubic-bezier(0.16,1,0.3,1); }
-  .cloth-card:first-child .cloth-img { min-height: 620px; }
   .cloth-card:hover .cloth-img { transform: scale(1.04); }
   .cloth-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(10,10,21,0.92) 0%, transparent 55%); opacity: 0; transition: opacity .4s; }
   .cloth-card:hover .cloth-overlay { opacity: 1; }
@@ -526,6 +544,11 @@
       <img class="cloth-img" src="https://i.imgur.com/NqMcTHB.gif" alt="Unravel">
       <div class="cloth-overlay"></div>
       <div class="cloth-meta"><div class="cloth-name">Custom Leather Jacket</div><div class="cloth-tag">Embroidered Sidequest · Made for James Seo</div></div>
+    </div>
+    <div class="cloth-card reveal d4">
+      <img class="cloth-img" src="https://i.imgur.com/AOo1MYb.jpeg" alt="Unravel">
+      <div class="cloth-overlay"></div>
+      <div class="cloth-meta"><div class="cloth-name">Unravel</div><div class="cloth-tag">unravelculture.com</div></div>
     </div>
   </div>
 </section>
