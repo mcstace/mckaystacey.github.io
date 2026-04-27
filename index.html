@@ -272,10 +272,9 @@
   #clothes { padding: 100px 48px; }
   .clothes-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 10px; }
   .cloth-card { position: relative; overflow: hidden; background: var(--white03); border: 1px solid var(--border); cursor: none; }
-  .cloth-ph { width: 100%; min-height: 300px; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 10px; }
-  .cloth-card:first-child .cloth-ph { min-height: 620px; }
-  .cloth-ph svg { opacity: 0.05; }
-  .cloth-ph-lbl { font-family: 'DM Mono', monospace; font-size: 0.48rem; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(255,255,255,0.09); }
+  .cloth-img { width: 100%; height: 100%; min-height: 300px; object-fit: cover; display: block; transition: transform .6s cubic-bezier(0.16,1,0.3,1); }
+  .cloth-card:first-child .cloth-img { min-height: 620px; }
+  .cloth-card:hover .cloth-img { transform: scale(1.04); }
   .cloth-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(10,10,21,0.92) 0%, transparent 55%); opacity: 0; transition: opacity .4s; }
   .cloth-card:hover .cloth-overlay { opacity: 1; }
   .cloth-meta { position: absolute; bottom: 0; left: 0; right: 0; padding: 20px 18px; opacity: 0; transform: translateY(8px); transition: opacity .4s, transform .4s; }
@@ -314,7 +313,7 @@
     #hero { padding: 140px 24px 80px; }
     #brands { padding: 60px 0; } .brands-header { padding: 0 24px; }
     #beast { padding: 60px 24px; }
-    #videos, #links, #clothes, #cta { padding: 70px 24px; }
+    #videos, #clothes, #cta { padding: 70px 24px; }
     .clothes-grid { grid-template-columns: 1fr 1fr; }
     .cloth-card:first-child { grid-column: 1/3; } .cloth-card:first-child .cloth-ph { min-height: 280px; }
     .video-grid { grid-template-columns: 1fr; } .video-card.featured { grid-column: auto; }
@@ -333,7 +332,6 @@
   <ul class="nav-links">
     <li><a href="#brands">Brands</a></li>
     <li><a href="#videos">Work</a></li>
-    <li><a href="#links">Links</a></li>
     <li><a href="#clothes">Clothes</a></li>
     <li><a href="#cta">Collab</a></li>
   </ul>
@@ -531,11 +529,31 @@
   <div class="section-label reveal">Unravel</div>
   <h2 class="section-title reveal">The Clothes</h2>
   <div class="clothes-grid">
-    <div class="cloth-card reveal"><div class="cloth-ph"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="0.7"><path d="M20.38 3.46L16 2a4 4 0 01-8 0L3.62 3.46a2 2 0 00-1.34 2.23l.58 3.57a1 1 0 00.99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 002-2V10h2.15a1 1 0 00.99-.84l.58-3.57a2 2 0 00-1.34-2.23z"/></svg><span class="cloth-ph-lbl">Drop your hero piece here</span></div><div class="cloth-overlay"></div><div class="cloth-meta"><div class="cloth-name">Hero Piece</div><div class="cloth-tag">Unravel — SS '25</div></div></div>
-    <div class="cloth-card reveal d1"><div class="cloth-ph"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="0.7"><path d="M20.38 3.46L16 2a4 4 0 01-8 0L3.62 3.46a2 2 0 00-1.34 2.23l.58 3.57a1 1 0 00.99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 002-2V10h2.15a1 1 0 00.99-.84l.58-3.57a2 2 0 00-1.34-2.23z"/></svg><span class="cloth-ph-lbl">Piece 2</span></div><div class="cloth-overlay"></div><div class="cloth-meta"><div class="cloth-name">Signature Cut</div><div class="cloth-tag">Limited Drop</div></div></div>
-    <div class="cloth-card reveal d2"><div class="cloth-ph"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="0.7"><path d="M20.38 3.46L16 2a4 4 0 01-8 0L3.62 3.46a2 2 0 00-1.34 2.23l.58 3.57a1 1 0 00.99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 002-2V10h2.15a1 1 0 00.99-.84l.58-3.57a2 2 0 00-1.34-2.23z"/></svg><span class="cloth-ph-lbl">Piece 3</span></div><div class="cloth-overlay"></div><div class="cloth-meta"><div class="cloth-name">The Statement</div><div class="cloth-tag">One-Off</div></div></div>
-    <div class="cloth-card reveal d3"><div class="cloth-ph"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="0.7"><path d="M20.38 3.46L16 2a4 4 0 01-8 0L3.62 3.46a2 2 0 00-1.34 2.23l.58 3.57a1 1 0 00.99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 002-2V10h2.15a1 1 0 00.99-.84l.58-3.57a2 2 0 00-1.34-2.23z"/></svg><span class="cloth-ph-lbl">Piece 4</span></div><div class="cloth-overlay"></div><div class="cloth-meta"><div class="cloth-name">Core Essential</div><div class="cloth-tag">Unravel</div></div></div>
-    <div class="cloth-card reveal d4"><div class="cloth-ph"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="0.7"><path d="M20.38 3.46L16 2a4 4 0 01-8 0L3.62 3.46a2 2 0 00-1.34 2.23l.58 3.57a1 1 0 00.99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 002-2V10h2.15a1 1 0 00.99-.84l.58-3.57a2 2 0 00-1.34-2.23z"/></svg><span class="cloth-ph-lbl">Piece 5</span></div><div class="cloth-overlay"></div><div class="cloth-meta"><div class="cloth-name">The Edge</div><div class="cloth-tag">Archive</div></div></div>
+    <div class="cloth-card reveal">
+      <img class="cloth-img" src="https://i.imgur.com/S4t0SWE.jpeg" alt="Unravel">
+      <div class="cloth-overlay"></div>
+      <div class="cloth-meta"><div class="cloth-name">Unravel</div><div class="cloth-tag">unravelculture.com</div></div>
+    </div>
+    <div class="cloth-card reveal d1">
+      <img class="cloth-img" src="https://i.imgur.com/eha4KPM.jpeg" alt="Unravel">
+      <div class="cloth-overlay"></div>
+      <div class="cloth-meta"><div class="cloth-name">Unravel</div><div class="cloth-tag">unravelculture.com</div></div>
+    </div>
+    <div class="cloth-card reveal d2">
+      <img class="cloth-img" src="https://i.imgur.com/EDj4zqi.jpeg" alt="Unravel">
+      <div class="cloth-overlay"></div>
+      <div class="cloth-meta"><div class="cloth-name">Unravel</div><div class="cloth-tag">unravelculture.com</div></div>
+    </div>
+    <div class="cloth-card reveal d3">
+      <img class="cloth-img" src="https://i.imgur.com/XczqvLE.jpeg" alt="Unravel">
+      <div class="cloth-overlay"></div>
+      <div class="cloth-meta"><div class="cloth-name">Unravel</div><div class="cloth-tag">unravelculture.com</div></div>
+    </div>
+    <div class="cloth-card reveal d4">
+      <img class="cloth-img" src="https://i.imgur.com/NqMcTHB.gif" alt="Unravel">
+      <div class="cloth-overlay"></div>
+      <div class="cloth-meta"><div class="cloth-name">Unravel</div><div class="cloth-tag">unravelculture.com</div></div>
+    </div>
   </div>
 </section>
 
