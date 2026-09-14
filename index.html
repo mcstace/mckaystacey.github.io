@@ -5,600 +5,356 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>McKay Stacey</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@300;400;600;700&family=DM+Mono:wght@300&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,400;0,500;0,600;0,700;1,500&family=Permanent+Marker&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
   :root {
-    --white: #ffffff;
-    --white60: rgba(255,255,255,0.6);
-    --white30: rgba(255,255,255,0.3);
-    --white10: rgba(255,255,255,0.1);
-    --white05: rgba(255,255,255,0.05);
-    --white03: rgba(255,255,255,0.03);
-    --border: rgba(255,255,255,0.1);
+    --bg: #ffffff;
+    --bg-raised: #f7f7f6;
+    --ink: #111111;
+    --ink-70: rgba(17,17,17,0.68);
+    --ink-45: rgba(17,17,17,0.45);
+    --line: rgba(17,17,17,0.14);
+    --accent: #e4002b;
+    --bar-h: 34px;
+    --side-w: 132px;
+    --font-display: 'Archivo', 'Helvetica Neue', Arial, sans-serif;
+    --font-mark: 'Permanent Marker', cursive;
   }
+  /* Committed to a white theme always — no dark-mode auto-switch,
+     matching the always-white Stüssy site regardless of system setting. */
 
   html { scroll-behavior: smooth; }
-
   body {
-    background: radial-gradient(ellipse at center, #1a1a2e 0%, #0a0a15 50%, #000000 100%);
-    color: var(--white);
-    font-family: 'Syne', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-display);
     overflow-x: hidden;
     cursor: none;
-    min-height: 100vh;
+  }
+  @media (max-width: 860px), (hover: none) {
+    body { cursor: auto; }
+    #cursorDot, #cursorRing { display: none; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    * { transition-duration: .01ms !important; animation-duration: .01ms !important; }
   }
 
-  .cursor {
-    position: fixed; width: 10px; height: 10px;
-    background: rgba(255,255,255,0.85); border-radius: 50%;
-    pointer-events: none; z-index: 9999;
+  a { color: inherit; }
+  img { max-width: 100%; display: block; }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+  #cursorDot {
+    position: fixed; width: 5px; height: 5px; background: var(--ink);
+    border-radius: 50%; pointer-events: none; z-index: 9999;
     transform: translate(-50%,-50%);
-    transition: width .18s, height .18s, border-radius .18s, background .18s;
   }
-  .cursor.drag { width: 52px; height: 52px; border-radius: 6px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.2); }
-  .cursor-ring {
-    position: fixed; width: 34px; height: 34px;
-    border: 1px solid rgba(255,255,255,0.2); border-radius: 50%;
+  #cursorRing {
+    position: fixed; width: 26px; height: 26px;
+    border: 1px solid var(--ink-45); border-radius: 50%;
     pointer-events: none; z-index: 9998;
-    transform: translate(-50%,-50%); transition: opacity .2s;
+    transform: translate(-50%,-50%); transition: opacity .2s, border-color .25s, width .25s, height .25s;
   }
-  .cursor-ring.hide { opacity: 0; }
+  #cursorRing.on-link { border-color: var(--accent); width: 34px; height: 34px; }
 
-  /* NAV */
-  nav {
-    position: fixed; top: 0; left: 0; right: 0;
-    display: flex; justify-content: space-between; align-items: center;
-    padding: 28px 48px; z-index: 100;
-    background: linear-gradient(to bottom, rgba(10,10,21,0.96) 0%, transparent 100%);
-  }
-  .nav-logo {
-    font-family: 'Syne', sans-serif; font-weight: 300;
-    font-size: 1.35rem; letter-spacing: 0.15em;
-    color: var(--white); text-decoration: none; text-transform: uppercase;
-  }
-  .nav-links { display: flex; gap: 36px; list-style: none; }
-  .nav-links a {
-    font-family: 'DM Mono', monospace; font-size: 0.58rem;
-    letter-spacing: 0.22em; text-transform: uppercase;
-    color: var(--white30); text-decoration: none; transition: color 0.25s;
-  }
-  .nav-links a:hover { color: var(--white); }
-
-  /* HERO */
-  #hero {
-    min-height: 100vh; display: flex; flex-direction: column;
-    align-items: center; justify-content: center;
-    text-align: center; padding: 160px 48px 100px;
-    position: relative; overflow: hidden;
-  }
-  .hero-glow {
-    position: absolute; top: 0; left: 50%; transform: translateX(-50%);
-    width: 800px; height: 500px;
-    background: radial-gradient(ellipse, rgba(100,100,200,0.12) 0%, transparent 70%);
-    pointer-events: none;
-  }
-  .hero-glow2 {
-    position: absolute; bottom: 0; right: 0; width: 400px; height: 400px;
-    background: radial-gradient(ellipse, rgba(80,80,180,0.07) 0%, transparent 70%);
-    pointer-events: none;
-  }
-  .hero-eyebrow {
-    font-family: 'DM Mono', monospace; font-size: 0.6rem;
-    letter-spacing: 0.35em; text-transform: uppercase; color: var(--white30);
-    margin-bottom: 28px; opacity: 0; animation: fadeUp .7s .2s forwards;
-  }
-  .hero-title {
-    font-family: 'Syne', sans-serif; font-weight: 300;
-    font-size: clamp(52px, 10vw, 140px); line-height: 1.1;
-    letter-spacing: 0.15em; text-transform: uppercase;
-    opacity: 0; animation: fadeUp .9s .3s forwards;
-  }
-  .hero-title em {
-    font-style: normal; color: var(--white60);
-    transition: color .4s, text-shadow .4s;
-  }
-  .hero-title em:hover {
-    color: var(--white);
-    text-shadow: 0 0 80px rgba(255,255,255,0.4), 0 0 160px rgba(160,160,255,0.2);
-  }
-  .hero-sub {
-    margin-top: 32px; margin-bottom: 52px;
-    font-family: 'Syne', sans-serif; font-weight: 300;
-    font-size: clamp(1.2rem, 3vw, 2.4rem);
-    letter-spacing: 0.05em; color: var(--white60); line-height: 1.3;
-    opacity: 0; animation: fadeUp .7s .5s forwards;
-  }
-  .hero-sub span { color: var(--white); }
-  .hero-socials {
-    display: flex; gap: 28px; align-items: center; justify-content: center; flex-wrap: wrap;
-    margin-bottom: 60px; opacity: 0; animation: fadeUp .7s .7s forwards;
-  }
-  .hero-socials a {
-    display: flex; align-items: center; gap: 8px;
-    font-family: 'DM Mono', monospace; font-size: 0.58rem;
-    letter-spacing: 0.18em; text-transform: uppercase;
-    color: var(--white60); text-decoration: none; transition: color .25s, transform .25s;
-  }
-  .hero-socials a:hover { color: var(--white); transform: translateY(-2px); }
-  .hero-socials svg { width: 14px; height: 14px; opacity: 0.65; }
-  .sep { color: var(--white10); font-size: 0.4rem; }
-
-  /* STAT — just the one big number */
-  .hero-stat {
-    opacity: 0; animation: fadeUp .7s .9s forwards;
-    display: flex; flex-direction: column; align-items: center; gap: 8px;
-    border: 1px solid var(--border); padding: 24px 60px;
-    transition: border-color .4s;
-    cursor: default;
-  }
-  .hero-stat:hover { border-color: rgba(255,255,255,0.25); }
-  .hero-stat-num {
-    font-family: 'Syne', sans-serif; font-weight: 300;
-    font-size: clamp(2.5rem, 6vw, 5rem); letter-spacing: 0.05em; line-height: 1;
-    transition: font-size .5s cubic-bezier(0.16,1,0.3,1), letter-spacing .5s, text-shadow .4s, color .3s;
-  }
-  .hero-stat:hover .hero-stat-num {
-    font-size: clamp(3rem, 8vw, 7rem);
-    letter-spacing: 0.08em;
-    text-shadow: 0 0 60px rgba(180,180,255,0.35), 0 0 120px rgba(120,120,255,0.15);
-    color: var(--white);
-  }
-  .hero-stat-lbl {
-    font-family: 'DM Mono', monospace; font-size: 0.58rem;
-    letter-spacing: 0.3em; text-transform: uppercase; color: var(--white30);
-    transition: color .3s, letter-spacing .4s;
-  }
-  .hero-stat:hover .hero-stat-lbl { color: var(--white60); letter-spacing: 0.35em; }
-
-  /* SECTION HELPERS */
-  .section-label {
-    font-family: 'DM Mono', monospace; font-size: 0.56rem;
-    letter-spacing: 0.28em; text-transform: uppercase; color: var(--white30);
-    margin-bottom: 14px; display: flex; align-items: center; gap: 10px;
-  }
-  .section-label::before { content: ''; width: 22px; height: 1px; background: var(--white30); }
-  .section-title {
-    font-family: 'Syne', sans-serif; font-weight: 300;
-    font-size: clamp(32px, 5vw, 64px); letter-spacing: 0.12em;
-    text-transform: uppercase; line-height: 1.1; margin-bottom: 52px;
-  }
-
-  /* BRANDS — right under hero, horizontal drag */
-  #brands { padding: 80px 0; }
-  .brands-header { padding: 0 48px; margin-bottom: 40px; }
-  .brands-hint {
-    font-family: 'DM Mono', monospace; font-size: 0.52rem;
-    letter-spacing: 0.2em; text-transform: uppercase; color: var(--white30);
-    margin-top: 8px; display: flex; align-items: center; gap: 8px;
-  }
-  .brands-hint svg { width: 14px; opacity: 0.4; }
-
-  .brands-track-outer {
-    overflow: hidden; position: relative; padding: 10px 0; cursor: none;
-  }
-  .brands-track-outer::before,
-  .brands-track-outer::after {
-    content: ''; position: absolute; top: 0; bottom: 0; width: 140px; z-index: 2; pointer-events: none;
-  }
-  .brands-track-outer::before { left: 0; background: linear-gradient(to right, #050510, transparent); }
-  .brands-track-outer::after  { right: 0; background: linear-gradient(to left, #000005, transparent); }
-
-  .brands-track { display: flex; align-items: stretch; width: max-content; user-select: none; will-change: transform; }
-
-  .brand-item {
-    display: flex; flex-direction: column; align-items: center; justify-content: center;
-    gap: 18px; padding: 40px 56px; border-right: 1px solid var(--border);
-    min-width: 220px; transition: background .3s;
-  }
-  .brand-item:first-child { border-left: 1px solid var(--border); }
-  .brand-item:hover { background: var(--white03); }
-
-  .brand-logo {
-    height: 56px; display: flex; align-items: center; justify-content: center;
-    opacity: 0.28; transition: opacity .35s;
-  }
-  .brand-item:hover .brand-logo { opacity: 0.8; }
-  .brand-logo img {
-    max-height: 56px; max-width: 160px;
-    object-fit: contain; display: block;
-  }
-
-  .brand-label {
-    font-family: 'DM Mono', monospace; font-size: 0.48rem;
-    letter-spacing: 0.2em; text-transform: uppercase; color: var(--white30);
-    transition: color .3s; white-space: nowrap;
-  }
-  .brand-item:hover .brand-label { color: var(--white60); }
-
-  /* BEAST GAMES — centered photo, no text */
-  #beast { padding: 80px 48px; display: flex; justify-content: center; }
-  .beast-photo-wrap {
-    max-width: 520px; width: 100%;
-    position: relative; border: 1px solid var(--border);
-    overflow: hidden; background: var(--white03);
-    display: block; text-decoration: none;
-    transition: opacity .3s;
-  }
-  .beast-photo-wrap:hover { opacity: 0.88; }
-
-  /* VIDEOS */
-  #videos { padding: 100px 48px; }
-  .video-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
-  .video-card {
-    position: relative; overflow: hidden;
-    background: var(--white03); border: 1px solid var(--border);
-    text-decoration: none; display: block; cursor: none;
-  }
-  .video-thumb {
-    width: 100%; aspect-ratio: 16/9;
-    display: block; object-fit: cover;
-    filter: brightness(0.72) grayscale(15%);
-    transition: filter .4s, transform .55s cubic-bezier(0.16,1,0.3,1);
-  }
-  .video-card:hover .video-thumb { filter: brightness(0.92) grayscale(0%); transform: scale(1.04); }
-
-  .video-ph {
-    width: 100%; aspect-ratio: 16/9;
-    display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 10px;
-    background: rgba(255,255,255,0.02);
-  }
-  .video-ph svg { opacity: 0.05; }
-  .video-ph-lbl { font-family: 'DM Mono', monospace; font-size: 0.48rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,0.09); }
-
-  .play-circle {
-    position: absolute; top: 50%; left: 50%;
-    transform: translate(-50%,-50%) scale(0.85);
-    width: 46px; height: 46px;
-    border: 1px solid rgba(255,255,255,0.3); border-radius: 50%;
+  /* TOP BAR */
+  .topbar {
+    position: fixed; top: 0; left: 0; right: 0; height: var(--bar-h); z-index: 110;
+    background: var(--bg); border-bottom: 1px solid var(--line);
     display: flex; align-items: center; justify-content: center;
-    transition: transform .3s, border-color .3s, background .3s;
-    /* keep centred regardless of thumb height */
-    margin-top: 0;
+    transition: transform .3s;
   }
-  .video-card:hover .play-circle { transform: translate(-50%,-50%) scale(1); border-color: rgba(255,255,255,0.7); background: rgba(255,255,255,0.1); }
-  .play-circle svg { width: 11px; margin-left: 3px; fill: var(--white); }
-
-
-
-  /* LINKS */
-  #links { padding: 100px 48px; }
-  .cards-grid { display: flex; flex-direction: column; gap: 12px; max-width: 860px; margin: 0 auto; }
-  .card {
-    background: var(--white03); backdrop-filter: blur(10px);
-    border: 1px solid var(--border); border-radius: 16px;
-    padding: 26px 34px; display: flex; align-items: center;
-    justify-content: space-between; gap: 28px;
-    transition: background .3s, border-color .3s, transform .3s; cursor: none;
+  .topbar.hidden { transform: translateY(-100%); }
+  .topbar-msg {
+    font-size: 0.64rem; letter-spacing: 0.04em; text-transform: uppercase;
+    color: var(--ink-70); display: flex; gap: 10px; align-items: baseline;
   }
-  .card:hover { background: var(--white05); border-color: rgba(255,255,255,0.2); transform: translateY(-3px); }
-  .card-left { display: flex; align-items: center; gap: 20px; }
-  .card-icon { width: 50px; height: 50px; flex-shrink: 0; border-radius: 12px; display: flex; align-items: center; justify-content: center; }
-  .card-title { font-family: 'Syne', sans-serif; font-weight: 600; font-size: 1.05rem; letter-spacing: 0.05em; color: var(--white); margin-bottom: 3px; }
-  .card-desc { font-family: 'DM Mono', monospace; font-size: 0.56rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--white60); }
-  .card-btn {
-    font-family: 'DM Mono', monospace; font-size: 0.56rem; letter-spacing: 0.18em; text-transform: uppercase;
-    color: var(--white); text-decoration: none; background: var(--white05);
-    border: 1px solid rgba(255,255,255,0.2); border-radius: 10px;
-    padding: 10px 20px; white-space: nowrap; transition: background .25s, border-color .25s;
+  .topbar-msg strong { color: var(--ink); font-variant-numeric: tabular-nums; }
+  .topbar-hide {
+    font: inherit; background: none; border: none; cursor: pointer;
+    color: var(--ink-70); text-transform: uppercase; letter-spacing: 0.04em;
+    font-size: 0.64rem; padding: 0; text-decoration: underline; text-underline-offset: 2px;
   }
-  .card-btn:hover { background: var(--white10); border-color: rgba(255,255,255,0.3); }
-
-  /* CLOTHES */
-  #clothes { padding: 100px 48px; }
-  .clothes-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
-  .cloth-card { position: relative; overflow: hidden; background: var(--white03); border: 1px solid var(--border); cursor: none; }
-  .cloth-img { width: 100%; height: 100%; min-height: 300px; object-fit: cover; display: block; transition: transform .6s cubic-bezier(0.16,1,0.3,1); }
-  .cloth-card:hover .cloth-img { transform: scale(1.04); }
-  .cloth-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(10,10,21,0.92) 0%, transparent 55%); opacity: 0; transition: opacity .4s; }
-  .cloth-card:hover .cloth-overlay { opacity: 1; }
-  .cloth-meta { position: absolute; bottom: 0; left: 0; right: 0; padding: 20px 18px; opacity: 0; transform: translateY(8px); transition: opacity .4s, transform .4s; }
-  .cloth-card:hover .cloth-meta { opacity: 1; transform: translateY(0); }
-  .cloth-name { font-family: 'Syne', sans-serif; font-weight: 600; font-size: 0.95rem; letter-spacing: 0.1em; text-transform: uppercase; }
-  .cloth-tag { font-family: 'DM Mono', monospace; font-size: 0.48rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--white60); margin-top: 4px; }
-
-  /* CTA */
-  #cta { padding: 100px 48px; text-align: center; position: relative; overflow: hidden; }
-  .cta-glow { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 600px; height: 300px; background: radial-gradient(ellipse, rgba(80,80,180,0.1) 0%, transparent 70%); pointer-events: none; }
-  .cta-title { font-family: 'Syne', sans-serif; font-weight: 300; font-size: clamp(32px, 5vw, 64px); letter-spacing: 0.12em; text-transform: uppercase; line-height: 1.2; margin-bottom: 16px; }
-  .cta-sub { font-family: 'DM Mono', monospace; font-size: 0.6rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--white30); margin-bottom: 40px; }
-  .cta-btn {
-    display: inline-flex; align-items: center; gap: 10px;
-    font-family: 'DM Mono', monospace; font-size: 0.6rem; letter-spacing: 0.22em; text-transform: uppercase;
-    color: var(--white); text-decoration: none; border: 1px solid rgba(255,255,255,0.2);
-    background: var(--white05); backdrop-filter: blur(10px);
-    padding: 15px 38px; border-radius: 10px; transition: background .3s, border-color .3s;
+  .topbar-hide:hover { color: var(--ink); }
+  .topbar-contact {
+    position: absolute; right: 22px; font-size: 0.64rem; letter-spacing: 0.04em;
+    text-transform: uppercase; color: var(--ink-70); text-decoration: none;
   }
-  .cta-btn:hover { background: var(--white10); border-color: rgba(255,255,255,0.35); }
+  .topbar-contact:hover { color: var(--ink); }
 
-  footer { padding: 34px 48px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
-  .footer-logo { font-family: 'Syne', sans-serif; font-weight: 300; font-size: 1.05rem; letter-spacing: 0.18em; text-transform: uppercase; }
-  .footer-copy { font-family: 'DM Mono', monospace; font-size: 0.48rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--white30); }
-  .footer-links { display: flex; gap: 20px; }
-  .footer-links a { font-family: 'DM Mono', monospace; font-size: 0.48rem; letter-spacing: 0.13em; text-transform: uppercase; color: var(--white30); text-decoration: none; transition: color .2s; }
-  .footer-links a:hover { color: var(--white); }
-
-  @keyframes fadeUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
-  .reveal { opacity:0; transform:translateY(26px); transition:opacity .85s cubic-bezier(0.16,1,0.3,1), transform .85s cubic-bezier(0.16,1,0.3,1); }
-  .reveal.vis { opacity:1; transform:translateY(0); }
-  .d1{transition-delay:.1s} .d2{transition-delay:.2s} .d3{transition-delay:.3s} .d4{transition-delay:.4s}
-
-  @media (max-width: 900px) {
-    nav { padding: 20px 24px; } .nav-links { display: none; }
-    #hero { padding: 140px 24px 80px; }
-    #brands { padding: 60px 0; } .brands-header { padding: 0 24px; }
-    #beast { padding: 60px 24px; }
-    #videos, #clothes, #cta { padding: 70px 24px; }
-    .clothes-grid { grid-template-columns: 1fr 1fr; }
-    .cloth-card:first-child { grid-column: 1/3; } .cloth-card:first-child .cloth-ph { min-height: 280px; }
-    .video-grid { grid-template-columns: 1fr; } .video-card.featured { grid-column: auto; }
-    footer { flex-direction: column; gap: 16px; text-align: center; }
+  /* SIDEBAR */
+  .sidebar {
+    position: fixed; top: var(--bar-h); left: 0; bottom: 0; width: var(--side-w);
+    padding: 26px 18px 20px; display: flex; flex-direction: column;
+    background: var(--bg); z-index: 90; overflow-y: auto;
   }
+  .logo {
+    font-family: var(--font-mark); font-size: 1.65rem; line-height: 0.92;
+    color: var(--ink); text-decoration: none; display: block; margin-bottom: 34px;
+    transform: rotate(-1.5deg); transform-origin: left top;
+  }
+  .side-nav { display: flex; flex-direction: column; gap: 13px; }
+  .side-nav a {
+    font-weight: 500; font-size: 0.68rem; letter-spacing: 0.02em; text-transform: uppercase;
+    color: var(--ink); text-decoration: none;
+  }
+  .side-nav a:hover { text-decoration: underline; text-underline-offset: 3px; }
+  .side-div { font-size: 0.7rem; color: var(--ink-45); margin: 18px 0; }
+  .side-bottom { margin-top: auto; display: flex; flex-direction: column; gap: 8px; padding-top: 24px; }
+  .side-handle {
+    font-weight: 500; font-size: 0.64rem; letter-spacing: 0.03em; text-transform: uppercase;
+    color: var(--ink-70); text-decoration: none;
+  }
+  .side-handle:hover { color: var(--ink); }
+  .side-copy { font-size: 0.56rem; letter-spacing: 0.02em; text-transform: uppercase; color: var(--ink-45); }
+
+  .menu-toggle {
+    display: none; background: none; border: 1px solid var(--ink); font-family: var(--font-display);
+    font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.06em; padding: 8px 14px; cursor: pointer;
+  }
+
+  @media (max-width: 860px) {
+    .sidebar {
+      position: static; width: 100%; flex-direction: row; align-items: center;
+      justify-content: space-between; padding: 16px 22px; border-bottom: 1px solid var(--line);
+    }
+    .logo { margin-bottom: 0; font-size: 1.3rem; }
+    .side-nav, .side-div, .side-bottom { display: none; }
+    .menu-toggle { display: inline-flex; }
+    body.menu-open .sidebar { flex-direction: column; align-items: flex-start; gap: 20px; }
+    body.menu-open .side-nav, body.menu-open .side-div, body.menu-open .side-bottom { display: flex; }
+    body.menu-open .side-bottom { padding-top: 4px; }
+  }
+
+  /* CONTENT */
+  .content { margin-left: var(--side-w); padding-top: var(--bar-h); }
+  @media (max-width: 860px) { .content { margin-left: 0; padding-top: 0; } }
+
+  .hero-shot img { width: 100%; height: 82vh; object-fit: cover; display: block; }
+  @media (max-width: 860px) { .hero-shot img { height: 58vh; } }
+
+  .cap-row {
+    display: flex; justify-content: space-between; align-items: baseline; gap: 16px;
+    padding: 16px 28px; border-bottom: 1px solid var(--line); flex-wrap: wrap;
+  }
+  .cap-title { font-weight: 600; font-size: 0.74rem; letter-spacing: 0.03em; text-transform: uppercase; }
+  .cap-meta { font-weight: 400; font-size: 0.64rem; letter-spacing: 0.02em; text-transform: uppercase; color: var(--ink-45); }
+  .cap-meta a { color: var(--ink-70); text-decoration: none; border-bottom: 1px solid var(--line); }
+  .cap-meta a:hover { color: var(--ink); border-color: var(--ink); }
+
+  .block { padding: 64px 28px; border-bottom: 1px solid var(--line); }
+  .block-eyebrow {
+    display: flex; align-items: center; gap: 8px; font-weight: 500; font-size: 0.6rem;
+    letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-45); margin-bottom: 10px;
+  }
+  .block-eyebrow::before { content: ''; width: 14px; height: 1px; background: var(--ink-45); }
+  .block-title { font-weight: 700; font-size: clamp(22px, 3vw, 32px); letter-spacing: -0.005em; text-transform: uppercase; margin-bottom: 30px; }
+
+  .tile-grid { display: grid; gap: 1px; background: var(--line); border: 1px solid var(--line); }
+
+  .brand-tile-grid { grid-template-columns: repeat(4, 1fr); }
+  .brand-tile {
+    background: var(--bg); padding: 34px 18px; display: flex; flex-direction: column;
+    align-items: center; justify-content: center; gap: 16px; text-align: center; transition: background .2s;
+  }
+  .brand-tile:hover { background: var(--bg-raised); }
+  .brand-tile img { max-height: 40px; max-width: 128px; object-fit: contain; filter: grayscale(1); opacity: 0.5; transition: opacity .2s; }
+  .brand-tile:hover img { opacity: 1; }
+  .brand-tile span { font-weight: 500; font-size: 0.6rem; letter-spacing: 0.05em; text-transform: uppercase; color: var(--ink-70); }
+
+  .video-tile-grid { grid-template-columns: repeat(2, 1fr); }
+  .video-tile { position: relative; background: var(--bg); text-decoration: none; display: block; cursor: none; }
+  .video-tile img { width: 100%; aspect-ratio: 16/10; object-fit: cover; filter: grayscale(0.3); transition: filter .3s, transform .5s cubic-bezier(0.16,1,0.3,1); }
+  .video-tile:hover img { filter: grayscale(0); transform: scale(1.02); }
+  .video-ph { width: 100%; aspect-ratio: 16/10; background: var(--bg-raised); display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 8px; }
+  .video-ph svg { width: 26px; opacity: 0.18; }
+  .video-ph span { font-size: 0.5rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-45); }
+  .tile-cap { display: flex; justify-content: space-between; padding: 12px 16px; border-top: 1px solid var(--line); background: var(--bg); }
+  .tile-cap span { font-size: 0.62rem; letter-spacing: 0.03em; text-transform: uppercase; }
+  .tile-cap span:last-child { color: var(--ink-45); }
+
+  .cloth-tile-grid { grid-template-columns: repeat(3, 1fr); }
+  .cloth-tile { background: var(--bg); text-decoration: none; display: block; cursor: none; }
+  .cloth-tile img { width: 100%; aspect-ratio: 4/5; object-fit: cover; display: block; transition: transform .5s cubic-bezier(0.16,1,0.3,1); }
+  .cloth-tile:hover img { transform: scale(1.02); }
+
+  @media (max-width: 1100px) {
+    .cloth-tile-grid { grid-template-columns: repeat(2, 1fr); }
+    .brand-tile-grid { grid-template-columns: repeat(2, 1fr); }
+    .video-tile-grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 560px) { .cloth-tile-grid { grid-template-columns: 1fr; } }
+
+  .cta-block { text-align: center; padding: 96px 28px; }
+  .cta-statement { font-weight: 700; font-size: clamp(24px, 4vw, 40px); text-transform: uppercase; letter-spacing: -0.005em; margin: 10px 0 14px; text-wrap: balance; }
+  .cta-meta { font-size: 0.64rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-45); margin-bottom: 26px; }
+  .cta-link {
+    display: inline-flex; align-items: center; gap: 8px; font-weight: 500; font-size: 0.68rem;
+    letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink); text-decoration: none;
+    border-bottom: 1px solid var(--ink); padding-bottom: 3px; transition: color .2s, border-color .2s;
+  }
+  .cta-link:hover { color: var(--accent); border-color: var(--accent); }
+
+  .reveal { opacity: 0; transform: translateY(16px); transition: opacity .55s cubic-bezier(0.16,1,0.3,1), transform .55s cubic-bezier(0.16,1,0.3,1); }
+  .reveal.vis { opacity: 1; transform: translateY(0); }
 </style>
 </head>
 <body>
 
-<div class="cursor" id="cursor"></div>
-<div class="cursor-ring" id="ring"></div>
+<div id="cursorDot"></div>
+<div id="cursorRing"></div>
 
-<!-- NAV -->
-<nav>
-  <a href="#" class="nav-logo">McKay Stacey</a>
-  <ul class="nav-links">
-    <li><a href="#brands">Brands</a></li>
-    <li><a href="#videos">Work</a></li>
-    <li><a href="#clothes">Clothes</a></li>
-    <li><a href="#cta">Collab</a></li>
-  </ul>
-</nav>
+<div class="topbar" id="topbar">
+  <p class="topbar-msg"><strong>250,000,000+</strong> views generated for other creators — last 6 months <button class="topbar-hide" id="hideBar" type="button">Hide</button></p>
+  <a class="topbar-contact" href="https://instagram.com/mmckaystacey" target="_blank">Contact</a>
+</div>
 
-<!-- HERO -->
-<section id="hero">
-  <div class="hero-glow"></div>
-  <div class="hero-glow2"></div>
-  <h1 class="hero-title">McKay<br><em>Stacey</em></h1>
-  <p class="hero-sub">I create cool stuff,<br><span>with cool people.</span></p>
-  <div class="hero-socials">
-    <a href="https://instagram.com/mmckaystacey" target="_blank">
-      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-      Instagram
-    </a>
-    <span class="sep">✦</span>
-    <a href="https://twitter.com/mmckaystacey" target="_blank">
-      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-      Twitter
-    </a>
-    <span class="sep">✦</span>
-    <a href="https://youtube.com/@mmckaystacey" target="_blank">
-      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
-      YouTube
-    </a>
-    <span class="sep">✦</span>
-    <a href="https://www.linkedin.com/in/mckay-stacey-bab412212/" target="_blank">
-      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-      LinkedIn
-    </a>
-  </div>
-
-  <!-- Single hero stat -->
-  <div class="hero-stat">
-    <div class="hero-stat-num">250,000,000</div>
-    <div class="hero-stat-lbl">Views generated for other creators · last 6 months</div>
-  </div>
-</section>
-
-<!-- BRANDS — immediately after hero -->
-<section id="brands">
-  <div class="brands-header reveal">
-    <div class="section-label">Worked With</div>
-    <h2 class="section-title" style="margin-bottom:10px;">The Brands</h2>
-    <p class="brands-hint">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M12 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      Drag to explore
-    </p>
-  </div>
-  <div class="brands-track-outer" id="brandsOuter">
-    <div class="brands-track" id="brandsTrack">
-
-      <!-- Microsoft -->
-      <div class="brand-item">
-        <div class="brand-logo">
-          <img src="https://i.imgur.com/FKrK73y.png" alt="Microsoft">
-        </div>
-        <span class="brand-label">Microsoft</span>
-      </div>
-
-      <!-- Halo -->
-      <div class="brand-item">
-        <div class="brand-logo">
-          <img src="https://i.imgur.com/KW3vlaw.png" alt="Halo">
-        </div>
-        <span class="brand-label">Halo</span>
-      </div>
-
-      <!-- Ubisoft -->
-      <div class="brand-item">
-        <div class="brand-logo">
-          <img src="https://i.imgur.com/SksunuT.png" alt="Ubisoft">
-        </div>
-        <span class="brand-label">Ubisoft</span>
-      </div>
-
-      <!-- Rocket League -->
-      <div class="brand-item">
-        <div class="brand-logo">
-          <img src="https://i.imgur.com/DGVZ1Tg.png" alt="Rocket League">
-        </div>
-        <span class="brand-label">Rocket League</span>
-      </div>
-
-      <!-- Epic Games -->
-      <div class="brand-item">
-        <div class="brand-logo">
-          <img src="https://i.imgur.com/ywZSfrJ.png" alt="Epic Games">
-        </div>
-        <span class="brand-label">Epic Games</span>
-      </div>
-
-      <!-- FaZe Clan -->
-      <div class="brand-item">
-        <div class="brand-logo">
-          <img src="https://i.imgur.com/nkbozI1.png" alt="FaZe Clan">
-        </div>
-        <span class="brand-label">FaZe Clan</span>
-      </div>
-
-      <!-- Bucked Up -->
-      <div class="brand-item">
-        <div class="brand-logo">
-          <img src="https://i.imgur.com/e5efSlm.png" alt="Bucked Up">
-        </div>
-        <span class="brand-label">Bucked Up</span>
-      </div>
-
-      <!-- And more -->
-      <div class="brand-item" style="opacity:0.3;">
-        <div class="brand-logo">
-          <svg viewBox="0 0 36 36" width="36" height="36" fill="none" stroke="white" stroke-width="1.5">
-            <circle cx="18" cy="18" r="15"/>
-            <line x1="18" y1="10" x2="18" y2="26"/>
-            <line x1="10" y1="18" x2="26" y2="18"/>
-          </svg>
-        </div>
-        <span class="brand-label">And more</span>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- BEAST GAMES — photo only, centered, slide 8 via img_index -->
-<section id="beast">
-  <a class="beast-photo-wrap reveal" href="https://www.instagram.com/p/DTRkZBFEZuE/?img_index=8" target="_blank">
-    <div class="beast-badge">@beastgames</div>
-    <img src="https://i.imgur.com/hs6ywxI.png" alt="McKay at Beast Games" style="width:100%;display:block;">
-  </a>
-</section>
-
-<!-- VIDEOS — portfolio work -->
-<section id="videos">
-  <div class="section-label reveal">The Work</div>
-  <h2 class="section-title reveal" style="margin-bottom:20px;">Videos I've Made</h2>
-  <div class="video-grid">
-
-    <!-- Video 1: YouTube Short t2i-O-8svik -->
-    <a class="video-card reveal" href="https://www.youtube.com/shorts/t2i-O-8svik" target="_blank">
-      <img class="video-thumb" src="https://i.ytimg.com/vi/t2i-O-8svik/hqdefault.jpg" alt="Video">
-      <div class="play-circle"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
-    </a>
-
-    <!-- Video 2: YouTube Short 9F-HbsyVOBA -->
-    <a class="video-card reveal d1" href="https://www.youtube.com/shorts/9F-HbsyVOBA" target="_blank">
-      <img class="video-thumb" src="https://i.ytimg.com/vi/9F-HbsyVOBA/hqdefault.jpg" alt="Video">
-      <div class="play-circle"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
-    </a>
-
-    <!-- Video 3: Instagram Reel -->
-    <a class="video-card reveal d2" href="https://www.instagram.com/reel/DWH1Y9ZyFVT/" target="_blank">
-      <div class="video-ph">
-        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="0.7"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="white" stroke="none"/></svg>
-        <span class="video-ph-lbl">Instagram Reel — tap to view</span>
-      </div>
-      <div class="play-circle"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
-    </a>
-
-
-
-  </div>
-</section>
-
-
-<!-- CLOTHES -->
-<section id="clothes">
-  <h2 class="section-title reveal">The Clothes</h2>
-  <div class="clothes-grid">
-    <div class="cloth-card reveal">
-      <img class="cloth-img" src="https://i.imgur.com/S4t0SWE.jpeg" alt="Unravel">
-      <div class="cloth-overlay"></div>
-      <div class="cloth-meta"><div class="cloth-name">Unravel</div><div class="cloth-tag">unravelculture.com</div></div>
-    </div>
-    <div class="cloth-card reveal d1">
-      <img class="cloth-img" src="https://i.imgur.com/eha4KPM.jpeg" alt="Unravel">
-      <div class="cloth-overlay"></div>
-      <div class="cloth-meta"><div class="cloth-name">Unravel</div><div class="cloth-tag">unravelculture.com</div></div>
-    </div>
-    <div class="cloth-card reveal d2">
-      <img class="cloth-img" src="https://i.imgur.com/EDj4zqi.jpeg" alt="Unravel">
-      <div class="cloth-overlay"></div>
-      <div class="cloth-meta"><div class="cloth-name">Unravel</div><div class="cloth-tag">unravelculture.com</div></div>
-    </div>
-    <div class="cloth-card reveal d3">
-      <img class="cloth-img" src="https://i.imgur.com/XczqvLE.jpeg" alt="Unravel">
-      <div class="cloth-overlay"></div>
-      <div class="cloth-meta"><div class="cloth-name">Unravel</div><div class="cloth-tag">unravelculture.com</div></div>
-    </div>
-    <div class="cloth-card reveal d4">
-      <img class="cloth-img" src="https://i.imgur.com/NqMcTHB.gif" alt="Unravel">
-      <div class="cloth-overlay"></div>
-      <div class="cloth-meta"><div class="cloth-name">Custom Leather Jacket</div><div class="cloth-tag">Embroidered Sidequest · Made for James Seo</div></div>
-    </div>
-    <div class="cloth-card reveal d4">
-      <img class="cloth-img" src="https://i.imgur.com/AOo1MYb.jpeg" alt="Unravel">
-      <div class="cloth-overlay"></div>
-      <div class="cloth-meta"><div class="cloth-name">Unravel</div><div class="cloth-tag">unravelculture.com</div></div>
-    </div>
-  </div>
-</section>
-
-<!-- CTA -->
-<section id="cta">
-  <div class="cta-glow"></div>
-  <p class="section-label reveal" style="justify-content:center;">Let's Work</p>
-  <h2 class="cta-title reveal">Got an idea?<br>Let's build it.</h2>
-  <p class="cta-sub reveal">Collabs · Brand Deals · Video Work · Anything</p>
-  <a href="https://instagram.com/mmckaystacey" class="cta-btn reveal" target="_blank">Hit Me Up →</a>
-</section>
-
-<footer>
-  <div class="footer-logo">McKay Stacey</div>
-  <div class="footer-copy">© 2025 McKay Stacey</div>
-  <div class="footer-links">
-    <a href="https://www.unravelculture.com" target="_blank">Unravel</a>
-    <a href="https://apps.apple.com/us/app/haingry/id6753778179" target="_blank">Haingry</a>
+<aside class="sidebar">
+  <a href="#" class="logo">McKay<br>Stacey</a>
+  <button class="menu-toggle" id="menuToggle" type="button">Menu</button>
+  <nav class="side-nav">
+    <a href="#brands">Brands</a>
+    <a href="#work">Work</a>
+    <a href="#clothes">Clothes</a>
+    <a href="#collab">Collab</a>
+  </nav>
+  <div class="side-div">—</div>
+  <nav class="side-nav">
     <a href="https://instagram.com/mmckaystacey" target="_blank">Instagram</a>
+    <a href="https://twitter.com/mmckaystacey" target="_blank">Twitter</a>
     <a href="https://youtube.com/@mmckaystacey" target="_blank">YouTube</a>
+    <a href="https://www.linkedin.com/in/mckay-stacey-bab412212/" target="_blank">LinkedIn</a>
+  </nav>
+  <div class="side-bottom">
+    <a href="https://instagram.com/mmckaystacey" target="_blank" class="side-handle">@mmckaystacey</a>
+    <p class="side-copy">© 2026 McKay Stacey</p>
   </div>
-</footer>
+</aside>
+
+<main class="content">
+  <div class="hero-shot">
+    <img src="https://i.imgur.com/hs6ywxI.png" alt="McKay Stacey on set at Beast Games">
+  </div>
+  <div class="cap-row">
+    <span class="cap-title">McKay Stacey — Content, Collabs &amp; Clothing</span>
+    <span class="cap-meta">On set — <a href="https://www.instagram.com/p/DTRkZBFEZuE/?img_index=8" target="_blank">@beastgames</a></span>
+  </div>
+
+  <section id="brands" class="block">
+    <div class="reveal">
+      <div class="block-eyebrow">Worked With</div>
+      <h2 class="block-title">The Brands</h2>
+    </div>
+    <div class="tile-grid brand-tile-grid reveal">
+      <div class="brand-tile"><img src="https://i.imgur.com/FKrK73y.png" alt="Microsoft"><span>Microsoft</span></div>
+      <div class="brand-tile"><img src="https://i.imgur.com/KW3vlaw.png" alt="Halo"><span>Halo</span></div>
+      <div class="brand-tile"><img src="https://i.imgur.com/SksunuT.png" alt="Ubisoft"><span>Ubisoft</span></div>
+      <div class="brand-tile"><img src="https://i.imgur.com/DGVZ1Tg.png" alt="Rocket League"><span>Rocket League</span></div>
+      <div class="brand-tile"><img src="https://i.imgur.com/ywZSfrJ.png" alt="Epic Games"><span>Epic Games</span></div>
+      <div class="brand-tile"><img src="https://i.imgur.com/nkbozI1.png" alt="FaZe Clan"><span>FaZe Clan</span></div>
+      <div class="brand-tile"><img src="https://i.imgur.com/e5efSlm.png" alt="Bucked Up"><span>Bucked Up</span></div>
+      <div class="brand-tile" style="opacity:.5;">
+        <svg viewBox="0 0 36 36" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="18" cy="18" r="15"/><line x1="18" y1="10" x2="18" y2="26"/><line x1="10" y1="18" x2="26" y2="18"/></svg>
+        <span>And More</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="work" class="block">
+    <div class="reveal">
+      <div class="block-eyebrow">The Work</div>
+      <h2 class="block-title">Videos I've Made</h2>
+    </div>
+    <div class="tile-grid video-tile-grid reveal">
+      <a class="video-tile" href="https://www.youtube.com/shorts/t2i-O-8svik" target="_blank">
+        <img src="https://i.ytimg.com/vi/t2i-O-8svik/hqdefault.jpg" alt="Video">
+        <div class="tile-cap"><span>Reel 001</span><span>Watch →</span></div>
+      </a>
+      <a class="video-tile" href="https://www.youtube.com/shorts/9F-HbsyVOBA" target="_blank">
+        <img src="https://i.ytimg.com/vi/9F-HbsyVOBA/hqdefault.jpg" alt="Video">
+        <div class="tile-cap"><span>Reel 002</span><span>Watch →</span></div>
+      </a>
+      <a class="video-tile" href="https://www.instagram.com/reel/DWH1Y9ZyFVT/" target="_blank">
+        <div class="video-ph">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.9"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+          <span>Instagram Reel</span>
+        </div>
+        <div class="tile-cap"><span>Reel 003</span><span>Watch →</span></div>
+      </a>
+    </div>
+  </section>
+
+  <section id="clothes" class="block">
+    <div class="reveal">
+      <div class="block-eyebrow">Unravel Culture</div>
+      <h2 class="block-title">The Clothes</h2>
+    </div>
+    <div class="tile-grid cloth-tile-grid reveal">
+      <a class="cloth-tile" href="https://www.unravelculture.com" target="_blank"><img src="https://i.imgur.com/S4t0SWE.jpeg" alt="Unravel"><div class="tile-cap"><span>Unravel</span><span>Shop</span></div></a>
+      <a class="cloth-tile" href="https://www.unravelculture.com" target="_blank"><img src="https://i.imgur.com/eha4KPM.jpeg" alt="Unravel"><div class="tile-cap"><span>Unravel</span><span>Shop</span></div></a>
+      <a class="cloth-tile" href="https://www.unravelculture.com" target="_blank"><img src="https://i.imgur.com/EDj4zqi.jpeg" alt="Unravel"><div class="tile-cap"><span>Unravel</span><span>Shop</span></div></a>
+      <a class="cloth-tile" href="https://www.unravelculture.com" target="_blank"><img src="https://i.imgur.com/XczqvLE.jpeg" alt="Unravel"><div class="tile-cap"><span>Unravel</span><span>Shop</span></div></a>
+      <a class="cloth-tile" href="#"><img src="https://i.imgur.com/NqMcTHB.gif" alt="Custom Leather Jacket"><div class="tile-cap"><span>Custom Jacket</span><span>For J. Seo</span></div></a>
+      <a class="cloth-tile" href="https://www.unravelculture.com" target="_blank"><img src="https://i.imgur.com/AOo1MYb.jpeg" alt="Unravel"><div class="tile-cap"><span>Unravel</span><span>Shop</span></div></a>
+      <a class="cloth-tile" href="https://www.unravelculture.com" target="_blank"><img src="https://i.imgur.com/joulrOZ.png" alt="Unravel"><div class="tile-cap"><span>Unravel</span><span>Shop</span></div></a>
+      <a class="cloth-tile" href="https://www.unravelculture.com" target="_blank"><img src="https://i.imgur.com/ATy8sLr.png" alt="Unravel"><div class="tile-cap"><span>Unravel</span><span>Shop</span></div></a>
+      <a class="cloth-tile" href="https://www.unravelculture.com" target="_blank"><img src="https://i.imgur.com/YeuSQ59.png" alt="Unravel"><div class="tile-cap"><span>Unravel</span><span>Shop</span></div></a>
+      <a class="cloth-tile" href="https://www.unravelculture.com" target="_blank"><img src="https://i.imgur.com/aBtSzhO.png" alt="Unravel"><div class="tile-cap"><span>Unravel</span><span>Shop</span></div></a>
+      <a class="cloth-tile" href="https://www.unravelculture.com" target="_blank"><img src="https://i.imgur.com/wCYbzqZ.png" alt="Unravel"><div class="tile-cap"><span>Unravel</span><span>Shop</span></div></a>
+      <a class="cloth-tile" href="https://www.unravelculture.com" target="_blank"><img src="https://i.imgur.com/sGvH1hL.png" alt="Unravel"><div class="tile-cap"><span>Unravel</span><span>Shop</span></div></a>
+      <a class="cloth-tile" href="https://www.unravelculture.com" target="_blank"><img src="https://i.imgur.com/Ji2BlCK.png" alt="Unravel"><div class="tile-cap"><span>Unravel</span><span>Shop</span></div></a>
+    </div>
+  </section>
+
+  <section id="collab" class="cta-block">
+    <span class="block-eyebrow reveal" style="justify-content:center;">Let's Work</span>
+    <h2 class="cta-statement reveal">Got an idea? Let's build it.</h2>
+    <p class="cta-meta reveal">Collabs · Brand Deals · Video Work · Anything</p>
+    <a href="https://instagram.com/mmckaystacey" class="cta-link reveal" target="_blank">Hit Me Up →</a>
+  </section>
+</main>
 
 <script>
-  // CURSOR
-  const cur = document.getElementById('cursor');
-  const ring = document.getElementById('ring');
-  let mx=0,my=0,rx=0,ry=0;
-  document.addEventListener('mousemove', e => { mx=e.clientX; my=e.clientY; cur.style.left=mx+'px'; cur.style.top=my+'px'; });
-  (function anim(){ rx+=(mx-rx)*0.11; ry+=(my-ry)*0.11; ring.style.left=rx+'px'; ring.style.top=ry+'px'; requestAnimationFrame(anim); })();
+  // cursor
+  const dot = document.getElementById('cursorDot');
+  const ring = document.getElementById('cursorRing');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    dot.style.left = mx + 'px'; dot.style.top = my + 'px';
+  });
+  (function anim() {
+    rx += (mx - rx) * 0.14; ry += (my - ry) * 0.14;
+    ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
+    requestAnimationFrame(anim);
+  })();
+  document.querySelectorAll('a, button').forEach(el => {
+    el.addEventListener('mouseenter', () => ring.classList.add('on-link'));
+    el.addEventListener('mouseleave', () => ring.classList.remove('on-link'));
+  });
 
-  // REVEAL
-  const obs = new IntersectionObserver(e => e.forEach(x => { if(x.isIntersecting) x.target.classList.add('vis'); }), { threshold: 0.07 });
+  // reveal on scroll
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('vis'); });
+  }, { threshold: 0.06 });
   document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
 
-  // BRAND DRAG
-  const outer = document.getElementById('brandsOuter');
-  const track = document.getElementById('brandsTrack');
-  let isDragging=false, startX=0, scrollLeft=0, currentX=0, velocity=0, lastX=0, rafId=null;
-  function clamp(v,a,b){ return Math.min(Math.max(v,a),b); }
-  function maxScroll(){ return Math.max(0, track.scrollWidth - outer.clientWidth); }
-  function applyX(x){ currentX=clamp(x,-maxScroll(),0); track.style.transform=`translateX(${currentX}px)`; }
-  outer.addEventListener('mouseenter',()=>{ ring.classList.add('hide'); cur.classList.add('drag'); });
-  outer.addEventListener('mouseleave',()=>{ ring.classList.remove('hide'); cur.classList.remove('drag'); if(isDragging) end(); });
-  outer.addEventListener('mousedown',e=>{ isDragging=true; startX=e.clientX; scrollLeft=currentX; lastX=e.clientX; velocity=0; if(rafId) cancelAnimationFrame(rafId); e.preventDefault(); });
-  document.addEventListener('mousemove',e=>{ if(!isDragging) return; velocity=e.clientX-lastX; lastX=e.clientX; applyX(scrollLeft+(e.clientX-startX)); });
-  document.addEventListener('mouseup',()=>{ if(isDragging) end(); });
-  function end(){ isDragging=false; (function m(){ velocity*=0.92; if(Math.abs(velocity)>0.4){ applyX(currentX+velocity); rafId=requestAnimationFrame(m); } })(); }
-  outer.addEventListener('touchstart',e=>{ startX=e.touches[0].clientX; scrollLeft=currentX; velocity=0; lastX=startX; if(rafId) cancelAnimationFrame(rafId); },{passive:true});
-  outer.addEventListener('touchmove',e=>{ velocity=e.touches[0].clientX-lastX; lastX=e.touches[0].clientX; applyX(scrollLeft+(e.touches[0].clientX-startX)); },{passive:true});
-  outer.addEventListener('touchend',()=>{ (function m(){ velocity*=0.92; if(Math.abs(velocity)>0.4){ applyX(currentX+velocity); rafId=requestAnimationFrame(m); } })(); });
+  // hide announcement bar
+  const topbar = document.getElementById('topbar');
+  document.getElementById('hideBar').addEventListener('click', () => {
+    topbar.classList.add('hidden');
+    document.documentElement.style.setProperty('--bar-h', '0px');
+  });
+
+  // mobile menu toggle
+  const menuToggle = document.getElementById('menuToggle');
+  menuToggle.addEventListener('click', () => {
+    const open = document.body.classList.toggle('menu-open');
+    menuToggle.textContent = open ? 'Close' : 'Menu';
+  });
 </script>
 </body>
 </html>
