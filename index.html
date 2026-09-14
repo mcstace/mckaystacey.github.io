@@ -47,7 +47,7 @@
   .topbar-contact:hover { color: var(--ink); }
 
   /* SIDEBAR NAV */
-  .sidebar { position: fixed; top: var(--bar-h); left: 0; bottom: 0; width: var(--side-w); padding: 26px 18px 20px; display: flex; flex-direction: column; background: var(--bg); z-index: 90; overflow-y: auto; }
+  .sidebar { position: sticky; top: var(--bar-h); width: var(--side-w); flex-shrink: 0; align-self: flex-start; max-height: calc(100vh - var(--bar-h)); padding: 26px 18px 20px; display: flex; flex-direction: column; background: var(--bg); z-index: 90; overflow-y: auto; }
   .logo { font-weight: 700; font-size: 0.82rem; letter-spacing: 0.03em; text-transform: uppercase; line-height: 1.3; color: var(--ink); text-decoration: none; display: block; }
   .logo-role { display: block; font-weight: 400; font-size: 0.54rem; letter-spacing: 0.04em; text-transform: uppercase; color: var(--ink-45); margin-top: 6px; margin-bottom: 32px; line-height: 1.5; }
   .side-nav { display: flex; flex-direction: column; gap: 13px; }
@@ -75,9 +75,15 @@
     body.menu-open .side-bottom { margin-top: auto; padding-top: 30px; }
   }
 
+  /* SHELL — sidebar + content centered together as one unit */
+  .shell { max-width: 1620px; margin: 0 auto; padding-top: var(--bar-h); display: flex; align-items: flex-start; }
+
   /* MAIN CONTENT */
-  .content { margin-left: var(--side-w); padding-top: var(--bar-h); }
-  @media (max-width: 860px) { .content { margin-left: 0; padding-top: calc(var(--mobile-h) + 4px); } }
+  .content { flex: 1; min-width: 0; }
+  @media (max-width: 860px) {
+    .shell { display: block; max-width: none; padding-top: 0; }
+    .content { padding-top: calc(var(--mobile-h) + 4px); }
+  }
 
   /* HOMEPAGE — small text, large offset image, empty space */
   .hero { max-width: 1160px; margin-inline: auto; padding: 64px 56px 110px; }
@@ -153,6 +159,7 @@
   <a class="topbar-contact" href="https://instagram.com/mmckaystacey" target="_blank">Contact</a>
 </div>
 
+<div class="shell">
 <aside class="sidebar">
   <a href="#" class="logo">McKay Stacey<span class="logo-role">Creative Director<br>Filmmaker<br>Entrepreneur</span></a>
   <button class="menu-toggle" id="menuToggle" type="button">Menu</button>
@@ -327,6 +334,7 @@
   </section>
 
 </main>
+</div>
 
 <script>
   // reveal on scroll
