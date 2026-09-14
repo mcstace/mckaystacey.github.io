@@ -6,7 +6,7 @@
 <title>McKay Stacey</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,400;0,500;0,600;0,700;1,500&family=Permanent+Marker&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,400;0,500;0,600;0,700&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -16,24 +16,17 @@
     --ink: #111111;
     --ink-70: rgba(17,17,17,0.68);
     --ink-45: rgba(17,17,17,0.45);
-    --line: rgba(17,17,17,0.14);
+    --line: rgba(17,17,17,0.13);
     --accent: #e4002b;
-    --bar-h: 34px;
-    --side-w: 132px;
-    --font-display: 'Archivo', 'Helvetica Neue', Arial, sans-serif;
-    --font-mark: 'Permanent Marker', cursive;
+    --bar-h: 32px;
+    --side-w: 138px;
+    --mobile-h: 56px;
+    --font: 'Archivo', 'Helvetica Neue', Arial, sans-serif;
   }
-  /* Committed to a white theme always — no dark-mode auto-switch,
-     matching the always-white Stüssy site regardless of system setting. */
+  /* Committed to a white theme always — no dark-mode auto-switch. */
 
   html { scroll-behavior: smooth; }
-  body {
-    background: var(--bg);
-    color: var(--ink);
-    font-family: var(--font-display);
-    overflow-x: hidden;
-    cursor: none;
-  }
+  body { background: var(--bg); color: var(--ink); font-family: var(--font); overflow-x: hidden; cursor: none; }
   @media (max-width: 860px), (hover: none) {
     body { cursor: auto; }
     #cursorDot, #cursorRing { display: none; }
@@ -47,158 +40,115 @@
   img { max-width: 100%; display: block; }
   :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
 
-  #cursorDot {
-    position: fixed; width: 5px; height: 5px; background: var(--ink);
-    border-radius: 50%; pointer-events: none; z-index: 9999;
-    transform: translate(-50%,-50%);
-  }
-  #cursorRing {
-    position: fixed; width: 26px; height: 26px;
-    border: 1px solid var(--ink-45); border-radius: 50%;
-    pointer-events: none; z-index: 9998;
-    transform: translate(-50%,-50%); transition: opacity .2s, border-color .25s, width .25s, height .25s;
-  }
-  #cursorRing.on-link { border-color: var(--accent); width: 34px; height: 34px; }
+  #cursorDot { position: fixed; width: 5px; height: 5px; background: var(--ink); border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%,-50%); }
+  #cursorRing { position: fixed; width: 24px; height: 24px; border: 1px solid var(--ink-45); border-radius: 50%; pointer-events: none; z-index: 9998; transform: translate(-50%,-50%); transition: opacity .2s, border-color .25s, width .25s, height .25s; }
+  #cursorRing.on-link { border-color: var(--accent); width: 32px; height: 32px; }
 
-  /* TOP BAR */
-  .topbar {
-    position: fixed; top: 0; left: 0; right: 0; height: var(--bar-h); z-index: 110;
-    background: var(--bg); border-bottom: 1px solid var(--line);
-    display: flex; align-items: center; justify-content: center;
-    transition: transform .3s;
-  }
+  /* ANNOUNCEMENT BAR — existing stat, preserved */
+  .topbar { position: fixed; top: 0; left: 0; right: 0; height: var(--bar-h); z-index: 110; background: var(--bg); border-bottom: 1px solid var(--line); display: flex; align-items: center; justify-content: center; transition: transform .3s; }
   .topbar.hidden { transform: translateY(-100%); }
-  .topbar-msg {
-    font-size: 0.64rem; letter-spacing: 0.04em; text-transform: uppercase;
-    color: var(--ink-70); display: flex; gap: 10px; align-items: baseline;
-  }
+  .topbar-msg { font-size: 0.62rem; letter-spacing: 0.04em; text-transform: uppercase; color: var(--ink-70); display: flex; gap: 10px; align-items: baseline; }
   .topbar-msg strong { color: var(--ink); font-variant-numeric: tabular-nums; }
-  .topbar-hide {
-    font: inherit; background: none; border: none; cursor: pointer;
-    color: var(--ink-70); text-transform: uppercase; letter-spacing: 0.04em;
-    font-size: 0.64rem; padding: 0; text-decoration: underline; text-underline-offset: 2px;
-  }
+  .topbar-hide { font: inherit; background: none; border: none; cursor: pointer; color: var(--ink-70); text-transform: uppercase; letter-spacing: 0.04em; font-size: 0.62rem; padding: 0; text-decoration: underline; text-underline-offset: 2px; }
   .topbar-hide:hover { color: var(--ink); }
-  .topbar-contact {
-    position: absolute; right: 22px; font-size: 0.64rem; letter-spacing: 0.04em;
-    text-transform: uppercase; color: var(--ink-70); text-decoration: none;
-  }
+  .topbar-contact { position: absolute; right: 22px; font-size: 0.62rem; letter-spacing: 0.04em; text-transform: uppercase; color: var(--ink-70); text-decoration: none; }
   .topbar-contact:hover { color: var(--ink); }
 
-  /* SIDEBAR */
-  .sidebar {
-    position: fixed; top: var(--bar-h); left: 0; bottom: 0; width: var(--side-w);
-    padding: 26px 18px 20px; display: flex; flex-direction: column;
-    background: var(--bg); z-index: 90; overflow-y: auto;
-  }
-  .logo {
-    font-family: var(--font-mark); font-size: 1.65rem; line-height: 0.92;
-    color: var(--ink); text-decoration: none; display: block; margin-bottom: 34px;
-    transform: rotate(-1.5deg); transform-origin: left top;
-  }
+  /* SIDEBAR NAV */
+  .sidebar { position: fixed; top: var(--bar-h); left: 0; bottom: 0; width: var(--side-w); padding: 26px 18px 20px; display: flex; flex-direction: column; background: var(--bg); z-index: 90; overflow-y: auto; }
+  .logo { font-weight: 700; font-size: 0.82rem; letter-spacing: 0.03em; text-transform: uppercase; line-height: 1.3; color: var(--ink); text-decoration: none; display: block; }
+  .logo-role { display: block; font-weight: 400; font-size: 0.54rem; letter-spacing: 0.04em; text-transform: uppercase; color: var(--ink-45); margin-top: 6px; margin-bottom: 32px; line-height: 1.5; }
   .side-nav { display: flex; flex-direction: column; gap: 13px; }
-  .side-nav a {
-    font-weight: 500; font-size: 0.68rem; letter-spacing: 0.02em; text-transform: uppercase;
-    color: var(--ink); text-decoration: none;
-  }
+  .side-nav a { font-weight: 500; font-size: 0.66rem; letter-spacing: 0.02em; text-transform: uppercase; color: var(--ink); text-decoration: none; }
   .side-nav a:hover { text-decoration: underline; text-underline-offset: 3px; }
-  .side-div { font-size: 0.7rem; color: var(--ink-45); margin: 18px 0; }
+  .side-div { font-size: 0.68rem; color: var(--ink-45); margin: 18px 0; }
   .side-bottom { margin-top: auto; display: flex; flex-direction: column; gap: 8px; padding-top: 24px; }
-  .side-handle {
-    font-weight: 500; font-size: 0.64rem; letter-spacing: 0.03em; text-transform: uppercase;
-    color: var(--ink-70); text-decoration: none;
-  }
+  .side-handle { font-weight: 500; font-size: 0.6rem; letter-spacing: 0.03em; text-transform: uppercase; color: var(--ink-70); text-decoration: none; }
   .side-handle:hover { color: var(--ink); }
-  .side-copy { font-size: 0.56rem; letter-spacing: 0.02em; text-transform: uppercase; color: var(--ink-45); }
+  .side-copy { font-size: 0.54rem; letter-spacing: 0.02em; text-transform: uppercase; color: var(--ink-45); }
 
-  .menu-toggle {
-    display: none; background: none; border: 1px solid var(--ink); font-family: var(--font-display);
-    font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.06em; padding: 8px 14px; cursor: pointer;
-  }
+  .menu-toggle { display: none; background: none; border: 1px solid var(--ink); font-family: var(--font); font-size: 0.58rem; text-transform: uppercase; letter-spacing: 0.06em; padding: 7px 13px; cursor: pointer; }
 
   @media (max-width: 860px) {
-    .sidebar {
-      position: static; width: 100%; flex-direction: row; align-items: center;
-      justify-content: space-between; padding: 16px 22px; border-bottom: 1px solid var(--line);
-    }
-    .logo { margin-bottom: 0; font-size: 1.3rem; }
+    .sidebar { position: fixed; top: 0; left: 0; right: 0; bottom: auto; width: 100%; height: var(--mobile-h); flex-direction: row; align-items: center; justify-content: space-between; padding: 0 20px; border-bottom: 1px solid var(--line); z-index: 150; }
+    .logo-role { display: none; }
     .side-nav, .side-div, .side-bottom { display: none; }
     .menu-toggle { display: inline-flex; }
-    body.menu-open .sidebar { flex-direction: column; align-items: flex-start; gap: 20px; }
-    body.menu-open .side-nav, body.menu-open .side-div, body.menu-open .side-bottom { display: flex; }
-    body.menu-open .side-bottom { padding-top: 4px; }
+    body.menu-open .sidebar { height: 100vh; flex-direction: column; align-items: flex-start; justify-content: flex-start; padding: 26px 24px 40px; overflow-y: auto; }
+    body.menu-open .logo { margin-bottom: 6px; }
+    body.menu-open .menu-toggle { position: absolute; top: 22px; right: 20px; }
+    body.menu-open .side-nav, body.menu-open .side-div, body.menu-open .side-bottom { display: flex; margin-top: 34px; }
+    body.menu-open .side-nav a { font-size: 0.95rem; }
+    body.menu-open .side-div { margin: 30px 0; }
+    body.menu-open .side-bottom { margin-top: auto; padding-top: 30px; }
   }
 
-  /* CONTENT */
+  /* MAIN CONTENT */
   .content { margin-left: var(--side-w); padding-top: var(--bar-h); }
-  @media (max-width: 860px) { .content { margin-left: 0; padding-top: 0; } }
+  @media (max-width: 860px) { .content { margin-left: 0; padding-top: calc(var(--mobile-h) + 4px); } }
 
-  .hero-shot img { width: 100%; height: 82vh; object-fit: cover; display: block; }
-  @media (max-width: 860px) { .hero-shot img { height: 58vh; } }
-
-  .cap-row {
-    display: flex; justify-content: space-between; align-items: baseline; gap: 16px;
-    padding: 16px 28px; border-bottom: 1px solid var(--line); flex-wrap: wrap;
+  /* HOMEPAGE — small text, large offset image, empty space */
+  .hero { padding: 64px 56px 110px; }
+  .hero-kicker { font-size: 0.66rem; letter-spacing: 0.05em; text-transform: uppercase; color: var(--ink-70); max-width: 42ch; margin-bottom: 72px; }
+  .hero-frame { width: 70%; margin-left: 5%; }
+  .hero-frame img { width: 100%; height: auto; }
+  .hero-cap { margin-top: 16px; width: 70%; margin-left: 5%; display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+  .hero-cap span { font-size: 0.62rem; letter-spacing: 0.03em; text-transform: uppercase; color: var(--ink-45); }
+  .hero-cap a { color: var(--ink-70); text-decoration: none; border-bottom: 1px solid var(--line); }
+  .hero-cap a:hover { color: var(--ink); border-color: var(--ink); }
+  @media (max-width: 860px) {
+    .hero { padding: 40px 22px 70px; }
+    .hero-kicker { margin-bottom: 44px; }
+    .hero-frame, .hero-cap { width: 100%; margin-left: 0; }
   }
-  .cap-title { font-weight: 600; font-size: 0.74rem; letter-spacing: 0.03em; text-transform: uppercase; }
-  .cap-meta { font-weight: 400; font-size: 0.64rem; letter-spacing: 0.02em; text-transform: uppercase; color: var(--ink-45); }
-  .cap-meta a { color: var(--ink-70); text-decoration: none; border-bottom: 1px solid var(--line); }
-  .cap-meta a:hover { color: var(--ink); border-color: var(--ink); }
 
-  .block { padding: 64px 28px; border-bottom: 1px solid var(--line); }
-  .block-eyebrow {
-    display: flex; align-items: center; gap: 8px; font-weight: 500; font-size: 0.6rem;
-    letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-45); margin-bottom: 10px;
+  /* EDITORIAL ARCHIVE SECTIONS */
+  .archive { padding: 90px 56px 20px; border-top: 1px solid var(--line); }
+  .archive-title { font-weight: 600; font-size: 0.86rem; letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 4px; }
+  .archive-eyebrow { display: flex; align-items: center; gap: 8px; font-weight: 500; font-size: 0.58rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-45); margin-bottom: 10px; }
+  .archive-eyebrow::before { content: ''; width: 14px; height: 1px; background: var(--ink-45); }
+  .archive-head { margin-bottom: 84px; }
+
+  .entry { margin-bottom: 120px; }
+  .entry:last-child { margin-bottom: 0; }
+  .entry-num { display: block; font-size: 0.6rem; letter-spacing: 0.08em; color: var(--ink-45); margin-bottom: 18px; font-variant-numeric: tabular-nums; }
+  .entry-media { display: block; text-decoration: none; overflow: hidden; }
+  .entry-media img { width: 100%; height: auto; display: block; transition: transform .55s cubic-bezier(.16,1,.3,1), opacity .3s; }
+  .entry-media:hover img { transform: scale(1.015); opacity: .93; }
+  .entry-ph { width: 100%; aspect-ratio: 16/10; background: var(--bg-raised); display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 8px; }
+  .entry-ph svg { width: 26px; opacity: .18; }
+  .entry-ph span { font-size: 0.5rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-45); }
+  .entry-meta { margin-top: 16px; display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+  .entry-title { font-size: 0.74rem; font-weight: 600; letter-spacing: 0.02em; text-transform: uppercase; }
+  .entry-sub { font-size: 0.6rem; letter-spacing: 0.03em; text-transform: uppercase; color: var(--ink-45); }
+
+  .entry--l1 { width: 68%; }
+  .entry--l2 { width: 48%; margin-left: auto; }
+  .entry--l3 { width: 84%; margin-inline: auto; }
+  .entry--l4 { width: 56%; margin-left: 12%; }
+  @media (max-width: 860px) {
+    .archive { padding: 60px 22px 10px; }
+    .archive-head { margin-bottom: 50px; }
+    .entry { margin-bottom: 70px; }
+    .entry--l1, .entry--l2, .entry--l3, .entry--l4 { width: 100%; margin-left: 0; margin-inline: 0; }
   }
-  .block-eyebrow::before { content: ''; width: 14px; height: 1px; background: var(--ink-45); }
-  .block-title { font-weight: 700; font-size: clamp(22px, 3vw, 32px); letter-spacing: -0.005em; text-transform: uppercase; margin-bottom: 30px; }
 
-  .tile-grid { display: grid; gap: 1px; background: var(--line); border: 1px solid var(--line); }
+  /* BRANDS — plain airy list, no cards */
+  .brand-list { display: flex; flex-wrap: wrap; gap: 52px 60px; }
+  .brand-item { display: flex; flex-direction: column; align-items: flex-start; gap: 14px; width: 138px; }
+  .brand-item .b-num { font-size: 0.54rem; color: var(--ink-45); letter-spacing: 0.08em; }
+  .brand-item img { max-height: 36px; max-width: 126px; object-fit: contain; filter: grayscale(1); opacity: 0.5; transition: opacity .2s; }
+  .brand-item:hover img { opacity: 1; }
+  .brand-item .b-label { font-size: 0.58rem; letter-spacing: 0.05em; text-transform: uppercase; color: var(--ink-70); }
 
-  .brand-tile-grid { grid-template-columns: repeat(4, 1fr); }
-  .brand-tile {
-    background: var(--bg); padding: 34px 18px; display: flex; flex-direction: column;
-    align-items: center; justify-content: center; gap: 16px; text-align: center; transition: background .2s;
-  }
-  .brand-tile:hover { background: var(--bg-raised); }
-  .brand-tile img { max-height: 40px; max-width: 128px; object-fit: contain; filter: grayscale(1); opacity: 0.5; transition: opacity .2s; }
-  .brand-tile:hover img { opacity: 1; }
-  .brand-tile span { font-weight: 500; font-size: 0.6rem; letter-spacing: 0.05em; text-transform: uppercase; color: var(--ink-70); }
-
-  .video-tile-grid { grid-template-columns: repeat(2, 1fr); }
-  .video-tile { position: relative; background: var(--bg); text-decoration: none; display: block; cursor: none; }
-  .video-tile img { width: 100%; aspect-ratio: 16/10; object-fit: cover; filter: grayscale(0.3); transition: filter .3s, transform .5s cubic-bezier(0.16,1,0.3,1); }
-  .video-tile:hover img { filter: grayscale(0); transform: scale(1.02); }
-  .video-ph { width: 100%; aspect-ratio: 16/10; background: var(--bg-raised); display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 8px; }
-  .video-ph svg { width: 26px; opacity: 0.18; }
-  .video-ph span { font-size: 0.5rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-45); }
-  .tile-cap { display: flex; justify-content: space-between; padding: 12px 16px; border-top: 1px solid var(--line); background: var(--bg); }
-  .tile-cap span { font-size: 0.62rem; letter-spacing: 0.03em; text-transform: uppercase; }
-  .tile-cap span:last-child { color: var(--ink-45); }
-
-  .cloth-tile-grid { grid-template-columns: repeat(3, 1fr); }
-  .cloth-tile { background: var(--bg); text-decoration: none; display: block; cursor: none; }
-  .cloth-tile img { width: 100%; aspect-ratio: 4/5; object-fit: cover; display: block; transition: transform .5s cubic-bezier(0.16,1,0.3,1); }
-  .cloth-tile:hover img { transform: scale(1.02); }
-
-  @media (max-width: 1100px) {
-    .cloth-tile-grid { grid-template-columns: repeat(2, 1fr); }
-    .brand-tile-grid { grid-template-columns: repeat(2, 1fr); }
-    .video-tile-grid { grid-template-columns: 1fr; }
-  }
-  @media (max-width: 560px) { .cloth-tile-grid { grid-template-columns: 1fr; } }
-
-  .cta-block { text-align: center; padding: 96px 28px; }
-  .cta-statement { font-weight: 700; font-size: clamp(24px, 4vw, 40px); text-transform: uppercase; letter-spacing: -0.005em; margin: 10px 0 14px; text-wrap: balance; }
-  .cta-meta { font-size: 0.64rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-45); margin-bottom: 26px; }
-  .cta-link {
-    display: inline-flex; align-items: center; gap: 8px; font-weight: 500; font-size: 0.68rem;
-    letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink); text-decoration: none;
-    border-bottom: 1px solid var(--ink); padding-bottom: 3px; transition: color .2s, border-color .2s;
-  }
+  /* CTA */
+  .cta-block { text-align: center; padding: 110px 28px; }
+  .cta-statement { font-weight: 600; font-size: clamp(20px, 2.6vw, 30px); text-transform: uppercase; letter-spacing: 0.01em; margin: 10px 0 14px; text-wrap: balance; }
+  .cta-meta { font-size: 0.62rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-45); margin-bottom: 26px; }
+  .cta-link { display: inline-flex; align-items: center; gap: 8px; font-weight: 500; font-size: 0.66rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--ink); padding-bottom: 3px; transition: color .2s, border-color .2s; }
   .cta-link:hover { color: var(--accent); border-color: var(--accent); }
 
-  .reveal { opacity: 0; transform: translateY(16px); transition: opacity .55s cubic-bezier(0.16,1,0.3,1), transform .55s cubic-bezier(0.16,1,0.3,1); }
+  .reveal { opacity: 0; transform: translateY(14px); transition: opacity .55s cubic-bezier(.16,1,.3,1), transform .55s cubic-bezier(.16,1,.3,1); }
   .reveal.vis { opacity: 1; transform: translateY(0); }
 </style>
 </head>
@@ -213,11 +163,11 @@
 </div>
 
 <aside class="sidebar">
-  <a href="#" class="logo">McKay<br>Stacey</a>
+  <a href="#" class="logo">McKay Stacey<span class="logo-role">Creative Director<br>Filmmaker<br>Entrepreneur</span></a>
   <button class="menu-toggle" id="menuToggle" type="button">Menu</button>
   <nav class="side-nav">
-    <a href="#brands">Brands</a>
     <a href="#work">Work</a>
+    <a href="#brands">Brands</a>
     <a href="#clothes">Clothes</a>
     <a href="#collab">Collab</a>
   </nav>
@@ -225,7 +175,6 @@
   <nav class="side-nav">
     <a href="https://instagram.com/mmckaystacey" target="_blank">Instagram</a>
     <a href="https://twitter.com/mmckaystacey" target="_blank">Twitter</a>
-    <a href="https://youtube.com/@mmckaystacey" target="_blank">YouTube</a>
     <a href="https://www.linkedin.com/in/mckay-stacey-bab412212/" target="_blank">LinkedIn</a>
   </nav>
   <div class="side-bottom">
@@ -235,86 +184,157 @@
 </aside>
 
 <main class="content">
-  <div class="hero-shot">
-    <img src="https://i.imgur.com/hs6ywxI.png" alt="McKay Stacey on set at Beast Games">
-  </div>
-  <div class="cap-row">
-    <span class="cap-title">McKay Stacey — Content, Collabs &amp; Clothing</span>
-    <span class="cap-meta">On set — <a href="https://www.instagram.com/p/DTRkZBFEZuE/?img_index=8" target="_blank">@beastgames</a></span>
-  </div>
 
-  <section id="brands" class="block">
-    <div class="reveal">
-      <div class="block-eyebrow">Worked With</div>
-      <h2 class="block-title">The Brands</h2>
+  <!-- HOMEPAGE: small text, large offset image, empty space -->
+  <section class="hero">
+    <p class="hero-kicker reveal">McKay Stacey — Creative Director / Filmmaker / Entrepreneur. Video, brand work, and a couple of side projects, made with cool people.</p>
+    <div class="hero-frame reveal">
+      <img src="https://i.imgur.com/hs6ywxI.png" alt="McKay Stacey on set at Beast Games">
     </div>
-    <div class="tile-grid brand-tile-grid reveal">
-      <div class="brand-tile"><img src="https://i.imgur.com/FKrK73y.png" alt="Microsoft"><span>Microsoft</span></div>
-      <div class="brand-tile"><img src="https://i.imgur.com/KW3vlaw.png" alt="Halo"><span>Halo</span></div>
-      <div class="brand-tile"><img src="https://i.imgur.com/SksunuT.png" alt="Ubisoft"><span>Ubisoft</span></div>
-      <div class="brand-tile"><img src="https://i.imgur.com/DGVZ1Tg.png" alt="Rocket League"><span>Rocket League</span></div>
-      <div class="brand-tile"><img src="https://i.imgur.com/ywZSfrJ.png" alt="Epic Games"><span>Epic Games</span></div>
-      <div class="brand-tile"><img src="https://i.imgur.com/nkbozI1.png" alt="FaZe Clan"><span>FaZe Clan</span></div>
-      <div class="brand-tile"><img src="https://i.imgur.com/e5efSlm.png" alt="Bucked Up"><span>Bucked Up</span></div>
-      <div class="brand-tile" style="opacity:.5;">
-        <svg viewBox="0 0 36 36" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="18" cy="18" r="15"/><line x1="18" y1="10" x2="18" y2="26"/><line x1="10" y1="18" x2="26" y2="18"/></svg>
-        <span>And More</span>
+    <div class="hero-cap reveal">
+      <span>On set — <a href="https://www.instagram.com/p/DTRkZBFEZuE/?img_index=8" target="_blank">@beastgames</a></span>
+    </div>
+  </section>
+
+  <!-- WORK -->
+  <section id="work" class="archive">
+    <div class="archive-head reveal">
+      <div class="archive-eyebrow">The Work</div>
+      <h2 class="archive-title">Videos I've Made</h2>
+    </div>
+
+    <div class="entry entry--l1 reveal">
+      <span class="entry-num">01</span>
+      <a class="entry-media" href="https://www.youtube.com/shorts/t2i-O-8svik" target="_blank">
+        <img src="https://i.ytimg.com/vi/t2i-O-8svik/hqdefault.jpg" alt="Video">
+      </a>
+      <div class="entry-meta"><span class="entry-title">YouTube Short</span><span class="entry-sub">Watch →</span></div>
+    </div>
+
+    <div class="entry entry--l2 reveal">
+      <span class="entry-num">02</span>
+      <a class="entry-media" href="https://www.youtube.com/shorts/9F-HbsyVOBA" target="_blank">
+        <img src="https://i.ytimg.com/vi/9F-HbsyVOBA/hqdefault.jpg" alt="Video">
+      </a>
+      <div class="entry-meta"><span class="entry-title">YouTube Short</span><span class="entry-sub">Watch →</span></div>
+    </div>
+
+    <div class="entry entry--l3 reveal">
+      <span class="entry-num">03</span>
+      <a class="entry-media" href="https://www.instagram.com/reel/DWH1Y9ZyFVT/" target="_blank">
+        <div class="entry-ph">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.9"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+          <span>Instagram Reel</span>
+        </div>
+      </a>
+      <div class="entry-meta"><span class="entry-title">Instagram Reel</span><span class="entry-sub">Watch →</span></div>
+    </div>
+  </section>
+
+  <!-- BRANDS -->
+  <section id="brands" class="archive">
+    <div class="archive-head reveal">
+      <div class="archive-eyebrow">Worked With</div>
+      <h2 class="archive-title">The Brands</h2>
+    </div>
+    <div class="brand-list reveal">
+      <div class="brand-item"><span class="b-num">No. 01</span><img src="https://i.imgur.com/FKrK73y.png" alt="Microsoft"><span class="b-label">Microsoft</span></div>
+      <div class="brand-item"><span class="b-num">No. 02</span><img src="https://i.imgur.com/KW3vlaw.png" alt="Halo"><span class="b-label">Halo</span></div>
+      <div class="brand-item"><span class="b-num">No. 03</span><img src="https://i.imgur.com/SksunuT.png" alt="Ubisoft"><span class="b-label">Ubisoft</span></div>
+      <div class="brand-item"><span class="b-num">No. 04</span><img src="https://i.imgur.com/DGVZ1Tg.png" alt="Rocket League"><span class="b-label">Rocket League</span></div>
+      <div class="brand-item"><span class="b-num">No. 05</span><img src="https://i.imgur.com/ywZSfrJ.png" alt="Epic Games"><span class="b-label">Epic Games</span></div>
+      <div class="brand-item"><span class="b-num">No. 06</span><img src="https://i.imgur.com/nkbozI1.png" alt="FaZe Clan"><span class="b-label">FaZe Clan</span></div>
+      <div class="brand-item"><span class="b-num">No. 07</span><img src="https://i.imgur.com/e5efSlm.png" alt="Bucked Up"><span class="b-label">Bucked Up</span></div>
+      <div class="brand-item" style="opacity:.5;">
+        <span class="b-num">No. 08</span>
+        <svg viewBox="0 0 36 36" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="18" cy="18" r="15"/><line x1="18" y1="10" x2="18" y2="26"/><line x1="10" y1="18" x2="26" y2="18"/></svg>
+        <span class="b-label">And More</span>
       </div>
     </div>
   </section>
 
-  <section id="work" class="block">
-    <div class="reveal">
-      <div class="block-eyebrow">The Work</div>
-      <h2 class="block-title">Videos I've Made</h2>
+  <!-- CLOTHES -->
+  <section id="clothes" class="archive">
+    <div class="archive-head reveal">
+      <div class="archive-eyebrow">Unravel Culture</div>
+      <h2 class="archive-title">The Clothes</h2>
     </div>
-    <div class="tile-grid video-tile-grid reveal">
-      <a class="video-tile" href="https://www.youtube.com/shorts/t2i-O-8svik" target="_blank">
-        <img src="https://i.ytimg.com/vi/t2i-O-8svik/hqdefault.jpg" alt="Video">
-        <div class="tile-cap"><span>Reel 001</span><span>Watch →</span></div>
-      </a>
-      <a class="video-tile" href="https://www.youtube.com/shorts/9F-HbsyVOBA" target="_blank">
-        <img src="https://i.ytimg.com/vi/9F-HbsyVOBA/hqdefault.jpg" alt="Video">
-        <div class="tile-cap"><span>Reel 002</span><span>Watch →</span></div>
-      </a>
-      <a class="video-tile" href="https://www.instagram.com/reel/DWH1Y9ZyFVT/" target="_blank">
-        <div class="video-ph">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.9"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
-          <span>Instagram Reel</span>
-        </div>
-        <div class="tile-cap"><span>Reel 003</span><span>Watch →</span></div>
-      </a>
+
+    <div class="entry entry--l1 reveal">
+      <span class="entry-num">01</span>
+      <a class="entry-media" href="https://www.unravelculture.com" target="_blank"><img src="https://i.imgur.com/S4t0SWE.jpeg" alt="Unravel"></a>
+      <div class="entry-meta"><span class="entry-title">Unravel</span><span class="entry-sub">unravelculture.com</span></div>
+    </div>
+    <div class="entry entry--l2 reveal">
+      <span class="entry-num">02</span>
+      <a class="entry-media" href="https://www.unravelculture.com" target="_blank"><img src="https://i.imgur.com/eha4KPM.jpeg" alt="Unravel"></a>
+      <div class="entry-meta"><span class="entry-title">Unravel</span><span class="entry-sub">unravelculture.com</span></div>
+    </div>
+    <div class="entry entry--l3 reveal">
+      <span class="entry-num">03</span>
+      <a class="entry-media" href="https://www.unravelculture.com" target="_blank"><img src="https://i.imgur.com/EDj4zqi.jpeg" alt="Unravel"></a>
+      <div class="entry-meta"><span class="entry-title">Unravel</span><span class="entry-sub">unravelculture.com</span></div>
+    </div>
+    <div class="entry entry--l4 reveal">
+      <span class="entry-num">04</span>
+      <a class="entry-media" href="https://www.unravelculture.com" target="_blank"><img src="https://i.imgur.com/XczqvLE.jpeg" alt="Unravel"></a>
+      <div class="entry-meta"><span class="entry-title">Unravel</span><span class="entry-sub">unravelculture.com</span></div>
+    </div>
+    <div class="entry entry--l1 reveal">
+      <span class="entry-num">05</span>
+      <a class="entry-media" href="#"><img src="https://i.imgur.com/NqMcTHB.gif" alt="Custom Leather Jacket"></a>
+      <div class="entry-meta"><span class="entry-title">Custom Jacket</span><span class="entry-sub">For J. Seo</span></div>
+    </div>
+    <div class="entry entry--l2 reveal">
+      <span class="entry-num">06</span>
+      <a class="entry-media" href="https://www.unravelculture.com" target="_blank"><img src="https://i.imgur.com/AOo1MYb.jpeg" alt="Unravel"></a>
+      <div class="entry-meta"><span class="entry-title">Unravel</span><span class="entry-sub">unravelculture.com</span></div>
+    </div>
+    <div class="entry entry--l3 reveal">
+      <span class="entry-num">07</span>
+      <a class="entry-media" href="https://www.unravelculture.com" target="_blank"><img src="https://i.imgur.com/joulrOZ.png" alt="Unravel"></a>
+      <div class="entry-meta"><span class="entry-title">Unravel</span><span class="entry-sub">unravelculture.com</span></div>
+    </div>
+    <div class="entry entry--l4 reveal">
+      <span class="entry-num">08</span>
+      <a class="entry-media" href="https://www.unravelculture.com" target="_blank"><img src="https://i.imgur.com/ATy8sLr.png" alt="Unravel"></a>
+      <div class="entry-meta"><span class="entry-title">Unravel</span><span class="entry-sub">unravelculture.com</span></div>
+    </div>
+    <div class="entry entry--l1 reveal">
+      <span class="entry-num">09</span>
+      <a class="entry-media" href="https://www.unravelculture.com" target="_blank"><img src="https://i.imgur.com/YeuSQ59.png" alt="Unravel"></a>
+      <div class="entry-meta"><span class="entry-title">Unravel</span><span class="entry-sub">unravelculture.com</span></div>
+    </div>
+    <div class="entry entry--l2 reveal">
+      <span class="entry-num">10</span>
+      <a class="entry-media" href="https://www.unravelculture.com" target="_blank"><img src="https://i.imgur.com/aBtSzhO.png" alt="Unravel"></a>
+      <div class="entry-meta"><span class="entry-title">Unravel</span><span class="entry-sub">unravelculture.com</span></div>
+    </div>
+    <div class="entry entry--l3 reveal">
+      <span class="entry-num">11</span>
+      <a class="entry-media" href="https://www.unravelculture.com" target="_blank"><img src="https://i.imgur.com/wCYbzqZ.png" alt="Unravel"></a>
+      <div class="entry-meta"><span class="entry-title">Unravel</span><span class="entry-sub">unravelculture.com</span></div>
+    </div>
+    <div class="entry entry--l4 reveal">
+      <span class="entry-num">12</span>
+      <a class="entry-media" href="https://www.unravelculture.com" target="_blank"><img src="https://i.imgur.com/sGvH1hL.png" alt="Unravel"></a>
+      <div class="entry-meta"><span class="entry-title">Unravel</span><span class="entry-sub">unravelculture.com</span></div>
+    </div>
+    <div class="entry entry--l1 reveal">
+      <span class="entry-num">13</span>
+      <a class="entry-media" href="https://www.unravelculture.com" target="_blank"><img src="https://i.imgur.com/Ji2BlCK.png" alt="Unravel"></a>
+      <div class="entry-meta"><span class="entry-title">Unravel</span><span class="entry-sub">unravelculture.com</span></div>
     </div>
   </section>
 
-  <section id="clothes" class="block">
-    <div class="reveal">
-      <div class="block-eyebrow">Unravel Culture</div>
-      <h2 class="block-title">The Clothes</h2>
-    </div>
-    <div class="tile-grid cloth-tile-grid reveal">
-      <a class="cloth-tile" href="https://www.unravelculture.com" target="_blank"><img src="https://i.imgur.com/S4t0SWE.jpeg" alt="Unravel"><div class="tile-cap"><span>Unravel</span><span>Shop</span></div></a>
-      <a class="cloth-tile" href="https://www.unravelculture.com" target="_blank"><img src="https://i.imgur.com/eha4KPM.jpeg" alt="Unravel"><div class="tile-cap"><span>Unravel</span><span>Shop</span></div></a>
-      <a class="cloth-tile" href="https://www.unravelculture.com" target="_blank"><img src="https://i.imgur.com/EDj4zqi.jpeg" alt="Unravel"><div class="tile-cap"><span>Unravel</span><span>Shop</span></div></a>
-      <a class="cloth-tile" href="https://www.unravelculture.com" target="_blank"><img src="https://i.imgur.com/XczqvLE.jpeg" alt="Unravel"><div class="tile-cap"><span>Unravel</span><span>Shop</span></div></a>
-      <a class="cloth-tile" href="#"><img src="https://i.imgur.com/NqMcTHB.gif" alt="Custom Leather Jacket"><div class="tile-cap"><span>Custom Jacket</span><span>For J. Seo</span></div></a>
-      <a class="cloth-tile" href="https://www.unravelculture.com" target="_blank"><img src="https://i.imgur.com/AOo1MYb.jpeg" alt="Unravel"><div class="tile-cap"><span>Unravel</span><span>Shop</span></div></a>
-      <a class="cloth-tile" href="https://www.unravelculture.com" target="_blank"><img src="https://i.imgur.com/joulrOZ.png" alt="Unravel"><div class="tile-cap"><span>Unravel</span><span>Shop</span></div></a>
-      <a class="cloth-tile" href="https://www.unravelculture.com" target="_blank"><img src="https://i.imgur.com/ATy8sLr.png" alt="Unravel"><div class="tile-cap"><span>Unravel</span><span>Shop</span></div></a>
-      <a class="cloth-tile" href="https://www.unravelculture.com" target="_blank"><img src="https://i.imgur.com/YeuSQ59.png" alt="Unravel"><div class="tile-cap"><span>Unravel</span><span>Shop</span></div></a>
-      <a class="cloth-tile" href="https://www.unravelculture.com" target="_blank"><img src="https://i.imgur.com/aBtSzhO.png" alt="Unravel"><div class="tile-cap"><span>Unravel</span><span>Shop</span></div></a>
-      <a class="cloth-tile" href="https://www.unravelculture.com" target="_blank"><img src="https://i.imgur.com/wCYbzqZ.png" alt="Unravel"><div class="tile-cap"><span>Unravel</span><span>Shop</span></div></a>
-      <a class="cloth-tile" href="https://www.unravelculture.com" target="_blank"><img src="https://i.imgur.com/sGvH1hL.png" alt="Unravel"><div class="tile-cap"><span>Unravel</span><span>Shop</span></div></a>
-      <a class="cloth-tile" href="https://www.unravelculture.com" target="_blank"><img src="https://i.imgur.com/Ji2BlCK.png" alt="Unravel"><div class="tile-cap"><span>Unravel</span><span>Shop</span></div></a>
-    </div>
-  </section>
-
+  <!-- COLLAB / CONTACT -->
   <section id="collab" class="cta-block">
-    <span class="block-eyebrow reveal" style="justify-content:center;">Let's Work</span>
+    <span class="archive-eyebrow reveal" style="justify-content:center;">Let's Work</span>
     <h2 class="cta-statement reveal">Got an idea? Let's build it.</h2>
     <p class="cta-meta reveal">Collabs · Brand Deals · Video Work · Anything</p>
     <a href="https://instagram.com/mmckaystacey" class="cta-link reveal" target="_blank">Hit Me Up →</a>
   </section>
+
 </main>
 
 <script>
@@ -349,7 +369,7 @@
     document.documentElement.style.setProperty('--bar-h', '0px');
   });
 
-  // mobile menu toggle
+  // mobile fullscreen menu
   const menuToggle = document.getElementById('menuToggle');
   menuToggle.addEventListener('click', () => {
     const open = document.body.classList.toggle('menu-open');
