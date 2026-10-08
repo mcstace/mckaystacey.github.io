@@ -182,6 +182,7 @@
   }
   .brand-item:hover .brand-logo { opacity: 0.75; }
 
+  /* SimpleIcons CDN — served as SVG, white via color param */
   .brand-logo img {
     max-height: 36px; max-width: 140px;
     object-fit: contain; display: block;
@@ -241,6 +242,15 @@
   .video-card:hover .play-circle { transform: translate(-50%,-50%) scale(1); border-color: rgba(255,255,255,0.7); background: rgba(255,255,255,0.1); }
   .play-circle svg { width: 11px; margin-left: 3px; fill: var(--white); }
 
+  /* SKILLS */
+  #skills { padding: 100px 48px; }
+  .skills-tagline { font-family: 'DM Mono', monospace; font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--white60); margin-top: -32px; margin-bottom: 52px; }
+  .skills-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; }
+  .skill-item { background: var(--white03); border: 1px solid var(--border); padding: 32px 26px; display: flex; flex-direction: column; justify-content: space-between; gap: 48px; min-height: 160px; transition: background .3s, border-color .3s; }
+  .skill-item:hover { background: var(--white05); border-color: rgba(255,255,255,0.22); }
+  .skill-num { font-family: 'DM Mono', monospace; font-size: 0.56rem; letter-spacing: 0.2em; color: var(--white30); }
+  .skill-name { font-family: 'Syne', sans-serif; font-weight: 600; font-size: 1.05rem; letter-spacing: 0.04em; text-transform: uppercase; line-height: 1.25; }
+
   /* CLOTHES */
   #clothes { padding: 100px 48px; }
   .clothes-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 10px; }
@@ -286,7 +296,8 @@
     #hero { padding: 140px 24px 80px; }
     #brands { padding: 60px 0; } .brands-header { padding: 0 24px; }
     #beast { padding: 60px 24px; }
-    #videos, #clothes, #cta { padding: 70px 24px; }
+    #videos, #skills, #clothes, #cta { padding: 70px 24px; }
+    .skills-grid { grid-template-columns: 1fr 1fr; }
     .clothes-grid { grid-template-columns: 1fr 1fr; }
     .cloth-card:first-child { grid-column: 1/3; min-height: 280px; }
     .video-grid { grid-template-columns: 1fr; } .video-card.featured { grid-column: auto; }
@@ -305,6 +316,7 @@
   <ul class="nav-links">
     <li><a href="#brands">Brands</a></li>
     <li><a href="#videos">Work</a></li>
+    <li><a href="#skills">Skills</a></li>
     <li><a href="#clothes">Clothes</a></li>
     <li><a href="#cta">Collab</a></li>
   </ul>
@@ -325,11 +337,6 @@
     <a href="https://twitter.com/mmckaystacey" target="_blank">
       <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
       Twitter
-    </a>
-    <span class="sep">✦</span>
-    <a href="https://youtube.com/@mmckaystacey" target="_blank">
-      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
-      YouTube
     </a>
     <span class="sep">✦</span>
     <a href="https://www.linkedin.com/in/mckay-stacey-bab412212/" target="_blank">
@@ -468,6 +475,20 @@
   </div>
 </section>
 
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-label reveal">What I Do</div>
+  <h2 class="section-title reveal" style="margin-bottom:16px;">The Skills</h2>
+  <p class="skills-tagline reveal">Swiss army knife of tech and social media.</p>
+  <div class="skills-grid">
+    <div class="skill-item reveal"><span class="skill-num">01</span><span class="skill-name">Creative Director</span></div>
+    <div class="skill-item reveal d1"><span class="skill-num">02</span><span class="skill-name">Filmmaker</span></div>
+    <div class="skill-item reveal d2"><span class="skill-num">03</span><span class="skill-name">Editor</span></div>
+    <div class="skill-item reveal d3"><span class="skill-num">04</span><span class="skill-name">Graphic Designer</span></div>
+    <div class="skill-item reveal d4"><span class="skill-num">05</span><span class="skill-name">Sourcing</span></div>
+  </div>
+</section>
+
 <!-- CLOTHES -->
 <section id="clothes">
   <div class="section-label reveal">Unravel</div>
@@ -557,7 +578,6 @@
     <a href="https://www.unravelculture.com" target="_blank">Unravel</a>
     <a href="https://apps.apple.com/us/app/haingry/id6753778179" target="_blank">Haingry</a>
     <a href="https://instagram.com/mmckaystacey" target="_blank">Instagram</a>
-    <a href="https://youtube.com/@mmckaystacey" target="_blank">YouTube</a>
   </div>
 </footer>
 
